@@ -1,8 +1,5 @@
 const fetchGames = async () => {
-  const corsAnywhereUrl = "http://localhost:8080/";
   const igdbApiUrl = "https://api.igdb.com/v4/games";
-
-  const proxyUrl = corsAnywhereUrl + igdbApiUrl;
 
   const headers = new Headers({
     "Client-ID": process.env.TWITCH_CLIENT_ID,
@@ -12,13 +9,20 @@ const fetchGames = async () => {
 
   const query = "fields name; limit 10;";
 
-  return fetch(proxyUrl, {
-    method: "POST",
-    headers: headers,
-    body: query,
-  })
-    .then((response) => response.json())
-    .catch((error) => console.error("Error:", error));
+  try {
+    const res = await fetch(igdbApiUrl, {
+      method: "POST",
+      headers: headers,
+      body: query,
+    });
+    if (!res.ok) {
+      console.log(res.status, res.statusText);
+    }
+    return await res.json();
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
 };
 
 export default fetchGames;
