@@ -1,5 +1,5 @@
-const fetchGames = async () => {
-  const igdbApiUrl = "https://api.igdb.com/v4/games";
+const fetchGames = async (fetchQuery, endpoint) => {
+  const igdbApiUrl = `https://api.igdb.com/v4/${endpoint}`;
 
   const headers = new Headers({
     "Client-ID": process.env.TWITCH_CLIENT_ID,
@@ -7,7 +7,7 @@ const fetchGames = async () => {
     Accept: "application/json",
   });
 
-  const query = "fields name; limit 10;";
+  let query = fetchQuery;
 
   try {
     const res = await fetch(igdbApiUrl, {

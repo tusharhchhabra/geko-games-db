@@ -38,3 +38,15 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+create a .env file using .env.example
+to get client id sign up for a twitch account and create a developer application
+this will give you a Client ID. Create a client secret.
+
+make a curl request using:
+curl -X POST "https://id.twitch.tv/oauth2/token" -H "Content-Type: application/x-www-form-urlencoded" -d "client_id=YourClientID" -d "client_secret=YourClientSecret" -d "grant_type=client_credentials"
+
+this will give you a authtoken to use in .env
+TWITCH_CLIENT_ID="twitch client id token"
+TWITCH_AUTH_TOKEN=x8d2fu5yp44lclhi1sbovqoqj981f2

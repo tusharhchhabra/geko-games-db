@@ -12,7 +12,10 @@ function GamesList({ games }) {
 
 export default GamesList;
 
+const query = "fields name; limit 10;";
+const endpoint = "games"
+
 export async function getServerSideProps() {
-  const games = await fetchGames();
+  const games = await fetchGames(query, endpoint);
   return { props: { games } };
 }
