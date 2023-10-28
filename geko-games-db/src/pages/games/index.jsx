@@ -1,4 +1,4 @@
-import fetchData from "@/helpers/fetchData";
+import fetchGames from "@/helpers/fetchDataExample";
 
 function GamesList({ games }) {
   return (
@@ -13,6 +13,6 @@ function GamesList({ games }) {
 export default GamesList;
 
 export async function getServerSideProps() {
-  const games = await fetchData();
+  const games = await fetchGames();
   return { props: { games } };
 }
