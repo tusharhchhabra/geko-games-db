@@ -1,9 +1,10 @@
 import GamesListItem from "@/components/GameListItem";
 
-const GamesList = ({ combinedData }) => {
+const GamesList = ({ top10Games, actionGames }) => {
+
   return (
     <div>
-      <GamesListItem combinedData={combinedData} />
+      <GamesListItem top10Games={top10Games} actionGames={actionGames}/>
     </div>
   );
 }
