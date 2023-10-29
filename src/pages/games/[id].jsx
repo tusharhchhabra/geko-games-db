@@ -1,15 +1,28 @@
 import adjustImageUrl from "@/helpers/adjustImageUrl";
 import fetchData from "@/helpers/fetchData";
+import { getYearFromUnixTimestamp } from "@/helpers/findTime";
 import queries from "@/helpers/queryStrings";
 import { useRouter } from "next/router";
 
 function GameDetailsPage({ game }) {
   return (
-    <div key={game.id}>
-      <p className="font-bold text-4xl line-clamp-2">{game.name}</p>
+    <div key={game.id} className="max-w-md">
+      <p className="font-bold text-4xl line-clamp-2 max-w-md">{game.name}</p>
+      <div className="flex gap-4">
+        <span className="max-w-sm">
+          {getYearFromUnixTimestamp(game.first_release_date)}
+        </span>
+        <div className="flex gap-2">
+          {game.genres.map((genre) => (
+            <span key={genre.id}>{genre.name}</span>
+          ))}
+        </div>
+      </div>
+      <p className="max-w-sm">{game.summary}</p>
       {game.coverUrl && (
         <img loading="lazy" src={game.coverUrl} alt={game.name} />
       )}
+      <p></p>
     </div>
   );
 }
@@ -18,7 +31,6 @@ export default GameDetailsPage;
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
-  console.log(id);
 
   const games = await fetchData(queries.game(id), "games");
   const game = games[0];
@@ -28,15 +40,36 @@ export async function getServerSideProps(context) {
     return;
   }
 
-  const covers = await fetchData(queries.coverArtForGame(game), "covers");
-  if (covers.length === 0) {
+  const [coversPromise, genresPromise, platformsPromise, screenshotsPromise] =
+    await Promise.allSettled([
+      fetchData(queries.coverArtForGame(game), "covers"),
+      fetchData(queries.genresForGame(game), "genres"),
+      fetchData(queries.platformsForGame(game), "platforms"),
+      fetchData(queries.screenshotsForGame(game), "screenshots"),
+    ]);
+
+  const [covers, genres, platforms, screenshots] = [
+    coversPromise.value,
+    genresPromise.value,
+    platformsPromise.value,
+    screenshotsPromise.value,
+  ];
+
+  let formattedCoverUrl = null;
+  if (covers.length !== 0) {
+    formattedCoverUrl = adjustImageUrl(covers[0].url, "t_cover_big");
+  } else {
     console.log("No covers found for this game!");
-    return;
   }
 
-  const formattedCoverUrl = adjustImageUrl(covers[0].url, "t_cover_big");
-
-  const gameDetails = { ...game, coverUrl: formattedCoverUrl };
+  const gameDetails = {
+    ...game,
+    coverUrl: formattedCoverUrl,
+    genres,
+    platforms,
+    screenshots,
+  };
+  console.log(gameDetails);
 
   return { props: { game: gameDetails } };
 }

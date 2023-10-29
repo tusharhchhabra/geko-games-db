@@ -15,6 +15,18 @@ const queries = {
 
   newGames: `fields id, name, first_release_date; where total_rating_count >= 5 & first_release_date > ${getTimestamp30DaysAgo()}; sort total_rating desc; limit 10;`,
 
+  genresForGame: function (game) {
+    return `fields name; where id = (${game.genres.join(", ")});`;
+  },
+
+  platformsForGame: function (game) {
+    return `fields name; where id = (${game.platforms.join(", ")});`;
+  },
+
+  screenshotsForGame: function (game) {
+    return `fields url; where id = (${game.screenshots.join(", ")});`;
+  },
+
   coverArtForGames: function (games) {
     return `fields game, url; where game = ${extractId(games)};`;
   },
