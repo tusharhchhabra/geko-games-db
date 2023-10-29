@@ -1,17 +1,18 @@
-import { useEffect, useState, useRef } from "react"; // Import useRef
+import { useEffect, useState, useRef } from "react";
 import MyCombobox from "./Dropdown";
+import { useRouter } from "next/router";
 
 function SearchBar() {
   const [query, setQuery] = useState("");
   const [games, setGames] = useState([]);
   const [selectedGame, setSelectedGame] = useState(null);
-  const [isSearching, setIsSearching] = useState(false);
+  const [canShowEmptyState, setCanShowEmptyState] = useState(false);
+  const router = useRouter();
 
-  const searchTimeoutRef = useRef(null); // Create a ref to hold the timeout ID
+  const searchTimeoutRef = useRef(null);
 
   const search = async (searchTerm) => {
     if (searchTerm) {
-      setIsSearching(true);
       const response = await fetch(
         `/api/search?searchTerm=${encodeURIComponent(searchTerm)}`
       );
@@ -22,19 +23,26 @@ function SearchBar() {
       console.log("search text is empty");
       setGames([]);
     }
-    setIsSearching(false);
   };
 
+  const handleGameSelect = (game) => {
+    setSelectedGame(game);
+    router.push(`/games/${game.id}`);
+  };
+
+  // Manage search request and results display
   useEffect(() => {
     if (!query) return;
 
     if (searchTimeoutRef.current) {
       clearTimeout(searchTimeoutRef.current);
+      setCanShowEmptyState(false);
     }
 
     searchTimeoutRef.current = setTimeout(async () => {
       await search(query);
-    }, 200);
+      setCanShowEmptyState(true);
+    }, 100);
 
     return () => {
       clearTimeout(searchTimeoutRef.current);
@@ -50,7 +58,8 @@ function SearchBar() {
           (a, b) => b.first_release_date - a.first_release_date
         )}
         selected={selectedGame}
-        setSelected={setSelectedGame}
+        setSelected={handleGameSelect}
+        canShowEmptyState={canShowEmptyState}
       ></MyCombobox>
       <button
         className="bg-gray-700 px-3 py-1 my-4 text-white"
