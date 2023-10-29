@@ -1,12 +1,11 @@
 import fetchGames from "@/helpers/fetchDataExample";
 import GamesList from "@/components/GameList";
-import extractId from "@/helpers/extractId";
-import adjustImageUrl from "@/helpers/adjustImageUrl";
+import queries from "@/queryStrings";
 
-const HomePage = ({ combinedData }) => {
+const HomePage = ({ top10GamesWithCovers, actionGamesWithCovers }) => {
   return (
     <div>
-      <GamesList combinedData={combinedData} />
+      <GamesList top10Games={top10GamesWithCovers} actionGames={actionGamesWithCovers} />
     </div>
   );
 }
@@ -15,24 +14,15 @@ export default HomePage;
 
 export async function getServerSideProps() {
 
-  // API call to get the games
-  const query1 = "fields name, id; where total_rating_count >= 100; sort total_rating desc; limit 12;";
-  const games = await fetchGames(query1, "games");
-
-  // API call to get the covers
-  const query2 = `fields game, url; where game = ${extractId(games)};`;
-  const covers = await fetchGames(query2, "covers");
-
-  // Combine the data
-  const combinedData = games.map(game => {
-    const cover = covers.find(cover => cover.game === game.id);
-    const coverUrl = cover ? adjustImageUrl(cover.url) : null;
-    return {
-      ...game,
-      coverUrl
-    };
-
-  });
+  // Top 10 games
+  const top10Games = await fetchGames(queries.top10Games, "games");
+  const covers = await fetchGames(queries.coverArt(top10Games), "covers");
+  const top10GamesWithCovers = queries.gamesWithCoverArt(top10Games, covers)
   
-  return { props: { combinedData } };
+  // Action Games
+  const actionGames = await fetchGames(queries.actionGames, "games");
+  const actionCovers = await fetchGames(queries.coverArt(actionGames), "covers");
+  const actionGamesWithCovers = queries.gamesWithCoverArt(actionGames, actionCovers);
+ 
+  return { props: { top10GamesWithCovers, actionGamesWithCovers } };
 }
