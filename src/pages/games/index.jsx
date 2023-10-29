@@ -21,14 +21,19 @@ export async function getServerSideProps() {
   // Top 10 games
   const top10Games = await fetchData(queries.top10Games, "games");
   const covers = await fetchData(queries.coverArt(top10Games), "covers");
-  const top10GamesWithCovers = queries.gamesWithCoverArt(top10Games, covers);
+  const top10GamesWithCovers = queries.gamesWithCoverArt(
+    top10Games,
+    covers,
+    "t_cover_big"
+  );
 
   // Action Games
   const actionGames = await fetchData(queries.actionGames, "games");
   const actionCovers = await fetchData(queries.coverArt(actionGames), "covers");
   const actionGamesWithCovers = queries.gamesWithCoverArt(
     actionGames,
-    actionCovers
+    actionCovers,
+    "t_cover_big"
   );
 
   return { props: { top10GamesWithCovers, actionGamesWithCovers } };

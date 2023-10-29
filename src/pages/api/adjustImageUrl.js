@@ -1,5 +1,5 @@
-function adjustImageUrl(url) {
-  return "https:" + url.replace("t_thumb", "t_cover_big");
+function adjustImageUrl(url, targetUrl) {
+  return "https:" + url.replace("t_thumb", targetUrl);
 }
 
 export default adjustImageUrl;

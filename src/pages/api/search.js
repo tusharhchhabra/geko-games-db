@@ -1,4 +1,5 @@
 import fetchData from "@/helpers/fetchData";
+import queries from "@/queryStrings";
 
 export default async function search(req, res) {
   if (req.method !== "GET") {
@@ -16,10 +17,15 @@ export default async function search(req, res) {
   const games = await fetchData(gamesQuery, endpoint);
   console.log(games.map((game) => game.name));
 
-  const thumbnailsQuery = `fields url; where id = (
-    ${games.map((game) => game.cover).join(", ")});`;
-  const thumbnails = await fetchData(thumbnailsQuery, "covers");
+  const thumbnails = await fetchData(queries.coverArt(games), "covers");
+
+  const gamesWithThumbnails = queries.gamesWithCoverArt(
+    games,
+    thumbnails,
+    "t_cover_small"
+  );
+
   console.log("thumbnails", thumbnails);
 
-  res.send(games);
+  res.send(gamesWithThumbnails);
 }

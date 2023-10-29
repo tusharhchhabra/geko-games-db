@@ -1,13 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react"; // Import useRef
 import MyCombobox from "./Dropdown";
 
 function SearchBar() {
   const [query, setQuery] = useState("");
   const [games, setGames] = useState([]);
   const [selectedGame, setSelectedGame] = useState(null);
+  const [isSearching, setIsSearching] = useState(false);
+
+  const searchTimeoutRef = useRef(null); // Create a ref to hold the timeout ID
 
   const search = async (searchTerm) => {
     if (searchTerm) {
+      setIsSearching(true);
       const response = await fetch(
         `/api/search?searchTerm=${encodeURIComponent(searchTerm)}`
       );
@@ -21,15 +25,20 @@ function SearchBar() {
     setIsSearching(false);
   };
 
-  const [isSearching, setIsSearching] = useState(false);
-
   useEffect(() => {
-    if (!query || isSearching) return;
-    const searchGames = async () => {
-      await search(query);
-    };
+    if (!query) return;
 
-    searchGames();
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current);
+    }
+
+    searchTimeoutRef.current = setTimeout(async () => {
+      await search(query);
+    }, 200);
+
+    return () => {
+      clearTimeout(searchTimeoutRef.current);
+    };
   }, [query]);
 
   return (

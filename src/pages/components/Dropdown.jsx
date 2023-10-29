@@ -25,13 +25,12 @@ export default function MyCombobox({
           leaveTo="opacity-0"
           afterLeave={() => setQuery("")}
         >
-          <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+          <Combobox.Options className="absolute mt-1 py-2 max-h-96 w-full overflow-auto rounded-md bg-white text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
             {games.length === 0 && query !== "" ? (
-              <p></p>
+              <div className="relative cursor-default select-none py-3 px-4 text-gray-700">
+                Nothing found.
+              </div>
             ) : (
-              // <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
-              //   Nothing found.
-              // </div>
               games.map((game) => (
                 <Combobox.Option
                   key={game.id}
@@ -44,23 +43,39 @@ export default function MyCombobox({
                 >
                   {({ selected, active }) => (
                     <>
-                      <span
-                        className={`block font-semibold truncate ${
-                          selected ? "font-medium" : "font-normal"
-                        }`}
-                      >
-                        {game.name}
-                      </span>
-                      <span className="italic">
-                        {getYearFromUnixTimestamp(game.first_release_date)}
-                      </span>
-                      {selected ? (
+                      <div className="flex gap-4">
+                        {game.coverUrl ? (
+                          <img
+                            loading="lazy"
+                            src={game.coverUrl}
+                            alt={game.name}
+                            width="60px"
+                            height="80px"
+                            className="rounded-md"
+                          />
+                        ) : (
+                          <div className="w-[60px] h-[80px] bg-gray-300 rounded-md"></div>
+                        )}
+                        <div>
+                          <p
+                            className={`block font-semibold truncate ${
+                              selected ? "font-medium" : "font-normal"
+                            }`}
+                          >
+                            {game.name}
+                          </p>
+                          <p className="italic">
+                            {getYearFromUnixTimestamp(game.first_release_date)}
+                          </p>
+                        </div>
+                      </div>
+                      {/* {selected ? (
                         <span
                           className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
                             active ? "text-white" : "text-teal-600"
                           }`}
                         ></span>
-                      ) : null}
+                      ) : null} */}
                     </>
                   )}
                 </Combobox.Option>
