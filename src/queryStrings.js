@@ -30,6 +30,11 @@ const queries = {
       };
     });
   },
+
+  videos: function (videoID) {
+    return `fields video_id; where game = ${videoID}; sort created_at desc; limit 1;`
+  }
+
 };
 
 export default queries;
