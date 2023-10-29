@@ -1,4 +1,4 @@
-const fetchGames = async (fetchQuery, endpoint) => {
+const fetchData = async (fetchQuery, endpoint) => {
   const igdbApiUrl = `https://api.igdb.com/v4/${endpoint}`;
 
   const headers = new Headers({
@@ -7,13 +7,13 @@ const fetchGames = async (fetchQuery, endpoint) => {
     Accept: "application/json",
   });
 
-  let query = fetchQuery;
+  fetchQuery;
 
   try {
     const res = await fetch(igdbApiUrl, {
       method: "POST",
       headers: headers,
-      body: query,
+      body: fetchQuery,
     });
     if (!res.ok) {
       console.log(res.status, res.statusText);
@@ -25,4 +25,4 @@ const fetchGames = async (fetchQuery, endpoint) => {
   }
 };
 
-export default fetchGames;
+export default fetchData;
