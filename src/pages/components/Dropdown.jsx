@@ -1,5 +1,6 @@
 import { Combobox, Transition } from "@headlessui/react";
 import { Fragment } from "react";
+import { getYearFromUnixTimestamp } from "../../helpers/findTime";
 
 export default function MyCombobox({
   query,
@@ -84,11 +85,4 @@ export default function MyCombobox({
       </div>
     </Combobox>
   );
-}
-
-function getYearFromUnixTimestamp(unixTimestamp) {
-  const date = new Date(unixTimestamp * 1000);
-  const year = date.getFullYear();
-  if (isNaN(year)) return "";
-  return year;
-}
+};
