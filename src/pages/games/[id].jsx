@@ -3,14 +3,18 @@ import fetchData from "@/helpers/fetchData";
 import queries from "@/helpers/queryStrings";
 import { useRouter } from "next/router";
 
-function GameID({ gameDetails }) {
-  // const router = useRouter();
-  // const { id } = router.query;
-
-  return <p className="text-red-500 text-2xl">Game</p>;
+function GameDetailsPage({ game }) {
+  return (
+    <div key={game.id}>
+      <p className="font-bold text-4xl line-clamp-2">{game.name}</p>
+      {game.coverUrl && (
+        <img loading="lazy" src={game.coverUrl} alt={game.name} />
+      )}
+    </div>
+  );
 }
 
-export default GameID;
+export default GameDetailsPage;
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
@@ -24,12 +28,15 @@ export async function getServerSideProps(context) {
     return;
   }
 
-  const cover = await fetchData(queries.coverArtForGame(game), "covers");
+  const covers = await fetchData(queries.coverArtForGame(game), "covers");
+  if (covers.length === 0) {
+    console.log("No covers found for this game!");
+    return;
+  }
 
-  // const formattedCoverUrl = adjustImageUrl(cover.url, "t_cover_big");
+  const formattedCoverUrl = adjustImageUrl(covers[0].url, "t_cover_big");
 
-  // console.log(id, game.name, formattedCoverUrl);
+  const gameDetails = { ...game, coverUrl: formattedCoverUrl };
 
-  const gameDetails = {};
-  return { props: { gameDetails } };
+  return { props: { game: gameDetails } };
 }
