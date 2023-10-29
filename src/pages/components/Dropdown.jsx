@@ -45,11 +45,14 @@ export default function MyCombobox({
                   {({ selected, active }) => (
                     <>
                       <span
-                        className={`block truncate ${
+                        className={`block font-semibold truncate ${
                           selected ? "font-medium" : "font-normal"
                         }`}
                       >
                         {game.name}
+                      </span>
+                      <span className="italic">
+                        {getYearFromUnixTimestamp(game.first_release_date)}
                       </span>
                       {selected ? (
                         <span
@@ -68,4 +71,11 @@ export default function MyCombobox({
       </div>
     </Combobox>
   );
+}
+
+function getYearFromUnixTimestamp(unixTimestamp) {
+  const date = new Date(unixTimestamp * 1000);
+  const year = date.getFullYear();
+  if (isNaN(year)) return "";
+  return year;
 }

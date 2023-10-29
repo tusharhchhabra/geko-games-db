@@ -16,8 +16,8 @@ export default async function search(req, res) {
   const games = await fetchData(gamesQuery, endpoint);
   console.log(games.map((game) => game.name));
 
-  const thumbnailsQuery = ``;
-  const thumbnails = await fetchData("");
+  // const thumbnailsQuery = `fields url; where id = (${})`;
+  // const thumbnails = await fetchData("");
 
   res.send(games);
 }

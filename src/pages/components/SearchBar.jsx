@@ -37,7 +37,9 @@ function SearchBar() {
       <MyCombobox
         query={query}
         setQuery={setQuery}
-        games={games}
+        games={games.sort(
+          (a, b) => b.first_release_date - a.first_release_date
+        )}
         selected={selectedGame}
         setSelected={setSelectedGame}
       ></MyCombobox>
