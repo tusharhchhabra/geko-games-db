@@ -1,13 +1,13 @@
-import renderGames from "@/helpers/renderGames";
+import RenderGames from "@/components/RenderGames";
 
 const GameListItem = ({ games }) => {
-const gamesElements = renderGames(games);
 
   return (
     <div>
-      {gamesElements}
+      <RenderGames games={games} />
     </div>
   );
 }
 
 export default GameListItem;
+
