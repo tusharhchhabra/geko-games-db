@@ -1,10 +1,14 @@
 import GamesListItem from "@/components/GameListItem";
 
-const GamesList = ({ top10Games, actionGames }) => {
-
+const GamesList = ({ setOfGames }) => {
   return (
     <div>
-      <GamesListItem top10Games={top10Games} actionGames={actionGames}/>
+      {setOfGames.map((gameSet, index) => (
+        <div key={index}>
+          <>{gameSet.title}</>
+          <GamesListItem games={gameSet.games} />
+        </div>
+      ))}
     </div>
   );
 }
