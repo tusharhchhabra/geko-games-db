@@ -10,11 +10,14 @@ export default async function search(req, res) {
   const { searchTerm } = req.query;
   console.log("searched", searchTerm);
 
-  const query = `search "${searchTerm}"; fields *;`;
+  const gamesQuery = `search "${searchTerm}"; fields *;`;
   const endpoint = "games";
 
-  const games = await fetchData(query, endpoint);
+  const games = await fetchData(gamesQuery, endpoint);
   console.log(games.map((game) => game.name));
+
+  const thumbnailsQuery = ``;
+  const thumbnails = await fetchData("");
 
   res.send(games);
 }

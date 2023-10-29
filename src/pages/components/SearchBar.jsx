@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MyCombobox from "./Dropdown";
 
 function SearchBar() {
   const [query, setQuery] = useState("");
   const [games, setGames] = useState([]);
+  const [selectedGame, setSelectedGame] = useState(null);
 
   const search = async (searchTerm) => {
     if (searchTerm) {
@@ -17,13 +18,31 @@ function SearchBar() {
       console.log("search text is empty");
       setGames([]);
     }
+    setIsSearching(false);
   };
 
+  const [isSearching, setIsSearching] = useState(false);
+
+  useEffect(() => {
+    if (!query || isSearching) return;
+    const searchGames = async () => {
+      await search(query);
+    };
+
+    searchGames();
+  }, [query]);
+
   return (
-    <div>
-      <MyCombobox query={query} setQuery={setQuery}></MyCombobox>
+    <div className="text-black">
+      <MyCombobox
+        query={query}
+        setQuery={setQuery}
+        games={games}
+        selected={selectedGame}
+        setSelected={setSelectedGame}
+      ></MyCombobox>
       <button
-        className="bg-gray-700 px-3 py-1 my-4"
+        className="bg-gray-700 px-3 py-1 my-4 text-white"
         onClick={() => search(query)}
       >
         Search
