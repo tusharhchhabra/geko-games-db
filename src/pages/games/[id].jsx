@@ -18,14 +18,18 @@ export async function getServerSideProps(context) {
 
   const games = await fetchData(queries.game(id), "games");
   const game = games[0];
-  // if (games.length === 0) {
-  //   console.log()
-  // }
-  // const cover = await fetchData(queries.coverArtForGame(game), "covers");
+
+  if (games.length === 0) {
+    console.log("No games found for this ID!");
+    return;
+  }
+
+  const cover = await fetchData(queries.coverArtForGame(game), "covers");
+
   // const formattedCoverUrl = adjustImageUrl(cover.url, "t_cover_big");
 
-  // console.log(id, games[0].name, cover);
+  // console.log(id, game.name, formattedCoverUrl);
 
-  const gameDetails = { ...game };
+  const gameDetails = {};
   return { props: { gameDetails } };
 }

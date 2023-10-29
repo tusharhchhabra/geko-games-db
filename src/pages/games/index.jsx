@@ -1,7 +1,7 @@
 import fetchData from "@/helpers/fetchData";
 import GamesList from "@/components/GameList";
 import queries from "@/helpers/queryStrings";
-import SearchBar from "../components/SearchBar";
+import SearchBar from "@/components/SearchBar";
 
 const HomePage = ({ setOfGames }) => {
   return (
