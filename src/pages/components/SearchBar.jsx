@@ -17,10 +17,8 @@ function SearchBar() {
         `/api/search?searchTerm=${encodeURIComponent(searchTerm)}`
       );
       const results = await response.json();
-      console.log("fetched", results);
       setGames(results);
     } else {
-      console.log("search text is empty");
       setGames([]);
     }
   };

@@ -9,14 +9,11 @@ export default async function search(req, res) {
   }
 
   const { searchTerm } = req.query;
-  console.log("searched", searchTerm);
 
   const gamesQuery = `search "${searchTerm}"; fields *;`;
   const endpoint = "games";
 
   const games = await fetchData(gamesQuery, endpoint);
-  console.log(games.map((game) => game.name));
-
   const thumbnails = await fetchData(queries.coverArt(games), "covers");
 
   const gamesWithThumbnails = queries.gamesWithCoverArt(
@@ -24,8 +21,6 @@ export default async function search(req, res) {
     thumbnails,
     "t_cover_small"
   );
-
-  console.log("thumbnails", thumbnails);
 
   res.send(gamesWithThumbnails);
 }
