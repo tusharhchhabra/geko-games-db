@@ -1,3 +1,4 @@
+import adjustImageUrl from "@/helpers/adjustImageUrl";
 import fetchData from "@/helpers/fetchData";
 import queries from "@/helpers/queryStrings";
 import { useRouter } from "next/router";
@@ -12,11 +13,19 @@ function GameID({ gameDetails }) {
 export default GameID;
 
 export async function getServerSideProps(context) {
-  const id = context.query;
+  const { id } = context.query;
   console.log(id);
 
-  // const game = fetchData(queries.game())
+  const games = await fetchData(queries.game(id), "games");
+  const game = games[0];
+  // if (games.length === 0) {
+  //   console.log()
+  // }
+  // const cover = await fetchData(queries.coverArtForGame(game), "covers");
+  // const formattedCoverUrl = adjustImageUrl(cover.url, "t_cover_big");
 
-  const gameDetails = {};
+  // console.log(id, games[0].name, cover);
+
+  const gameDetails = { ...game };
   return { props: { gameDetails } };
 }

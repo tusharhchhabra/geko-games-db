@@ -14,7 +14,7 @@ export default async function search(req, res) {
   const endpoint = "games";
 
   const games = await fetchData(gamesQuery, endpoint);
-  const thumbnails = await fetchData(queries.coverArt(games), "covers");
+  const thumbnails = await fetchData(queries.coverArtForGames(games), "covers");
 
   const gamesWithThumbnails = queries.gamesWithCoverArt(
     games,
