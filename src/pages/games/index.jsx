@@ -3,11 +3,13 @@ import SearchBar from "../components/SearchBar";
 
 function GamesList({ games }) {
   return (
-    <div>
+    <div className="p-10">
       <SearchBar></SearchBar>
-      {games &&
-        games.length > 0 &&
-        games.map((game) => <p key={game.id}>{game.name}</p>)}
+      <div>
+        {games &&
+          games.length > 0 &&
+          games.map((game) => <p key={game.id}>{game.name}</p>)}
+      </div>
     </div>
   );
 }

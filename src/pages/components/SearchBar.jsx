@@ -1,12 +1,9 @@
 import { useState } from "react";
+import MyCombobox from "./Dropdown";
 
 function SearchBar() {
-  const [searchText, setSearchText] = useState("");
+  const [query, setQuery] = useState("");
   const [games, setGames] = useState([]);
-
-  const handleSearch = async (e) => {
-    setSearchText(e.target.value);
-  };
 
   const search = async (searchTerm) => {
     if (searchTerm) {
@@ -24,16 +21,10 @@ function SearchBar() {
 
   return (
     <div>
-      <input
-        type="search"
-        placeholder="Search..."
-        className="flex h-9 w-64 rounded-md px-3 py-1 text-md text-gray-900"
-        value={searchText}
-        onChange={handleSearch}
-      />
+      <MyCombobox query={query} setQuery={setQuery}></MyCombobox>
       <button
         className="bg-gray-700 px-3 py-1 my-4"
-        onClick={() => search(searchText)}
+        onClick={() => search(query)}
       >
         Search
       </button>

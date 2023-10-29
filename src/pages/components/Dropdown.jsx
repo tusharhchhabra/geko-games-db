@@ -9,7 +9,7 @@ const people = [
   "Katelyn Rohan",
 ];
 
-function MyCombobox() {
+export default function MyCombobox() {
   const [selectedPerson, setSelectedPerson] = useState(people[0]);
   const [query, setQuery] = useState("");
 
