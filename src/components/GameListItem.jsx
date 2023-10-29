@@ -1,16 +1,14 @@
-const GameListItem = ({ combinedData }) => {
-  
-  const game = combinedData.map(game => (
-    <div key={game.id}>
-      <h2>{game.name}</h2>
-      {game.coverUrl && <img loading="lazy" src={game.coverUrl} alt={game.name} />}
-    </div>
-  ));
-    
+import renderGames from "@/helpers/renderGames";
+
+const GameListItem = ({ top10Games, actionGames }) => {
+ 
+const top10GamesElements = renderGames(top10Games);
+const actionGamesElements = renderGames(actionGames);
 
   return (
     <div>
-      {game}
+      {top10GamesElements}
+      {actionGamesElements}
     </div>
   );
 }
