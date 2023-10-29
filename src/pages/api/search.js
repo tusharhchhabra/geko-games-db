@@ -1,5 +1,5 @@
 import fetchData from "@/helpers/fetchData";
-import queries from "@/queryStrings";
+import queries from "@/helpers/queryStrings";
 
 export default async function search(req, res) {
   if (req.method !== "GET") {

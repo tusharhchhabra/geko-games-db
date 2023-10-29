@@ -1,7 +1,11 @@
-import extractId from "./helpers/extractId";
-import adjustImageUrl from "./helpers/adjustImageUrl";
+import extractId from "./extractId";
+import adjustImageUrl from "./adjustImageUrl";
 
 const queries = {
+  game: function (id) {
+    return `fields *; where id = ${id};`;
+  },
+
   top10Games:
     "fields name, id; where total_rating_count >= 100; sort total_rating desc; limit 10;",
 
