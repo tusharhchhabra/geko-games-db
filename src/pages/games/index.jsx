@@ -25,6 +25,7 @@ export async function getServerSideProps() {
   );
   top10GamesWithCovers;
   const top10GamesObject = { games: top10GamesWithCovers, title: "Top 10" };
+
   // Action Games
   const actionGames = await fetchData(queries.actionGames, "games");
   const actionCovers = await fetchData(queries.coverArt(actionGames), "covers");
@@ -38,13 +39,18 @@ export async function getServerSideProps() {
     title: "Action Games",
   };
 
-  const setOfGames = [top10GamesObject, actionGamesObject];
-
   // New and Noteworthy Games
   const newGames = await fetchGames(queries.newGames, "games");
   const newCovers = await fetchGames(queries.coverArt(newGames), "covers");
-  const newGamesWithCovers = queries.gamesWithCoverArt(newGames, newCovers);
-  const newGamesObject = {games: newGamesWithCovers, title: "New and Noteworthy"};
+  const newGamesWithCovers = queries.gamesWithCoverArt(
+    newGames,
+    newCovers,
+    "t_cover_big"
+  );
+  const newGamesObject = {
+    games: newGamesWithCovers,
+    title: "New and Noteworthy"
+    };
 
   const setOfGames = [top10GamesObject, actionGamesObject, newGamesObject]
  
