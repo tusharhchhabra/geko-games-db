@@ -6,7 +6,7 @@ import SearchBar from "../components/SearchBar";
 const HomePage = ({ setOfGames }) => {
   return (
     <div className="p-10">
-      <SearchBar></SearchBar>
+      <SearchBar />
       <GamesList setOfGames={setOfGames} />
     </div>
   );
