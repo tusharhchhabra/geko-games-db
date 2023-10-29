@@ -16,6 +16,7 @@ export default function MyCombobox({
           <Combobox.Input
             className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
             displayValue={query}
+            placeholder="Search..."
             onChange={(event) => setQuery(event.target.value)}
           />
         </div>
