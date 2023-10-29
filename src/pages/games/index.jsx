@@ -40,8 +40,8 @@ export async function getServerSideProps() {
   };
 
   // New and Noteworthy Games
-  const newGames = await fetchGames(queries.newGames, "games");
-  const newCovers = await fetchGames(queries.coverArt(newGames), "covers");
+  const newGames = await fetchData(queries.newGames, "games");
+  const newCovers = await fetchData(queries.coverArt(newGames), "covers");
   const newGamesWithCovers = queries.gamesWithCoverArt(
     newGames,
     newCovers,
