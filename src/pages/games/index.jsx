@@ -1,31 +1,44 @@
-import fetchGames from "@/helpers/fetchDataExample";
+import fetchData from "@/helpers/fetchData";
 import GamesList from "@/components/GameList";
 import queries from "@/queryStrings";
+import SearchBar from "../components/SearchBar";
 
 const HomePage = ({ setOfGames }) => {
   return (
-    <div>
+    <div className="p-10">
+      <SearchBar />
       <GamesList setOfGames={setOfGames} />
     </div>
   );
-}
+};
 
 export default HomePage;
 
 export async function getServerSideProps() {
-
-  // Top 10 Games
-  const top10Games = await fetchGames(queries.top10Games, "games");
-  const covers = await fetchGames(queries.coverArt(top10Games), "covers");
-  const top10GamesWithCovers = queries.gamesWithCoverArt(top10Games, covers)
-  top10GamesWithCovers
-  const top10GamesObject = {games: top10GamesWithCovers, title: "Top 10"};
-
+  // Top 10 games
+  const top10Games = await fetchData(queries.top10Games, "games");
+  const covers = await fetchData(queries.coverArt(top10Games), "covers");
+  const top10GamesWithCovers = queries.gamesWithCoverArt(
+    top10Games,
+    covers,
+    "t_cover_big"
+  );
+  top10GamesWithCovers;
+  const top10GamesObject = { games: top10GamesWithCovers, title: "Top 10" };
   // Action Games
-  const actionGames = await fetchGames(queries.actionGames, "games");
-  const actionCovers = await fetchGames(queries.coverArt(actionGames), "covers");
-  const actionGamesWithCovers = queries.gamesWithCoverArt(actionGames, actionCovers);
-  const actionGamesObject = {games: actionGamesWithCovers, title: "Action Games"};
+  const actionGames = await fetchData(queries.actionGames, "games");
+  const actionCovers = await fetchData(queries.coverArt(actionGames), "covers");
+  const actionGamesWithCovers = queries.gamesWithCoverArt(
+    actionGames,
+    actionCovers,
+    "t_cover_big"
+  );
+  const actionGamesObject = {
+    games: actionGamesWithCovers,
+    title: "Action Games",
+  };
+
+  const setOfGames = [top10GamesObject, actionGamesObject];
 
   // New and Noteworthy Games
   const newGames = await fetchGames(queries.newGames, "games");
