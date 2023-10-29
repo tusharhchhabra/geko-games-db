@@ -3,14 +3,11 @@ import GamesList from "@/components/GameList";
 import queries from "@/queryStrings";
 import SearchBar from "../components/SearchBar";
 
-const HomePage = ({ top10GamesWithCovers, actionGamesWithCovers }) => {
+const HomePage = ({ setOfGames }) => {
   return (
     <div className="p-10">
       <SearchBar></SearchBar>
-      <GamesList
-        top10Games={top10GamesWithCovers}
-        actionGames={actionGamesWithCovers}
-      />
+      <GamesList setOfGames={setOfGames} />
     </div>
   );
 };
@@ -26,7 +23,8 @@ export async function getServerSideProps() {
     covers,
     "t_cover_big"
   );
-
+  top10GamesWithCovers;
+  const top10GamesObject = { games: top10GamesWithCovers, title: "Top 10" };
   // Action Games
   const actionGames = await fetchData(queries.actionGames, "games");
   const actionCovers = await fetchData(queries.coverArt(actionGames), "covers");
@@ -35,6 +33,12 @@ export async function getServerSideProps() {
     actionCovers,
     "t_cover_big"
   );
+  const actionGamesObject = {
+    games: actionGamesWithCovers,
+    title: "Action Games",
+  };
 
-  return { props: { top10GamesWithCovers, actionGamesWithCovers } };
+  const setOfGames = [top10GamesObject, actionGamesObject];
+
+  return { props: { setOfGames } };
 }

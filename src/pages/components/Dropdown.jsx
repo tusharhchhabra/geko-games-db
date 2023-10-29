@@ -19,7 +19,7 @@ export default function MyCombobox({
             onChange={(event) => setQuery(event.target.value)}
           />
         </div>
-        {(games.length !== 0 || canShowEmptyState) && (
+        {(games.length !== 0 || canShowEmptyState) && query !== "" && (
           <Transition
             as={Fragment}
             leave="transition ease-in duration-100"
