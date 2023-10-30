@@ -11,9 +11,9 @@ const queries = {
   themes: "fields id, name;",
 
   gamesByTheme: function gamesByTheme(themeId) {
-    return `fields name, id; where total_rating_count >= 10 & themes = ${themeId}; sort total_rating desc; limit 10;`;
+    return `fields name, id, total_rating; where total_rating >= 50 & themes = ${themeId} & total_rating_count > 6; sort total_rating desc; limit 10;`;
   },
-  
+
   coverArt: function (games) {
     return `fields game, url; where game = ${extractId(games)};`;
   },
