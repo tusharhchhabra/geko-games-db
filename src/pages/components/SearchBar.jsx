@@ -40,7 +40,7 @@ function SearchBar() {
     searchTimeoutRef.current = setTimeout(async () => {
       await search(query);
       setCanShowEmptyState(true);
-    }, 100);
+    }, 150);
 
     return () => {
       clearTimeout(searchTimeoutRef.current);
