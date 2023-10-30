@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 function RenderGames({ games }) {
   const [videos, setVideos] = useState({});
@@ -6,13 +6,15 @@ function RenderGames({ games }) {
 
   async function fetchVideo(gameId) {
     try {
-      const response = await fetch(`/api/videos?videoID=${encodeURIComponent(gameId)}`);
+      const response = await fetch(
+        `/api/videos?videoID=${encodeURIComponent(gameId)}`
+      );
       const result = await response.json();
 
       if (result && result.length > 0) {
         setVideos((prevVideos) => ({
           ...prevVideos,
-          [gameId]: result[0]
+          [gameId]: result[0],
         }));
         setHoveredGameId(gameId);
       } else {
@@ -32,38 +34,47 @@ function RenderGames({ games }) {
     setHoveredGameId(null);
   }
 
-  
+  const handleClick = () => {
+    console.log("CLICKED!!!");
+  };
+
   return games.map((game) => {
     const gameVideo = videos[game.id];
     return (
       <div key={game.id}>
         <h2>{game.name}</h2>
-        <img 
-          loading="lazy" 
-          src={game.coverUrl} 
-          alt={game.name} 
-          onMouseEnter={() => fetchVideo(game.id)} 
-          className={gameVideo && game.id === hoveredGameId ? 'hidden' : 'block'} 
+        <img
+          loading="lazy"
+          src={game.coverUrl}
+          alt={game.name}
+          onMouseEnter={() => fetchVideo(game.id)}
+          className={
+            gameVideo && game.id === hoveredGameId ? "hidden" : "block"
+          }
         />
-        <div>
+        <div
+          className="relative w-560 h-315 mx-auto"
+          onClick={handleClick}
+          onMouseLeave={() => clearVideo(game.id)}
+        >
           {gameVideo && (
             <iframe
-              className={gameVideo && game.id === hoveredGameId ? 'block' : 'hidden'}
-              onMouseLeave={() => clearVideo(game.id)}
+              className={
+                gameVideo && game.id === hoveredGameId ? "block" : "hidden"
+              }
               width="560"
               height="315"
-              src={`https://www.youtube.com/embed/${gameVideo.video_id}?si=rKISgJFVYRGMtTwG&amp;start=10&autoplay=1&mute=1`}
+              src={`https://www.youtube.com/embed/${gameVideo.video_id}?si=rKISgJFVYRGMtTwG&amp;start=10&autoplay=1&mute=1&controls=0&showinfo=0`}
               title="YouTube video player"
-              frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen>
-            </iframe>
+              allowFullScreen
+            ></iframe>
           )}
+          <div className="absolute top-0 left-0 w-full h-full bg-transparent cursor-pointer z-10"></div>
         </div>
       </div>
     );
   });
 }
-
 
 export default RenderGames;
