@@ -29,6 +29,10 @@ const queries = {
     )});`;
   },
 
+  websitesForGame: function (game) {
+    return `fields url, category; where id = (${game.websites.join(", ")});`;
+  },
+
   similarGames: function (game) {
     return `fields name, cover; where id = (${game.similar_games.join(", ")});`;
   },

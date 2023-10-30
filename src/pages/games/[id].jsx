@@ -2,7 +2,7 @@ import adjustImageUrl from "@/helpers/adjustImageUrl";
 import fetchData from "@/helpers/fetchData";
 import { getYearFromUnixTimestamp } from "@/helpers/findTime";
 import queries from "@/helpers/queryStrings";
-import { useRouter } from "next/router";
+import websiteCategores from "@/helpers/websiteCategories";
 
 function GameDetailsPage({ game }) {
   return (
@@ -53,32 +53,36 @@ export async function getServerSideProps(context) {
   const { id } = context.query;
 
   const games = await fetchData(queries.game(id), "games");
-  const game = games[0];
 
   if (games.length === 0) {
     console.log("No games found for this ID!");
     return;
   }
 
+  const game = games[0];
+
   const [
     coversPromise,
     genresPromise,
     platformsPromise,
     screenshotsPromise,
+    websitesPromise,
     similarGamesPromise,
   ] = await Promise.allSettled([
     fetchData(queries.coverArtForGame(game), "covers"),
     fetchData(queries.genresForGame(game), "genres"),
     fetchData(queries.platformsForGame(game), "platforms"),
     fetchData(queries.screenshotsForGame(game), "screenshots"),
+    fetchData(queries.websitesForGame(game), "websites"),
     fetchData(queries.similarGames(game), "games"),
   ]);
 
-  const [covers, genres, platforms, screenshots, similarGames] = [
+  const [covers, genres, platforms, screenshots, websites, similarGames] = [
     coversPromise.value,
     genresPromise.value,
     platformsPromise.value,
     screenshotsPromise.value,
+    websitesPromise.value,
     similarGamesPromise.value,
   ];
 
@@ -108,8 +112,9 @@ export async function getServerSideProps(context) {
     platforms,
     screenshots: formattedScreenshots,
     similarGames,
+    websites,
   };
-  console.log(gameDetails);
 
+  console.log(gameDetails);
   return { props: { game: gameDetails } };
 }
