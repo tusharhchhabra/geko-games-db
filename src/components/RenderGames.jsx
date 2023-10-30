@@ -41,7 +41,7 @@ function RenderGames({ games }) {
   return games.map((game) => {
     const gameVideo = videos[game.id];
     return (
-      <div key={game.id}>
+      <div key={game.id} className="h-[400px]">
         <h2>{game.name}</h2>
         <img
           loading="lazy"
@@ -53,7 +53,7 @@ function RenderGames({ games }) {
           }
         />
         <div
-          className="relative w-560 h-315 mx-auto"
+          className="relative w-[560px] h-[315px]"
           onClick={handleClick}
           onMouseLeave={() => clearVideo(game.id)}
         >
