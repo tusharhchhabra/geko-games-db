@@ -10,7 +10,7 @@ export default async function search(req, res) {
 
   const { searchTerm } = req.query;
 
-  const gamesQuery = `search "${searchTerm}"; fields *;`;
+  const gamesQuery = `fields *; where name ~ *"${searchTerm}"* & version_parent = null; limit 10;`;
   const endpoint = "games";
 
   const games = await fetchData(gamesQuery, endpoint);
