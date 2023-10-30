@@ -24,7 +24,9 @@ const queries = {
   },
 
   screenshotsForGame: function (game) {
-    return `fields url; where id = (${game.screenshots.join(", ")});`;
+    return `fields url, width, height; where id = (${game.screenshots.join(
+      ", "
+    )});`;
   },
 
   coverArtForGames: function (games) {

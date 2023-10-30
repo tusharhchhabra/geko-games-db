@@ -18,6 +18,16 @@ function GameDetailsPage({ game }) {
           ))}
         </div>
       </div>
+      <div className="flex gap-2">
+        {game.platforms.map((platform) => (
+          <span key={platform.id}>{platform.name}</span>
+        ))}
+      </div>
+      <div className="flex gap-2">
+        {game.screenshots.map((screenshot) => (
+          <img key={screenshot.id} src={screenshot.url} loading="lazy" />
+        ))}
+      </div>
       <p className="max-w-sm">{game.summary}</p>
       {game.coverUrl && (
         <img loading="lazy" src={game.coverUrl} alt={game.name} />
@@ -62,12 +72,24 @@ export async function getServerSideProps(context) {
     console.log("No covers found for this game!");
   }
 
+  let formattedScreenshots = screenshots;
+  if (screenshots.length !== 0) {
+    formattedScreenshots = screenshots.map((screenshot) => {
+      return {
+        ...screenshot,
+        url: adjustImageUrl(screenshot.url, "t_screenshot_med"),
+      };
+    });
+  } else {
+    console.log("No screenshots found for this game!");
+  }
+
   const gameDetails = {
     ...game,
     coverUrl: formattedCoverUrl,
     genres,
     platforms,
-    screenshots,
+    screenshots: formattedScreenshots,
   };
   console.log(gameDetails);
 
