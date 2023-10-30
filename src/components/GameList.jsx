@@ -11,6 +11,6 @@ const GamesList = ({ setOfGames }) => {
       ))}
     </div>
   );
-}
+};
 
 export default GamesList;

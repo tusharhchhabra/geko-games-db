@@ -8,9 +8,8 @@ const queries = {
 
   actionGames:
     "fields id, name; where total_rating_count >= 100 & themes = 1; sort total_rating desc; limit 10;",
-    
-  newGames: 
-  `fields id, name, first_release_date; where total_rating_count >= 5 & first_release_date > ${getTimestamp30DaysAgo()}; sort total_rating desc; limit 10;`,
+
+  newGames: `fields id, name, first_release_date; where total_rating_count >= 5 & first_release_date > ${getTimestamp30DaysAgo()}; sort total_rating desc; limit 10;`,
 
   coverArt: function (games) {
     return `fields game, url; where game = ${extractId(games)};`;
@@ -29,6 +28,10 @@ const queries = {
         coverUrl,
       };
     });
+  },
+
+  videos: function (gameID) {
+    return `fields video_id; where game = ${gameID}; sort created_at desc; limit 1;`;
   },
 };
 
