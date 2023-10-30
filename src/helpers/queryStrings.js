@@ -29,6 +29,10 @@ const queries = {
     )});`;
   },
 
+  similarGames: function (game) {
+    return `fields name, cover; where id = (${game.similar_games.join(", ")});`;
+  },
+
   coverArtForGames: function (games) {
     return `fields game, url; where game = ${extractId(games)};`;
   },

@@ -7,7 +7,10 @@ import { useRouter } from "next/router";
 function GameDetailsPage({ game }) {
   return (
     <div key={game.id} className="max-w-md">
-      <p className="font-bold text-4xl line-clamp-2 max-w-md">{game.name}</p>
+      {game.coverUrl && (
+        <img loading="lazy" src={game.coverUrl} alt={game.name} />
+      )}
+      <p className="font-bold text-3xl line-clamp-2 max-w-md">{game.name}</p>
       <div className="flex gap-4">
         <span className="max-w-sm">
           {getYearFromUnixTimestamp(game.first_release_date)}
@@ -28,11 +31,18 @@ function GameDetailsPage({ game }) {
           <img key={screenshot.id} src={screenshot.url} loading="lazy" />
         ))}
       </div>
-      <p className="max-w-sm">{game.summary}</p>
-      {game.coverUrl && (
-        <img loading="lazy" src={game.coverUrl} alt={game.name} />
-      )}
-      <p></p>
+      <div className="max-w-sm">
+        <p className="font-bold text-xl">Summary</p>
+        <p className="max-w-sm">{game.summary}</p>
+      </div>
+      <div className="mt-12 max-w-sm">
+        <p className="font-bold text-xl">Other Games Like This</p>
+        {game.similarGames.map((game) => (
+          <p key={game.id} className="max-w-sm">
+            {game.name}
+          </p>
+        ))}
+      </div>
     </div>
   );
 }
@@ -50,19 +60,26 @@ export async function getServerSideProps(context) {
     return;
   }
 
-  const [coversPromise, genresPromise, platformsPromise, screenshotsPromise] =
-    await Promise.allSettled([
-      fetchData(queries.coverArtForGame(game), "covers"),
-      fetchData(queries.genresForGame(game), "genres"),
-      fetchData(queries.platformsForGame(game), "platforms"),
-      fetchData(queries.screenshotsForGame(game), "screenshots"),
-    ]);
+  const [
+    coversPromise,
+    genresPromise,
+    platformsPromise,
+    screenshotsPromise,
+    similarGamesPromise,
+  ] = await Promise.allSettled([
+    fetchData(queries.coverArtForGame(game), "covers"),
+    fetchData(queries.genresForGame(game), "genres"),
+    fetchData(queries.platformsForGame(game), "platforms"),
+    fetchData(queries.screenshotsForGame(game), "screenshots"),
+    fetchData(queries.similarGames(game), "games"),
+  ]);
 
-  const [covers, genres, platforms, screenshots] = [
+  const [covers, genres, platforms, screenshots, similarGames] = [
     coversPromise.value,
     genresPromise.value,
     platformsPromise.value,
     screenshotsPromise.value,
+    similarGamesPromise.value,
   ];
 
   let formattedCoverUrl = null;
@@ -90,6 +107,7 @@ export async function getServerSideProps(context) {
     genres,
     platforms,
     screenshots: formattedScreenshots,
+    similarGames,
   };
   console.log(gameDetails);
 
