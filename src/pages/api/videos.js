@@ -12,7 +12,7 @@ export default async function getVideos(req, res) {
 
   const videoQuery = queries.videos(videoID);
   const endpoint = "game_videos";
-  
+
   const video = await fetchData(videoQuery, endpoint);
 
   res.send(video);
