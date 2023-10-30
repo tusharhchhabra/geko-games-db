@@ -70,7 +70,8 @@ const HomePage = ({ initialGameSets, initialThemes }) => {
     <div className="p-10">
       <SearchBar />
       <GamesList setOfGames={gameSets} />
-      {loading && <p>Loading more games...</p>}
+      {loading && <p className="text-3xl font-bold text-gray-700 mt-4">Loading more games...</p>}
+
     </div>
   );
 };
