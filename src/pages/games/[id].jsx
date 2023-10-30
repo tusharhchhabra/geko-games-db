@@ -3,6 +3,7 @@ import fetchData from "@/helpers/fetchData";
 import { getYearFromUnixTimestamp } from "@/helpers/findTime";
 import queries from "@/helpers/queryStrings";
 import websiteCategores from "@/helpers/websiteCategories";
+import Link from "next/link";
 
 function GameDetailsPage({ game }) {
   return (
@@ -35,6 +36,18 @@ function GameDetailsPage({ game }) {
         <p className="font-bold text-xl">Summary</p>
         <p className="max-w-sm">{game.summary}</p>
       </div>
+
+      <div className="mt-12 max-w-sm">
+        <p className="font-bold text-xl ">Other Games Like This</p>
+        <div className="max-w-sm flex gap-6">
+          {game.websites.map((website) => (
+            <Link key={website.id} href={website.url} target="_blank">
+              {websiteCategores[website.category].name}
+            </Link>
+          ))}
+        </div>
+      </div>
+
       <div className="mt-12 max-w-sm">
         <p className="font-bold text-xl">Other Games Like This</p>
         {game.similarGames.map((game) => (
