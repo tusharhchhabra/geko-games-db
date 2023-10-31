@@ -3,16 +3,30 @@ import fetchData from "@/helpers/fetchData";
 import queries from "@/queryStrings";
 import extractId from "@/helpers/extractId";
 
-const Platform = ( {gamesByPlatformFamiliesObject} ) => {
-  const [platformFamily, setPlatformFamily] = useState();
-  const [platform, setPlatform] = useState();
+const Platform = ({ initialGames, initialPlatforms }) => {
+  const [platform, setPlatform] = useState(null);
+  const [games, setGames] = useState(initialGames);
 
-  useEffect(() => {}, [platformFamily, platform]);
+  const platformsDropdown = initialPlatforms.map((platform) => {
+    return platform.name;
+  });
+
+
+  const fetchNextSection = async (platform) => {
+    if (platform) {
+      const response = await fetch(
+        `/api/platforms?platformId=${encodeURIComponent(platform.id)}`
+      );
+      const results = await response.json();
+      setGames(results);
+    } else {
+      setGames([]);
+    }
+  };
+
+  useEffect(() => {}, [platform]);
 
   return (
-    // 1. 4 Dropdowns (Xbox, Playstation, Nintendo, PC)
-    // 2. Display Grid of Games from all Platforms
-    // 3. User selects a platform or platform family => changes grid of games
     <div>
       <h1>Hello</h1>
       <GamesList setOfGames={setOfGames} />
@@ -23,33 +37,31 @@ const Platform = ( {gamesByPlatformFamiliesObject} ) => {
 export default Platform;
 
 export async function getServerSideProps() {
-  // Fetch all platform family IDs
-  // Fetch all platform IDs
-  // Fetch all games by platform family
-  // Set initial games to render as query for all games from all platform families
-  //
-  const platformFamilies = await fetchData(queries.platformFamilies, "platform_families");
 
+  // Fetch platforms
+  const platforms = await fetchData(queries.platforms, "platforms");
 
-  const gamesByPlatformFamilies = await fetchData(
-    extractId(queries.gamesByPlatformFamilies),
+  // Fetch initial games (Move rest to call on scroll)
+  // (PS5 &  Xbox Series X/S)
+  const gamesByPlatform = await fetchData(
+    queries.gamesByPlatforms((167, 169)),
     "games"
   );
-  const gamesByPlatformFamiliesCovers = await fetchData(
-    queries.coverArt(gamesByPlatformFamilies),
+  const gamesByPlatformCovers = await fetchData(
+    queries.coverArt(gamesByPlatform),
     "covers"
   );
-  const gamesByPlatformFamiliesWithCovers = queries.gamesWithCoverArt(
-    gamesByPlatformFamilies,
-    gamesByPlatformFamiliesCovers,
+  const gamesByPlatformWithCovers = queries.gamesWithCoverArt(
+    gamesByPlatform,
+    gamesByPlatformCovers,
     "t_cover_big"
   );
-  const gamesByPlatformFamiliesObject = {
-    games: gamesByPlatformFamiliesWithCovers,
-    title: "All Games - All Platforms",
+  const gamesByPlatformObject = {
+    games: gamesByPlatformWithCovers,
+    title: "All Platforms",
   };
 
-  const setOfGames = [gamesByPlatformFamiliesObject];
+  const setOfGames = [gamesByPlatformObject];
 
-  return { props: { setOfGames } };
+  return { props: { initialGames: setOfGames, initialPlatforms: platforms } };
 }
