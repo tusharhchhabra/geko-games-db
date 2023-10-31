@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { sql } from "@vercel/postgres";
 
-export default async function handler(
+export default async function createTables(
   request: NextApiRequest,
   response: NextApiResponse
 ) {
