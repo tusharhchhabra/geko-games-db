@@ -44,7 +44,7 @@ const queries = {
   themes: "fields id, name;",
 
   gamesByTheme: function gamesByTheme(themeId) {
-    return `fields name, id, total_rating; where total_rating >= 50 & themes = ${themeId} & total_rating_count > 6; sort total_rating desc; limit 10;`;
+    return `fields name, id, total_rating; where total_rating >= 50 & themes = [${themeId}] & total_rating_count > 6; sort total_rating desc; limit 10;`;
   },
 
   coverArtForGames: function (games) {
@@ -73,6 +73,27 @@ const queries = {
   videos: function (gameID) {
     return `fields video_id; where game = ${gameID}; sort created_at desc; limit 1;`;
   },
+
+  platforms: `fields id, name; limit 10; sort generation desc; where id = (6,48, 38, 9, 49, 12, 11, 130, 41, 20);`,
+
+  topPlatforms: `fields id, name; limit 10; sort generation desc; where id = (6, 169, 167, 48, 38, 9, 49, 12, 11, 130, 41, 20);`,
+
+  gamesByPlatform: function (platformId) {
+    return `fields name, id; where platforms = [${platformId}] & rating > 70 & rating_count > 30 & version_parent = null & parent_game = null; sort total_rating desc; limit 10;`;
+  },
+
+  gamesByThemeAndPlatform: function gamesByTheme(themeId, platformId) {
+    return `fields name, id; where total_rating >= 60 & themes = [${themeId}] & platforms = [${platformId}] & total_rating_count > 50; sort total_rating desc; limit 10;`;
+  },
+
+  top10GamesByPlatform: function (platformId) {
+    return ` fields name, id; where total_rating_count >= 100 & total_rating > 80 & platforms = [${platformId}] & version_parent = null & parent_game = null; sort total_rating desc; limit 10;`
+  },
+
+  newGamesByPlatform: function (platformId) {
+    return `fields id, name, first_release_date; where total_rating_count >= 5 & platforms = [${platformId}]; sort first_release_date desc; limit 10;`;
+  },
+
 };
 
 export default queries;
