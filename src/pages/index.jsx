@@ -5,6 +5,9 @@ import queries from "@/helpers/queryStrings";
 import SearchBar from "@/components/SearchBar";
 import extractIdAsAnArray from "@/helpers/extractIdsAsArray";
 import extractNameAsAnArray from "@/helpers/extractNameAsArray";
+import { Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
 
 const HomePage = ({ initialGameSets, initialThemes }) => {
   const [gameSets, setGameSets] = useState(initialGameSets);
@@ -67,15 +70,19 @@ const HomePage = ({ initialGameSets, initialThemes }) => {
   }, [handleScroll]);
 
   return (
-    <div className="p-10">
-      <SearchBar />
-      <GamesList setOfGames={gameSets} />
-      {loading && (
-        <p className="text-3xl font-bold text-gray-700 mt-4">
-          Loading more games...
-        </p>
-      )}
-    </div>
+    <main
+      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
+    >
+      <div className="p-10">
+        <SearchBar />
+        <GamesList setOfGames={gameSets} />
+        {loading && (
+          <p className="text-3xl font-bold text-gray-700 mt-4">
+            Loading more games...
+          </p>
+        )}
+      </div>
+    </main>
   );
 };
 
