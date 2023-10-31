@@ -1,29 +1,90 @@
 import GamesList from "@/components/GameList";
 import fetchData from "@/helpers/fetchData";
-import queries from "@/queryStrings";
-import SearchBar from "../components/SearchBar";
-import { useState, useEffect, useCallback } from "react";
-import extractId from "@/helpers/extractId";
+import queries from "@/helpers/queryStrings";
+import SearchBar from "@/components/SearchBar";
+import PlatformButton from "@/components/PlatformButton";
+import { useState, useEffect, useCallback, useRef } from "react";
 import extractIdAsAnArray from "@/helpers/extractIdsAsArray";
 import extractNameAsAnArray from "@/helpers/extractNameAsArray";
 
-const PlatformsGameList = ({ initialGames, initialPlatforms }) => {
+const PlatformsGameList = ({
+  initialGames,
+  initialPlatforms,
+  initialThemes,
+}) => {
+  const [selectedPlatform, setSelectedPlatform] = useState(null);
+  const [filteredGames, setFilteredGames] = useState(null);
   const [gameSets, setGameSets] = useState(initialGames);
   const [loading, setLoading] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [platformId, setPlatformId] = useState(() =>
-    extractIdAsAnArray(initialPlatforms));
+    extractIdAsAnArray(initialPlatforms)
+  );
   const [gamePlatforms, setGamePlatform] = useState(() =>
     extractNameAsAnArray(initialPlatforms)
   );
-  
+  const [gameThemesId, setGameThemesId] = useState(() =>
+    extractIdAsAnArray(initialThemes)
+  );
+  const [gameThemes, setGameThemes] = useState(() =>
+    extractNameAsAnArray(initialThemes)
+  );
+  const [filteredGamesFetched, setFilteredGamesFetched] = useState(false);
+  const [prevSelectedPlatform, setPrevSelectedPlatform] = useState("");
 
-  const platformsDropdown = initialPlatforms.map((platform) => {
-    return platform.name;
-  });
+  useEffect(() => {
+    if (selectedPlatform) {
+      const fetchGamesForPlatform = async () => {
+        try {
+          const response = await fetch(
+            `/api/initialThemesByPlatform?platformId=${encodeURIComponent(
+              selectedPlatform
+            )}`
+          );
+          const data = await response.json();
+          setFilteredGames(data);
+          setFilteredGamesFetched(true);
+        } catch (error) {
+          console.error("Error fetching games for selected platform:", error);
+        }
+      };
 
-  const fetchMoreGames = useCallback(async () => {
-    if (!platformId.length && !platforms.length) {
+      fetchGamesForPlatform();
+    }
+  }, [selectedPlatform]);
+
+  const fetchMoreThemesByPlatform = useCallback(async () => {
+    if (!gameThemesId.length && !gameThemes.length) {
+      setAllDataLoaded(true);
+      return;
+    }
+
+    setLoading(true);
+
+    const [nextThemeId, ...remainingThemeId] = gameThemesId;
+    const [nextTheme, ...remainingThemeNames] = gameThemes;
+    try {
+      const response = await fetch(
+        `/api/themeAndPlatform?nextThemeId=${encodeURIComponent(
+          nextThemeId
+        )}&nextTheme=${encodeURIComponent(
+          nextTheme
+        )}&platformId=${encodeURIComponent(selectedPlatform)}`
+      );
+      const newGameData = await response.json();
+
+      setFilteredGames((prevGames) => [...prevGames, newGameData]);
+      setGameThemesId(remainingThemeId);
+      setGameThemes(remainingThemeNames);
+    } catch (error) {
+      console.error("Error fetching additional games: ", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [gameThemesId, gameThemes, selectedPlatform]);
+
+  const fetchMorePlatforms = useCallback(async () => {
+    if (!platformId.length && !gamePlatforms.length) {
       setAllDataLoaded(true);
       return;
     }
@@ -48,8 +109,7 @@ const PlatformsGameList = ({ initialGames, initialPlatforms }) => {
     } finally {
       setLoading(false);
     }
-  }, [gameSets, platformId]);
-
+  }, [platformId, gamePlatforms]);
 
   const handleScroll = useCallback(() => {
     if (loading || allDataLoaded) return;
@@ -63,21 +123,50 @@ const PlatformsGameList = ({ initialGames, initialPlatforms }) => {
       Math.ceil(scrollTop + clientHeight) >= scrollHeight;
 
     if (scrolledToBottom) {
-      fetchMoreGames();
+      selectedPlatform ? fetchMoreThemesByPlatform() : fetchMorePlatforms();
     }
-  }, [loading, allDataLoaded, fetchMoreGames]);
+  }, [
+    loading,
+    allDataLoaded,
+    fetchMorePlatforms,
+    fetchMoreThemesByPlatform,
+    selectedPlatform,
+  ]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
+  console.log("selectedPlatform Before click: ", selectedPlatform);
+  console.log("prevSelectedPlatform: On click", setPrevSelectedPlatform);
+  console.log("selectedPlatform After click: ", selectedPlatform);
+
   return (
     <div className="p-10">
       <SearchBar />
-      <GamesList setOfGames={gameSets} />
-      {loading && <p className="text-3xl font-bold text-gray-700 mt-4">Loading more games...</p>}
-
+      <PlatformButton
+        platforms={initialPlatforms}
+        setSelectedPlatform={setSelectedPlatform}
+        setGameThemesId={setGameThemesId}
+        setGameThemes={setGameThemes}
+        initialThemes={initialThemes}
+      />
+      {filteredGamesFetched ? (
+        <GamesList setOfGames={filteredGames} />
+      ) : (
+        <GamesList setOfGames={gameSets} />
+      )}
+      {loading && (
+        <p className="text-3xl font-bold text-gray-700 mt-4">
+          Loading more games...
+        </p>
+      )}
+      {allDataLoaded && (
+        <p className="text-3xl font-bold text-gray-700 mt-4">
+          No more games. Pick a game already you nerd!
+        </p>
+      )}
     </div>
   );
 };
@@ -85,22 +174,12 @@ const PlatformsGameList = ({ initialGames, initialPlatforms }) => {
 export default PlatformsGameList;
 
 export async function getServerSideProps() {
+  const platforms = await fetchData(queries.topPlatforms, "platforms");
+  const themes = await fetchData(queries.themes, "themes");
 
-  // Fetch platforms
-  const platforms = await fetchData(queries.platforms, "platforms");
-
-  // Fetch initial games (Move rest to call on scroll)
-  // (PS5 &  Xbox Series X/S)
-  const seriesXGames = await fetchData(
-    queries.gamesByPlatform(169),
-    "games"
-  );
-  console.log(seriesXGames);
-
-
-
+  const seriesXGames = await fetchData(queries.gamesByPlatform(169), "games");
   const seriesXGamesCovers = await fetchData(
-    queries.coverArt(seriesXGames),
+    queries.coverArtForGames(seriesXGames),
     "covers"
   );
   const seriesXGamesWithCovers = queries.gamesWithCoverArt(
@@ -112,14 +191,10 @@ export async function getServerSideProps() {
     games: seriesXGamesWithCovers,
     title: "Xbox Series X/S",
   };
-  console.log("obj", seriesXGamesObject);
 
-  const ps5Games = await fetchData(
-    queries.gamesByPlatform(167),
-    "games"
-  );
+  const ps5Games = await fetchData(queries.gamesByPlatform(167), "games");
   const ps5GamesCovers = await fetchData(
-    queries.coverArt(ps5Games),
+    queries.coverArtForGames(ps5Games),
     "covers"
   );
   const ps5GamesWithCovers = queries.gamesWithCoverArt(
@@ -129,12 +204,16 @@ export async function getServerSideProps() {
   );
   const ps5GamesObject = {
     games: ps5GamesWithCovers,
-    title: "PS5",
+    title: "Play Station 5",
   };
 
   const setOfGames = [seriesXGamesObject, ps5GamesObject];
 
-  return { props: { initialGames: setOfGames, initialPlatforms: platforms } };
+  return {
+    props: {
+      initialGames: setOfGames,
+      initialPlatforms: platforms,
+      initialThemes: themes,
+    },
+  };
 }
-
-//fields name, id, total_rating; where platforms = [167] & rating > 70 & rating_count > 0; sort total_rating desc; limit 10;
