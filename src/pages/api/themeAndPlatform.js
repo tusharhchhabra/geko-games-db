@@ -12,8 +12,10 @@ export default async function search(req, res) {
 
   const gamesQuery = queries.gamesByThemeAndPlatform(nextThemeId, platformId);
   const endpoint = "games";
-
+  console.log("nextThemeId", nextThemeId);
+  console.log("platformId", platformId);
   const games = await fetchData(gamesQuery, endpoint);
+  console.log("games", games);
   const covers = await fetchData(queries.coverArtForGames(games), "covers");
   const gamesWithCovers = queries.gamesWithCoverArt(
     games,

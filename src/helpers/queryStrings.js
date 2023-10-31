@@ -44,7 +44,7 @@ const queries = {
   themes: "fields id, name;",
 
   gamesByTheme: function gamesByTheme(themeId) {
-    return `fields name, id, total_rating; where total_rating >= 50 & themes = ${themeId} & total_rating_count > 6; sort total_rating desc; limit 10;`;
+    return `fields name, id, total_rating; where total_rating >= 50 & themes = [${themeId}] & total_rating_count > 6; sort total_rating desc; limit 10;`;
   },
 
   coverArtForGames: function (games) {
@@ -83,7 +83,7 @@ const queries = {
   },
 
   gamesByThemeAndPlatform: function gamesByTheme(themeId, platformId) {
-    return `fields name, id; where total_rating >= 5 & themes = ${themeId} & platforms = [${platformId}] & total_rating_count > 1; sort total_rating desc; limit 10;`;
+    return `fields name, id; where total_rating >= 60 & themes = [${themeId}] & platforms = [${platformId}] & total_rating_count > 50; sort total_rating desc; limit 10;`;
   },
 
   top10GamesByPlatform: function (platformId) {
