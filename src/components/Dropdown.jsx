@@ -1,6 +1,6 @@
 import { Combobox, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import { getYearFromUnixTimestamp } from "../../helpers/findTime";
+import { getYearFromUnixTimestamp } from "../helpers/findTime";
 
 export default function MyCombobox({
   query,
@@ -88,4 +88,4 @@ export default function MyCombobox({
       </div>
     </Combobox>
   );
-};
+}
