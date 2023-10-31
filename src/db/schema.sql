@@ -1,4 +1,4 @@
-CREATE TABLE "users" (
+CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(255),
     email VARCHAR(255) UNIQUE NOT NULL,
@@ -6,7 +6,7 @@ CREATE TABLE "users" (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE "favorite_games" (
+CREATE TABLE favorite_games (
     id SERIAL PRIMARY KEY,
     game_id INT NOT NULL,
     user_id INT NOT NULL REFERENCES "users"(id) ON DELETE CASCADE,
