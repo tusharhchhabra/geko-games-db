@@ -4,7 +4,7 @@ import GamesList from "@/components/GameList";
 import SearchBar from "../components/SearchBar";
 import queries from "@/queryStrings";
 import extractIdAsAnArray from "@/helpers/extractIdsAsArray";
-import extractThemeAsAnArray from "@/helpers/extractThemeAsArray";
+import extractNameAsAnArray from "@/helpers/extractNameAsArray";
 
 const HomePage = ({ initialGameSets, initialThemes }) => {
   const [gameSets, setGameSets] = useState(initialGameSets);
@@ -14,7 +14,7 @@ const HomePage = ({ initialGameSets, initialThemes }) => {
     extractIdAsAnArray(initialThemes)
   );
   const [gameThemes, setGameThemes] = useState(() =>
-    extractThemeAsAnArray(initialThemes)
+    extractNameAsAnArray(initialThemes)
   );
 
   const fetchMoreGames = useCallback(async () => {
