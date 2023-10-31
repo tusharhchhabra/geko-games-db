@@ -1,15 +1,17 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import { sql } from "@vercel/postgres";
 
-export default async function createTables(
-  request: NextApiRequest,
-  response: NextApiResponse
-) {
-  try {
-    const result = await sql```
+const dropTables = async () => {
+  const result1 = await sql`
       DROP TABLE IF EXISTS users;
+    `;
+  const result2 = await sql`
       DROP TABLE IF EXISTS favorite_games;
+    `;
+  return { result1, result2 };
+};
 
+const createTables = async () => {
+  const usersTable = await sql`
       CREATE TABLE users (
         id          SERIAL PRIMARY KEY,
         username    VARCHAR(255),
@@ -17,7 +19,8 @@ export default async function createTables(
         created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         updated_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
       );
-
+    `;
+  const favoriteGamesTable = await sql`
       CREATE TABLE favorite_games (
         id SERIAL PRIMARY KEY,
         game_id INT NOT NULL,
@@ -25,9 +28,8 @@ export default async function createTables(
         created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
       );
-    ```;
-    return response.status(200).json({ result });
-  } catch (error) {
-    return response.status(500).json({ error });
-  }
-}
+    `;
+  return { usersTable, favoriteGamesTable };
+};
+
+export { dropTables, createTables };

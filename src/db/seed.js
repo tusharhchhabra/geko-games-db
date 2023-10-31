@@ -1,4 +1,4 @@
-import { sql } from "@vercel/pg";
+const { sql } = require("@vercel/postgres");
 
 const users = [
   { username: "john_doe", email: "john.doe@example.com" },
@@ -14,7 +14,7 @@ const favoriteGames = [
 async function seedUsers() {
   for (const user of users) {
     await sql`
-      INSERT INTO "User" (username, email)
+      INSERT INTO users (username, email)
       VALUES (${user.username}, ${user.email});
     `;
   }
@@ -23,7 +23,7 @@ async function seedUsers() {
 async function seedFavoriteGames() {
   for (const favoriteGame of favoriteGames) {
     await sql`
-      INSERT INTO "FavoriteGame" (game_id, user_id)
+      INSERT INTO favorite_games (game_id, user_id)
       VALUES (${favoriteGame.gameId}, ${favoriteGame.userId});
     `;
   }
@@ -35,4 +35,4 @@ async function seedDatabase() {
   console.log("Database seeded successfully");
 }
 
-seedDatabase().catch((error) => console.error("Seeding failed:", error));
+export default seedDatabase;
