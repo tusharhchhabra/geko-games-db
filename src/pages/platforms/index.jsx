@@ -54,7 +54,7 @@ const PlatformsGameList = ({
     }
   }, [selectedPlatform]);
 
-  // Fetch More Games When a Platfor is Slected and a User Scroll
+  // Fetch More Games When a Platform IS Selected and a User Scrolls
   const fetchMoreThemesByPlatform = useCallback(async () => {
     if (!gameThemesId.length && !gameThemes.length) {
       setAllDataLoaded(true);
