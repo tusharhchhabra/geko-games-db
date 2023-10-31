@@ -1,9 +1,9 @@
-const { default: SearchBar } = require("./SearchBar");
+import Navbar from "./Navbar";
 
 const Layout = ({ children }) => {
   return (
-    <main>
-      <SearchBar />
+    <main className="pt-20">
+      <Navbar />
       {children}
     </main>
   );

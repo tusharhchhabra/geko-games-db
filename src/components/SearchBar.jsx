@@ -48,7 +48,7 @@ function SearchBar() {
   }, [query]);
 
   return (
-    <div className="text-black min-w-[400px]">
+    <div className="min-w-[400px] mr-6">
       <MyCombobox
         query={query}
         setQuery={setQuery}
@@ -59,12 +59,6 @@ function SearchBar() {
         setSelected={handleGameSelect}
         canShowEmptyState={canShowEmptyState}
       ></MyCombobox>
-      <button
-        className="bg-gray-700 px-3 py-1 my-4 text-white"
-        onClick={() => search(query)}
-      >
-        Search
-      </button>
     </div>
   );
 }

@@ -13,9 +13,9 @@ export default function MyCombobox({
   return (
     <Combobox value={selected} onChange={setSelected}>
       <div className="relative mt-1">
-        <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+        <div className="relative w-full cursor-default overflow-hidden rounded-md text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
           <Combobox.Input
-            className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
+            className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 bg-gray-800 text-white focus:ring-0"
             displayValue={query}
             placeholder="Search..."
             onChange={(event) => setQuery(event.target.value)}
@@ -31,9 +31,9 @@ export default function MyCombobox({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Combobox.Options className="absolute mt-1 py-2 max-h-96 w-full overflow-auto rounded-md bg-white text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+            <Combobox.Options className="absolute mt-1 py-2 max-h-96 w-full overflow-auto rounded-md bg-gray-700 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
               {games.length === 0 && query !== "" && canShowEmptyState ? (
-                <div className="relative cursor-default select-none py-3 px-4 text-gray-700">
+                <div className="relative cursor-default select-none py-3 px-4 text-gray-400">
                   Nothing found.
                 </div>
               ) : (
@@ -42,7 +42,7 @@ export default function MyCombobox({
                     key={game.id}
                     className={({ active }) =>
                       `relative cursor-default select-none py-2 px-4 ${
-                        active ? "bg-teal-600 text-white" : "text-gray-900"
+                        active ? "bg-teal-600" : "text-white"
                       }`
                     }
                     value={game}
