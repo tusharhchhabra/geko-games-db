@@ -13,9 +13,8 @@ function GameDetailsPage({ game }) {
       )}
       <p className="font-bold text-3xl line-clamp-2 max-w-md">{game.name}</p>
       <div className="flex gap-4">
-        <span className="max-w-sm">
-          {getYearFromUnixTimestamp(game.first_release_date)}
-        </span>
+        <span>{getYearFromUnixTimestamp(game.first_release_date)}</span>
+        <span>Rating: {Math.round(game.total_rating)}</span>
         <div className="flex gap-2">
           {game.genres.map((genre) => (
             <span key={genre.id}>{genre.name}</span>
@@ -38,7 +37,7 @@ function GameDetailsPage({ game }) {
       </div>
 
       <div className="mt-12 max-w-sm">
-        <p className="font-bold text-xl ">Other Games Like This</p>
+        <p className="font-bold text-xl ">Links</p>
         <div className="max-w-sm flex gap-6">
           {game.websites.map((website) => (
             <Link key={website.id} href={website.url} target="_blank">
@@ -49,7 +48,7 @@ function GameDetailsPage({ game }) {
       </div>
 
       <div className="mt-12 max-w-sm">
-        <p className="font-bold text-xl">Other Games Like This</p>
+        <p className="font-bold text-xl">More Like This</p>
         {game.similarGames.map((game) => (
           <p key={game.id} className="max-w-sm">
             {game.name}
