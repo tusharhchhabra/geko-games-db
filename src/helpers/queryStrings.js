@@ -41,6 +41,12 @@ const queries = {
     return `fields name, cover; where id = (${game.similar_games.join(", ")});`;
   },
 
+  themes: "fields id, name;",
+
+  gamesByTheme: function gamesByTheme(themeId) {
+    return `fields name, id, total_rating; where total_rating >= 50 & themes = ${themeId} & total_rating_count > 6; sort total_rating desc; limit 10;`;
+  },
+
   coverArtForGames: function (games) {
     return `fields game, url; where game = ${extractId(games)};`;
   },
