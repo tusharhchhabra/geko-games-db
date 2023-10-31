@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import fetchData from "@/helpers/fetchData";
 import GamesList from "@/components/GameList";
-import SearchBar from "../components/SearchBar";
-import queries from "@/queryStrings";
+import queries from "@/helpers/queryStrings";
+import SearchBar from "@/components/SearchBar";
 import extractIdAsAnArray from "@/helpers/extractIdsAsArray";
 import extractNameAsAnArray from "@/helpers/extractNameAsArray";
 
@@ -70,8 +70,11 @@ const HomePage = ({ initialGameSets, initialThemes }) => {
     <div className="p-10">
       <SearchBar />
       <GamesList setOfGames={gameSets} />
-      {loading && <p className="text-3xl font-bold text-gray-700 mt-4">Loading more games...</p>}
-
+      {loading && (
+        <p className="text-3xl font-bold text-gray-700 mt-4">
+          Loading more games...
+        </p>
+      )}
     </div>
   );
 };
@@ -83,7 +86,10 @@ export async function getServerSideProps() {
     const themes = await fetchData(queries.themes, "themes");
 
     const top10Games = await fetchData(queries.top10Games, "games");
-    const covers = await fetchData(queries.coverArt(top10Games), "covers");
+    const covers = await fetchData(
+      queries.coverArtForGames(top10Games),
+      "covers"
+    );
     const top10GamesWithCovers = queries.gamesWithCoverArt(
       top10Games,
       covers,
@@ -93,7 +99,10 @@ export async function getServerSideProps() {
     const top10GamesObject = { games: top10GamesWithCovers, title: "Top 10" };
 
     const newGames = await fetchData(queries.newGames, "games");
-    const newCovers = await fetchData(queries.coverArt(newGames), "covers");
+    const newCovers = await fetchData(
+      queries.coverArtForGames(newGames),
+      "covers"
+    );
     const newGamesWithCovers = queries.gamesWithCoverArt(
       newGames,
       newCovers,

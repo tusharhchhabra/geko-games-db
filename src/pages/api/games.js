@@ -1,5 +1,5 @@
 import fetchData from "@/helpers/fetchData";
-import queries from "@/queryStrings";
+import queries from "@/helpers/queryStrings";
 
 export default async function search(req, res) {
   if (req.method !== "GET") {
@@ -13,7 +13,7 @@ export default async function search(req, res) {
   const endpoint = "games";
 
   const games = await fetchData(gamesQuery, endpoint);
-  const covers = await fetchData(queries.coverArt(games), "covers");
+  const covers = await fetchData(queries.coverArtForGames(games), "covers");
 
   const gamesWithCovers = queries.gamesWithCoverArt(
     games,
