@@ -35,9 +35,11 @@ const queries = {
 
   platforms: `fields id, name; limit 10; sort generation desc; where id = (167, 48, 38, 9, 169, 49, 12, 11, 3, 130, 41, 20);`,
 
-  gamesByPlatforms: function (platformId) {
-    `fields name, id; where platforms = ${platformId} & total_rating > 80 & total_rating_count > 20; limit 10;`;
+  gamesByPlatform: function (platformId) {
+    return `fields name, id; where platforms = [${platformId}] & rating > 70 & rating_count > 0; sort total_rating desc; limit 10;`;
   },
+
+  
 };
 
 export default queries;
