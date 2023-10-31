@@ -31,14 +31,11 @@ const queries = {
     return `fields video_id; where game = ${gameID}; sort created_at desc; limit 1;`;
   },
 
-  platformFamilies: 
-  `fields id, name;`,
+  platforms: `fields id, name; limit 10; sort generation desc; where id = (167, 48, 38, 9, 169, 49, 12, 11, 3, 130, 41, 20);`,
 
-  gamesByPlatformFamilies: function (platformFamilies) {
-    return `fields name, id, platforms; where platforms.platform_family = (${platformFamilies}); limit 10;`;
+  gamesByPlatforms: function (platformId) {
+    `fields name, id; where platforms = ${platformId} & total_rating > 80 & total_rating_count > 20; limit 10;`;
   },
-
-
 };
 
 export default queries;
