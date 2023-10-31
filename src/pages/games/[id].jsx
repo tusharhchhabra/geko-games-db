@@ -77,6 +77,7 @@ export async function getServerSideProps(context) {
     coversPromise,
     genresPromise,
     platformsPromise,
+    videosPromise,
     screenshotsPromise,
     websitesPromise,
     similarGamesPromise,
@@ -84,15 +85,25 @@ export async function getServerSideProps(context) {
     fetchData(queries.coverArtForGame(game), "covers"),
     fetchData(queries.genresForGame(game), "genres"),
     fetchData(queries.platformsForGame(game), "platforms"),
+    fetchData(queries.videosForGame(game), "game_videos"),
     fetchData(queries.screenshotsForGame(game), "screenshots"),
     fetchData(queries.websitesForGame(game), "websites"),
     fetchData(queries.similarGames(game), "games"),
   ]);
 
-  const [covers, genres, platforms, screenshots, websites, similarGames] = [
+  const [
+    covers,
+    genres,
+    platforms,
+    videos,
+    screenshots,
+    websites,
+    similarGames,
+  ] = [
     coversPromise.value,
     genresPromise.value,
     platformsPromise.value,
+    videosPromise.value,
     screenshotsPromise.value,
     websitesPromise.value,
     similarGamesPromise.value,
@@ -122,6 +133,7 @@ export async function getServerSideProps(context) {
     coverUrl: formattedCoverUrl,
     genres,
     platforms,
+    videos,
     screenshots: formattedScreenshots,
     similarGames,
     websites,

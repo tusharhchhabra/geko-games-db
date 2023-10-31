@@ -23,6 +23,10 @@ const queries = {
     return `fields name; where id = (${game.platforms.join(", ")});`;
   },
 
+  videosForGame: function (game) {
+    return `fields video_id; where id = (${game.videos.join(", ")});`;
+  },
+
   screenshotsForGame: function (game) {
     return `fields url, width, height; where id = (${game.screenshots.join(
       ", "
