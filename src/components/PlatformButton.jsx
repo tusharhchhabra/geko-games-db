@@ -1,10 +1,11 @@
 import extractIdAsAnArray from "@/helpers/extractIdsAsArray";
 import extractNameAsAnArray from "@/helpers/extractNameAsArray";
 
-const PlatformButton = ({ platforms, setSelectedPlatform, setGameThemesId, setGameThemes, initialThemes }) => {
+const PlatformButton = ({ platforms, setSelectedPlatform, setGameThemesId, setGameThemes, initialThemes, setAllDataLoaded }) => {
   const selectPlatform = (platform) => {
     setGameThemesId(extractIdAsAnArray(initialThemes));
     setGameThemes(extractNameAsAnArray(initialThemes));
+    setAllDataLoaded(false)
     setSelectedPlatform(platform);
   };
 

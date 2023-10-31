@@ -153,6 +153,7 @@ const PlatformsGameList = ({
         setGameThemesId={setGameThemesId}
         setGameThemes={setGameThemes}
         initialThemes={initialThemes}
+        setAllDataLoaded={setAllDataLoaded}
       />
       {filteredGamesFetched ? (
         <GamesList setOfGames={filteredGames} />
