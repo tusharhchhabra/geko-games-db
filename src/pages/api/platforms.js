@@ -8,18 +8,24 @@ export default async function getVideos(req, res) {
     return;
   }
 
-  const { platformId, platformName } = req.query;
+  const { nextPlatformId, nextPlatform } = req.query;
 
+  console.log("req.query", req.query);
 
-  const games = await fetchData(queries.gamesByPlatforms(platformId), "games");
+  const gameQuery = queries.gamesByPlatform(nextPlatformId);
 
-  const gameCovers = await fetchData(queries.coverArt(games), "covers");
-
-  const gamesWithCovers = queries.gamesWithCoverArt(games, gameCovers, "t_cover_big");
+  const games = await fetchData(gameQuery, "games");
+  console.log("games", games);
+  const covers = await fetchData(queries.coverArt(games), "covers");
+  const gamesWithCovers = queries.gamesWithCoverArt(
+    games,
+    covers,
+    "t_cover_big"
+  );
 
   const gamesObject = {
     games: gamesWithCovers,
-    title: platformName
+    title: nextPlatform,
   }
   res.send(gamesObject);
 }
