@@ -70,10 +70,8 @@ const HomePage = ({ initialGameSets, initialThemes }) => {
   }, [handleScroll]);
 
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="p-10">
+    <main className={`p-16 flex justify-center ${inter.className}`}>
+      <div>
         <SearchBar />
         <GamesList setOfGames={gameSets} />
         {loading && (
