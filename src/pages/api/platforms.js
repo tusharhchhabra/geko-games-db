@@ -10,12 +10,8 @@ export default async function getVideos(req, res) {
 
   const { nextPlatformId, nextPlatform } = req.query;
 
-  // console.log("req.query", req.query);
-
   const gameQuery = queries.gamesByPlatform(nextPlatformId);
-
   const games = await fetchData(gameQuery, "games");
-  console.log("games", games);
   const covers = await fetchData(queries.coverArtForGames(games), "covers");
   const gamesWithCovers = queries.gamesWithCoverArt(
     games,

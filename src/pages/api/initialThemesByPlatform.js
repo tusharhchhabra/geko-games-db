@@ -31,7 +31,6 @@ export default async function search(req, res) {
   if (newPlatforms.includes(query)) {
     const newGamesQuery = queries.newGamesByPlatform(query);
     const newGames = await fetchData(newGamesQuery, endpoint);
-    // console.log("newGames", newGames);
     const newGamesCovers = await fetchData(
       queries.coverArtForGames(newGames),
       "covers"
@@ -45,12 +44,12 @@ export default async function search(req, res) {
       games: newGamesWithCovers,
       title: "New & Noteworthy",
     };
-  
+
     const gameObject = {
       top10Games: top10GamesObject,
       newGames: newGamesObject,
     };
-  
+
     res.send([top10GamesObject, newGamesObject]);
   } else {
     res.send([top10GamesObject]);

@@ -3,7 +3,7 @@ import fetchData from "@/helpers/fetchData";
 import queries from "@/helpers/queryStrings";
 import SearchBar from "@/components/SearchBar";
 import PlatformButton from "@/components/PlatformButton";
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import extractIdAsAnArray from "@/helpers/extractIdsAsArray";
 import extractNameAsAnArray from "@/helpers/extractNameAsArray";
 
@@ -12,6 +12,7 @@ const PlatformsGameList = ({
   initialPlatforms,
   initialThemes,
 }) => {
+  // States
   const [selectedPlatform, setSelectedPlatform] = useState(null);
   const [filteredGames, setFilteredGames] = useState(null);
   const [gameSets, setGameSets] = useState(initialGames);
@@ -30,8 +31,8 @@ const PlatformsGameList = ({
     extractNameAsAnArray(initialThemes)
   );
   const [filteredGamesFetched, setFilteredGamesFetched] = useState(false);
-  const [prevSelectedPlatform, setPrevSelectedPlatform] = useState("");
 
+  // Fetch Initial Games When a Platform is Selected
   useEffect(() => {
     if (selectedPlatform) {
       const fetchGamesForPlatform = async () => {
@@ -53,6 +54,7 @@ const PlatformsGameList = ({
     }
   }, [selectedPlatform]);
 
+  // Fetch More Games When a Platfor is Slected and a User Scroll
   const fetchMoreThemesByPlatform = useCallback(async () => {
     if (!gameThemesId.length && !gameThemes.length) {
       setAllDataLoaded(true);
@@ -83,6 +85,7 @@ const PlatformsGameList = ({
     }
   }, [gameThemesId, gameThemes, selectedPlatform]);
 
+  // Fetch More Games When a Platform IS NOT Selected and a User Scrolls
   const fetchMorePlatforms = useCallback(async () => {
     if (!platformId.length && !gamePlatforms.length) {
       setAllDataLoaded(true);
@@ -111,6 +114,7 @@ const PlatformsGameList = ({
     }
   }, [platformId, gamePlatforms]);
 
+  // Handle Scroll
   const handleScroll = useCallback(() => {
     if (loading || allDataLoaded) return;
 
@@ -133,15 +137,13 @@ const PlatformsGameList = ({
     selectedPlatform,
   ]);
 
+  // Clean up Scroll
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  console.log("selectedPlatform Before click: ", selectedPlatform);
-  console.log("prevSelectedPlatform: On click", setPrevSelectedPlatform);
-  console.log("selectedPlatform After click: ", selectedPlatform);
-
+  // Render JSX
   return (
     <div className="p-10">
       <SearchBar />
@@ -173,6 +175,7 @@ const PlatformsGameList = ({
 
 export default PlatformsGameList;
 
+// Initial Data Fetching
 export async function getServerSideProps() {
   const platforms = await fetchData(queries.topPlatforms, "platforms");
   const themes = await fetchData(queries.themes, "themes");
