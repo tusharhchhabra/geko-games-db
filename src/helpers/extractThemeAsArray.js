@@ -1,6 +1,6 @@
-function extractThemeAsAnArray(games) {
-  const names = games.map((game) => game.name);
+function extractNameAsAnArray(objects) {
+  const names = objects.map((object) => object.name);
   return names;
 }
 
-export default extractThemeAsAnArray;
+export default extractNameAsAnArray;
