@@ -9,7 +9,7 @@ export default function Navbar() {
     <nav
       className={`fixed left-0 top-0 z-20 w-full bg-transparent transition-colors duration-300 ${
         scrollPosition > 0
-          ? "border-b border-gray-800 bg-gray-900/70 backdrop-blur-md"
+          ? "border-b border-gray-800 bg-black/[.35] backdrop-blur-lg"
           : "border-gray-800"
       }`}
     >
@@ -59,12 +59,12 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                href="/search"
                 className="block rounded py-2 pl-3 pr-4 text-white hover:bg-slate-100 md:p-0 md:hover:bg-transparent md:hover:text-violet-500"
               >
                 Advanced Search
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
