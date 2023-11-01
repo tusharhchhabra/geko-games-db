@@ -1,9 +1,12 @@
 import { useScrollPosition } from "@/hooks/useScrollPosition";
 import SearchBar from "./SearchBar";
 import Link from "next/link";
+import { AuthModalContext } from "@/context/AuthModalContext";
+import { useContext } from "react";
 
 export default function Navbar() {
   const scrollPosition = useScrollPosition();
+  const { openModal } = useContext(AuthModalContext);
 
   return (
     <nav
@@ -69,7 +72,11 @@ export default function Navbar() {
           </ul>
         </div>
         <SearchBar />
-        <button type="button" className="btn btn-secondary bg-white/90">
+        <button
+          type="button"
+          onClick={openModal}
+          className="btn btn-secondary bg-white/90"
+        >
           Login
         </button>
       </div>

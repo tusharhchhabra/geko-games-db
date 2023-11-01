@@ -1,3 +1,5 @@
+import { createTables, dropTables } from "./create";
+
 const { sql } = require("@vercel/postgres");
 
 const users = [
@@ -5,11 +7,9 @@ const users = [
   { username: "jane_doe", email: "jane.doe@example.com" },
 ];
 
-const favoriteGames = [
-  { gameId: 1, userId: 1 },
-  { gameId: 2, userId: 1 },
-  { gameId: 3, userId: 2 },
-];
+const favoriteGames = [...Array(20)].map((v, i) => {
+  return { gameId: i + 1, userId: 1 };
+});
 
 async function seedUsers() {
   for (const user of users) {
@@ -30,6 +30,8 @@ async function seedFavoriteGames() {
 }
 
 async function seedDatabase() {
+  await dropTables();
+  await createTables();
   await seedUsers();
   await seedFavoriteGames();
   console.log("Database seeded successfully");

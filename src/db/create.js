@@ -1,11 +1,12 @@
 import { sql } from "@vercel/postgres";
 
 const dropTables = async () => {
-  const result1 = await sql`
-      DROP TABLE IF EXISTS users;
-    `;
   const result2 = await sql`
       DROP TABLE IF EXISTS favorite_games;
+    `;
+
+  const result1 = await sql`
+      DROP TABLE IF EXISTS users;
     `;
   return { result1, result2 };
 };
