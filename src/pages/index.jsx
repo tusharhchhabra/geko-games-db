@@ -4,9 +4,6 @@ import GamesList from "@/components/GameList";
 import queries from "@/helpers/queryStrings";
 import extractIdAsAnArray from "@/helpers/extractIdsAsArray";
 import extractNameAsAnArray from "@/helpers/extractNameAsArray";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
 
 const HomePage = ({ initialGameSets, initialThemes }) => {
   const [gameSets, setGameSets] = useState(initialGameSets);
@@ -69,7 +66,7 @@ const HomePage = ({ initialGameSets, initialThemes }) => {
   }, [handleScroll]);
 
   return (
-    <div className={`p-16 flex justify-center ${inter.className}`}>
+    <div>
       <GamesList setOfGames={gameSets} />
       {loading && (
         <p className="text-3xl font-bold text-gray-700 mt-4">
