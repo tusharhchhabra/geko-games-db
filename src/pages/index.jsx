@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from "react";
 import fetchData from "@/helpers/fetchData";
 import GamesList from "@/components/GameList";
 import queries from "@/helpers/queryStrings";
-import SearchBar from "@/components/SearchBar";
 import extractIdAsAnArray from "@/helpers/extractIdsAsArray";
 import extractNameAsAnArray from "@/helpers/extractNameAsArray";
 import { Inter } from "next/font/google";
