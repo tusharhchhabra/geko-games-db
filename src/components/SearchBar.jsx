@@ -28,7 +28,6 @@ function SearchBar() {
     router.push(`/games/${game.id}`);
   };
 
-  // Manage search request and results display
   useEffect(() => {
     if (!query) return;
 
@@ -48,7 +47,7 @@ function SearchBar() {
   }, [query]);
 
   return (
-    <div className="min-w-[400px] mr-6">
+    <div className="md:min-w-[400px] mr-6 mx-auto">
       <MyCombobox
         query={query}
         setQuery={setQuery}
