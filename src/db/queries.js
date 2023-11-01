@@ -1,4 +1,4 @@
-import { sql } from "@vercel/pg";
+import { sql } from "@vercel/postgres";
 
 async function createUser(username, email) {
   const user = await sql`
