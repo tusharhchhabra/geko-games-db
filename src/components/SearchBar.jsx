@@ -48,7 +48,7 @@ function SearchBar() {
   }, [query]);
 
   return (
-    <div className="text-black">
+    <div className="text-black min-w-[400px]">
       <MyCombobox
         query={query}
         setQuery={setQuery}

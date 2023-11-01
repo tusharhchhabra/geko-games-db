@@ -2,12 +2,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import fetchData from "@/helpers/fetchData";
 import GamesList from "@/components/GameList";
 import queries from "@/helpers/queryStrings";
-import SearchBar from "@/components/SearchBar";
 import extractIdAsAnArray from "@/helpers/extractIdsAsArray";
 import extractNameAsAnArray from "@/helpers/extractNameAsArray";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
 
 const HomePage = ({ initialGameSets, initialThemes }) => {
   const [gameSets, setGameSets] = useState(initialGameSets);
@@ -70,17 +66,14 @@ const HomePage = ({ initialGameSets, initialThemes }) => {
   }, [handleScroll]);
 
   return (
-    <main className={`p-16 flex justify-center ${inter.className}`}>
-      <div>
-        <SearchBar />
-        <GamesList setOfGames={gameSets} />
-        {loading && (
-          <p className="text-3xl font-bold text-gray-700 mt-4">
-            Loading more games...
-          </p>
-        )}
-      </div>
-    </main>
+    <div>
+      <GamesList setOfGames={gameSets} />
+      {loading && (
+        <p className="text-3xl font-bold text-gray-700 mt-4">
+          Loading more games...
+        </p>
+      )}
+    </div>
   );
 };
 
