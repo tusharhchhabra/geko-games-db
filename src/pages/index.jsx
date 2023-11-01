@@ -81,32 +81,44 @@ export default HomePage;
 
 export async function getServerSideProps() {
   try {
-    const themes = await fetchData(queries.themes, "themes");
+    const themesPromise = fetchData(queries.themes, "themes");
 
-    const top10Games = await fetchData(queries.top10Games, "games");
-    const covers = await fetchData(
+    const top10GamesPromise = fetchData(queries.top10Games, "games");
+    const newGamesPromise = fetchData(queries.newGames, "games");
+
+    const [themes, top10Games, newGames] = await Promise.all([
+      themesPromise,
+      top10GamesPromise,
+      newGamesPromise,
+    ]);
+
+    const top10GamesCoversPromise = fetchData(
       queries.coverArtForGames(top10Games),
       "covers"
     );
+    const newGamesCoversPromise = fetchData(
+      queries.coverArtForGames(newGames),
+      "covers"
+    );
+
+    const [top10GamesCovers, newGamesCovers] = await Promise.all([
+      top10GamesCoversPromise,
+      newGamesCoversPromise,
+    ]);
+
     const top10GamesWithCovers = queries.gamesWithCoverArt(
       top10Games,
-      covers,
+      top10GamesCovers,
+      "t_cover_big"
+    );
+
+    const newGamesWithCovers = queries.gamesWithCoverArt(
+      newGames,
+      newGamesCovers,
       "t_cover_big"
     );
 
     const top10GamesObject = { games: top10GamesWithCovers, title: "Top 10" };
-
-    const newGames = await fetchData(queries.newGames, "games");
-    const newCovers = await fetchData(
-      queries.coverArtForGames(newGames),
-      "covers"
-    );
-    const newGamesWithCovers = queries.gamesWithCoverArt(
-      newGames,
-      newCovers,
-      "t_cover_big"
-    );
-
     const newGamesObject = {
       games: newGamesWithCovers,
       title: "New and Noteworthy",
