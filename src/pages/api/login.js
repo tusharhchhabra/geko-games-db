@@ -8,7 +8,6 @@ export default async function login(req, res) {
     res.status(405).end();
   }
   const { email, password } = req.body;
-  console.log(email, password);
 
   try {
     const result = await getUserByEmail(email);
@@ -17,7 +16,7 @@ export default async function login(req, res) {
     }
 
     const user = result.rows[0];
-    console.log(user);
+
     const isValidPassword = bcrypt.compareSync(password, user.password_digest);
     if (!isValidPassword) {
       return res.status(401).json({ message: "Invalid email or password" });
