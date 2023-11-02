@@ -1,10 +1,19 @@
-import "@/styles/globals.css";
+import "../styles/globals.css";
+import { FavouritesProvider } from "../context/FavouritesProvider";
 import Layout from "@/components/Layout";
 
-export default function App({ Component, pageProps }) {
+function MyApp({ Component, pageProps }) {
+  // Retrieve the user ID from wherever it is stored (e.g., global state, local storage, etc.)
+  const userId = 1; // Replace with actual logic to retrieve user ID
+
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
-  );
-}
+    <FavouritesProvider userId={userId}>
+      {" "}
+      {/* Pass the userId to the provider */}
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </FavouritesProvider>
+  )};
+
+export default MyApp;
