@@ -17,7 +17,6 @@ export default async function search(req, res) {
     return formattedIds;
   };
   const gameIds = formatIds(game_id);
-
   const gamesQuery = queries.game(gameIds);
   const endpoint = "games";
 
