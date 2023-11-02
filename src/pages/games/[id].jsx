@@ -139,6 +139,6 @@ export async function getServerSideProps(context) {
     websites,
   };
 
-  console.log(gameDetails);
+  // console.log(gameDetails);
   return { props: { game: gameDetails } };
 }

@@ -1,13 +1,13 @@
 import "@/styles/globals.css";
 import Layout from "@/components/Layout";
-import { AuthModalProvider } from "@/context/AuthModalContext";
+import { AuthProvider } from "@/context/AuthContext";
 
 export default function App({ Component, pageProps }) {
   return (
-    <AuthModalProvider>
+    <AuthProvider>
       <Layout>
         <Component {...pageProps} />
       </Layout>
-    </AuthModalProvider>
+    </AuthProvider>
   );
 }

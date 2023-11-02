@@ -1,8 +1,9 @@
-import { AuthModalContext } from "@/context/AuthModalContext";
+import { AuthContext } from "@/context/AuthContext";
+import { Router } from "next/router";
 import React, { useContext, useState } from "react";
 
 export default function AuthModal() {
-  const { closeModal } = useContext(AuthModalContext);
+  const { closeModal } = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     username: "",
@@ -26,7 +27,7 @@ export default function AuthModal() {
       newErrors.email = "Please enter a valid email";
     if (!formData.password || formData.password.length < 6)
       newErrors.password = "Password must be at least 6 characters";
-    if (!isLogin && !/\w+/.test(formData.username))
+    if (!isLogin && !/\w+/.test(formData.username) && formData.username != "")
       newErrors.username = "Please enter a valid username";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -35,11 +36,26 @@ export default function AuthModal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
+      console.log("validated");
+      const response = await fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        console.log(await response.json());
+        closeModal();
+      } else {
+        console.log("Login failed");
+      }
     }
   };
 
   return (
-    <div className="bg-gray-800 relative w-full max-w-md rounded-2xl shadow-2xl shadow-gray-900 md:mt-0 xl:p-0">
+    <div className="bg-gray-800 relative w-full max-w-md rounded-2xl shadow-2xl shadow-gray-900 border border-gray-700 md:mt-0 xl:p-0">
       <button
         onClick={closeModal}
         className="w-9 h-9 rounded-full flex items-center justify-center absolute right-4 top-5"
@@ -54,10 +70,17 @@ export default function AuthModal() {
         <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
           {!isLogin && (
             <div>
+              <label
+                htmlFor="username"
+                className="block mb-2 text-md font-medium"
+              >
+                Username{" "}
+                <span className="text-gray-400 font-normal">(optional)</span>
+              </label>
               <input
                 type="text"
                 name="username"
-                placeholder="Username (optional)"
+                placeholder="janedoe"
                 className="border border-gray-700 rounded-lg bg-gray-900 w-full p-2.5"
                 value={formData.username}
                 onChange={handleInputChange}

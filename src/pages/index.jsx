@@ -4,7 +4,6 @@ import GamesList from "@/components/GameList";
 import queries from "@/helpers/queryStrings";
 import extractIdAsAnArray from "@/helpers/extractIdsAsArray";
 import extractNameAsAnArray from "@/helpers/extractNameAsArray";
-import AuthModal from "@/components/AuthModal";
 
 const HomePage = ({ initialGameSets, initialThemes }) => {
   const [gameSets, setGameSets] = useState(initialGameSets);

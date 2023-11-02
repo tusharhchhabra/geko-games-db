@@ -2,12 +2,12 @@ import { Inter } from "next/font/google";
 import Navbar from "./Navbar";
 import AuthModal from "./AuthModal";
 import { useContext } from "react";
-import { AuthModalContext } from "@/context/AuthModalContext";
+import { AuthContext } from "@/context/AuthContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const Layout = ({ children }) => {
-  const { isModalOpen } = useContext(AuthModalContext);
+  const { isModalOpen } = useContext(AuthContext);
 
   return (
     <main className="relative">
@@ -16,7 +16,7 @@ const Layout = ({ children }) => {
         {children}
       </div>
       {isModalOpen && (
-        <div className="flex w-full justify-center bg-gray-900/[0.75] backdrop-blur-lg items-center fixed top-0 bottom-0 left-0 right-0">
+        <div className="flex w-full z-30 justify-center bg-gray-900/[0.75] backdrop-blur-lg items-center fixed top-0 bottom-0 left-0 right-0">
           <AuthModal />
         </div>
       )}

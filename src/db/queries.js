@@ -1,20 +1,18 @@
 import { sql } from "@vercel/postgres";
 
 async function createUser(username, email) {
-  const user = await sql`
+  return await sql`
     INSERT INTO users (username, email)
     VALUES (${username}, ${email})
     RETURNING *;
   `;
-  return user;
 }
 
 async function getUserByEmail(email) {
-  const user = await sql`
+  return await sql`
     SELECT * FROM users
     WHERE email = ${email};
   `;
-  return user;
 }
 
 async function updateUserEmail(userId, newEmail) {
