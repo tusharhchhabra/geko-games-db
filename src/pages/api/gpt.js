@@ -17,8 +17,6 @@ async function queryOpenAI(promptContent) {
     });
 
     const data = await response.json();
-    console.log("OpenAI response:", data);
-    console.log("OpenAI response:", data.choices[0].message.content);
     const message = data.choices[0].message;
     if (message && message.role === "assistant") {
       return message.content.trim();
@@ -42,15 +40,14 @@ const GPT = async (req, res) => {
     try {
       const item = req.query.term;
       const prompt = `
-        You will be given a video game title. You must respond the the names of other video games that are similar to the given title that you think the user would like. Respond with all titles in an array. Example:
-        [Valheim, Minecraft, Terraria]. Respond only with the array.
-        Always give 5 games back in the response.
+        You will be given an array of video game titles that belong to a users favourites in a video game database. You must respond the the names of other video games, DIFFERENT then those sent in that you think the user would like. Your response will be used to queryIGDB API.
+        Respond with all your suggested video game titles part of the query in one line. Example:
+        fields id, name; where (name ~ "Suggestion 1" | name ~ "Suggestion 2" | name ~ "Suggestion 3" | name ~ "Suggestion 4" | name ~ "Suggestion 5") & version_parent = null & parent_game = null; limit 5;
 
         The game is: ${item}
       `;
-
       const game = await queryOpenAI(prompt);
-      res.status(200).json({ game: removeQuotationMarks(game) });
+      res.status(200).json(removeQuotationMarks(game));
     } catch (error) {
       console.error("Error:", error);
       res.status(500).json({ error: "Failed to fetch similar games" });
@@ -62,3 +59,7 @@ const GPT = async (req, res) => {
 };
 
 export default GPT;
+
+// Respond with all titles in an array. Example:
+//         [Valheim, Minecraft, Terraria]. Respond only with the array.
+//         Always give 5 games back in the response.
