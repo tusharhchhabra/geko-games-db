@@ -10,12 +10,14 @@ export const AuthProvider = ({ children }) => {
   const closeModal = () => setIsModalOpen(false);
 
   useEffect(() => {
+    console.log("Searching for cookie");
     const token = document.cookie
       .split("; ")
       .find((row) => row.startsWith("auth_token="));
     if (token) {
       const user = jwt.decode(token.split("=")[1]);
       setUser(user);
+      console.log("User set", user);
     }
   }, []);
 

@@ -20,9 +20,5 @@ export function middleware(req) {
 }
 
 export const config = {
-  matcher: [
-    "/api/createFavoriteGame",
-    "/api/removeFavoriteGame",
-    "/games/:id*",
-  ],
+  matcher: ["/api/createFavoriteGame", "/api/removeFavoriteGame"],
 };
