@@ -33,5 +33,5 @@ export async function middleware(req) {
 }
 
 export const config = {
-  matcher: ["/games/:path*"],
+  matcher: ["/games/:id*"],
 };
