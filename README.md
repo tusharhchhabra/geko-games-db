@@ -63,7 +63,7 @@ Follow these instructions to set up Games DB locally for development and testing
 
 [cookie](https://www.npmjs.com/package/cookie)
 
-[JSONWebToken](https://www.npmjs.com/package/jsonwebtoken)
+[jose](https://www.npmjs.com/package/jose)
 
 [Tailwind CSS](https://www.npmjs.com/package/tailwindcss)
 
