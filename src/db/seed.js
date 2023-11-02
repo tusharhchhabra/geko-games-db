@@ -3,8 +3,16 @@ import { createTables, dropTables } from "./createTables";
 const { sql } = require("@vercel/postgres");
 
 const users = [
-  { username: "john_doe", email: "john.doe@example.com" },
-  { username: "jane_doe", email: "jane.doe@example.com" },
+  {
+    username: "john_doe",
+    email: "john.doe@example.com",
+    passwordDigest: "example_password_digest",
+  },
+  {
+    username: "jane_doe",
+    email: "jane.doe@example.com",
+    passwordDigest: "example_password_digest",
+  },
 ];
 
 const favoriteGames = [...Array(20)].map((v, i) => {
@@ -14,8 +22,8 @@ const favoriteGames = [...Array(20)].map((v, i) => {
 async function seedUsers() {
   for (const user of users) {
     await sql`
-      INSERT INTO users (username, email)
-      VALUES (${user.username}, ${user.email});
+      INSERT INTO users (username, email, password_digest)
+      VALUES (${user.username}, ${user.email}, ${user.passwordDigest});
     `;
   }
 }
