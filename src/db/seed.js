@@ -1,21 +1,29 @@
+import { createTables, dropTables } from "./createTables";
+
 const { sql } = require("@vercel/postgres");
 
 const users = [
-  { username: "john_doe", email: "john.doe@example.com" },
-  { username: "jane_doe", email: "jane.doe@example.com" },
+  {
+    username: "john_doe",
+    email: "john.doe@example.com",
+    passwordDigest: "example_password_digest",
+  },
+  {
+    username: "jane_doe",
+    email: "jane.doe@example.com",
+    passwordDigest: "example_password_digest",
+  },
 ];
 
-const favoriteGames = [
-  { gameId: 1, userId: 1 },
-  { gameId: 2, userId: 1 },
-  { gameId: 3, userId: 2 },
-];
+const favoriteGames = [...Array(20)].map((v, i) => {
+  return { gameId: i + 1, userId: 1 };
+});
 
 async function seedUsers() {
   for (const user of users) {
     await sql`
-      INSERT INTO users (username, email)
-      VALUES (${user.username}, ${user.email});
+      INSERT INTO users (username, email, password_digest)
+      VALUES (${user.username}, ${user.email}, ${user.passwordDigest});
     `;
   }
 }
@@ -30,6 +38,8 @@ async function seedFavoriteGames() {
 }
 
 async function seedDatabase() {
+  await dropTables();
+  await createTables();
   await seedUsers();
   await seedFavoriteGames();
   console.log("Database seeded successfully");
