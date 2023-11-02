@@ -34,6 +34,6 @@ export async function middleware(req) {
   }
 }
 
-export const config = {
-  matcher: ["/api/createFavoriteGame", "/api/removeFavoriteGame"],
-};
+// export const config = {
+//   matcher: ["/api/createFavoriteGame", "/api/removeFavoriteGame"],
+// };
