@@ -33,5 +33,5 @@ export async function middleware(req) {
 }
 
 export const config = {
-  matcher: ["/api/games/:path*"],
+  matcher: ["/games/:path*"],
 };
