@@ -7,6 +7,7 @@ import extractIdAsAnArray from "@/helpers/extractIdsAsArray";
 import extractNameAsAnArray from "@/helpers/extractNameAsArray";
 import { Inter } from "next/font/google";
 
+
 const inter = Inter({ subsets: ["latin"] });
 
 const HomePage = ({ initialGameSets, initialThemes }) => {
@@ -19,6 +20,7 @@ const HomePage = ({ initialGameSets, initialThemes }) => {
   const [gameThemes, setGameThemes] = useState(() =>
     extractNameAsAnArray(initialThemes)
   );
+  
 
   const fetchMoreGames = useCallback(async () => {
     if (!gameThemesId.length && !gameThemes.length) {
