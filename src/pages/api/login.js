@@ -1,7 +1,7 @@
-import jwt from "jsonwebtoken";
 import { serialize } from "cookie";
 import { getUserByEmail } from "@/db/queries";
 import bcrypt from "bcryptjs";
+import generateToken from "@/helpers/generateToken";
 
 export default async function login(req, res) {
   if (req.method !== "POST") {
@@ -22,11 +22,10 @@ export default async function login(req, res) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
-    const token = jwt.sign(
-      { username: user.username, email: user.email },
-      process.env.JWT_SECRET,
-      { expiresIn: "1h" }
-    );
+    const token = await generateToken({
+      username: user.username,
+      email: user.email,
+    });
 
     res.setHeader(
       "Set-Cookie",

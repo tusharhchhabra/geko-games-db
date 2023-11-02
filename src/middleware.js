@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import { jwtVerify } from "jose";
 import { NextResponse } from "next/server";
 
 export async function middleware(req) {
@@ -6,7 +6,7 @@ export async function middleware(req) {
   if (!token) {
     console.log("No auth token found");
     return new NextResponse(
-      JSON.stringify({ error: { message: "authentication required" } }),
+      JSON.stringify({ error: { message: "Authentication required" } }),
       { status: 401 }
     );
   }
@@ -14,19 +14,12 @@ export async function middleware(req) {
   console.log("Auth token found");
 
   try {
-    if (jwt.verify(token, process.env.JWT_SECRET)) {
-      return NextResponse.next();
-    } else {
-      console.log("Invalid token", error);
-      return new NextResponse(
-        JSON.stringify({ error: { message: "authentication required" } }),
-        { status: 401 }
-      );
-    }
+    await jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET));
+    return NextResponse.next();
   } catch (error) {
-    // console.log("Not authenticated", error);
+    console.log("Invalid token or verification failed", error);
     return new NextResponse(
-      JSON.stringify({ error: { message: "authentication required" } }),
+      JSON.stringify({ error: { message: "Authentication required" } }),
       { status: 401 }
     );
   }

@@ -1,7 +1,7 @@
-import jwt from "jsonwebtoken";
 import { serialize } from "cookie";
 import { createUser } from "@/db/queries";
 import bcrypt from "bcryptjs";
+import generateToken from "@/helpers/generateToken";
 
 export default async function register(req, res) {
   if (req.method !== "POST") {
@@ -21,9 +21,7 @@ export default async function register(req, res) {
 
   const userTokenContent = { username, email };
 
-  const token = jwt.sign(userTokenContent, process.env.JWT_SECRET, {
-    expiresIn: "1h",
-  });
+  const token = generateToken(userTokenContent);
 
   res.setHeader(
     "Set-Cookie",
