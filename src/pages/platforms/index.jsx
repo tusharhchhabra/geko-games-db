@@ -1,7 +1,6 @@
 import GamesList from "@/components/GameList";
 import fetchData from "@/helpers/fetchData";
 import queries from "@/helpers/queryStrings";
-import SearchBar from "@/components/SearchBar";
 import PlatformButton from "@/components/PlatformButton";
 import { useState, useEffect, useCallback } from "react";
 import extractIdAsAnArray from "@/helpers/extractIdsAsArray";
@@ -146,7 +145,6 @@ const PlatformsGameList = ({
   // Render JSX
   return (
     <div className="p-10">
-      <SearchBar />
       <PlatformButton
         platforms={initialPlatforms}
         setSelectedPlatform={setSelectedPlatform}
