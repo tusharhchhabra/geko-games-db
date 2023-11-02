@@ -1,9 +1,8 @@
 import { AuthContext } from "@/context/AuthContext";
-import { Router } from "next/router";
 import React, { useContext, useState } from "react";
 
 export default function AuthModal() {
-  const { closeModal } = useContext(AuthContext);
+  const { closeModal, setUser } = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     username: "",
@@ -37,19 +36,38 @@ export default function AuthModal() {
     e.preventDefault();
     if (validate()) {
       console.log("validated");
-      const response = await fetch("/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      if (isLogin) {
+        const response = await fetch("/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
 
-      if (response.ok) {
-        console.log(await response.json());
-        closeModal();
+        if (response.ok) {
+          const user = await response.json();
+          setUser(user);
+          closeModal();
+        } else {
+          console.error("Login failed");
+        }
       } else {
-        console.log("Login failed");
+        const response = await fetch("/api/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+          const user = await response.json();
+          setUser(user);
+          closeModal();
+        } else {
+          console.log("Login failed");
+        }
       }
     }
   };

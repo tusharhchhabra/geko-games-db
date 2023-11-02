@@ -9,20 +9,33 @@ export const AuthProvider = ({ children }) => {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  const logout = () => {
+    fetch("/api/logout")
+      .then((res) => {
+        console.log(res.json());
+        setUser(null);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch user:", error);
+      });
+  };
+
   useEffect(() => {
-    console.log("Searching for cookie");
-    const token = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("auth_token="));
-    if (token) {
-      const user = jwt.decode(token.split("=")[1]);
-      setUser(user);
-      console.log("User set", user);
-    }
+    fetch("/api/user")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("user authorized", data);
+        setUser(data.user);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch user:", error);
+      });
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isModalOpen, openModal, closeModal }}>
+    <AuthContext.Provider
+      value={{ isModalOpen, openModal, closeModal, user, setUser, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

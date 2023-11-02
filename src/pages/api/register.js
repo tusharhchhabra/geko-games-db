@@ -15,7 +15,7 @@ export default async function register(req, res) {
   try {
     await createUser(username, email, passwordDigest);
   } catch (err) {
-    console.error(error);
+    console.error(err);
     res.status(500).json({ message: "Internal Server Error" });
   }
 

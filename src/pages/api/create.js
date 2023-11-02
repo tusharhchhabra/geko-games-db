@@ -2,7 +2,6 @@
 
 import { getUserFavoriteGames } from "@/db/queries";
 import seedDatabase from "@/db/seed";
-import { sql } from "@vercel/postgres";
 
 export default async function handler(request, response) {
   try {

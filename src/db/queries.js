@@ -1,9 +1,9 @@
 import { sql } from "@vercel/postgres";
 
-async function createUser(username, email) {
+async function createUser(username, email, passwordDigest) {
   return await sql`
-    INSERT INTO users (username, email)
-    VALUES (${username}, ${email})
+    INSERT INTO users (username, email, password_digest)
+    VALUES (${username}, ${email}, ${passwordDigest})
     RETURNING *;
   `;
 }

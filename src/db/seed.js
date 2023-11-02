@@ -1,4 +1,4 @@
-import { createTables, dropTables } from "./create";
+import { createTables, dropTables } from "./createTables";
 
 const { sql } = require("@vercel/postgres");
 

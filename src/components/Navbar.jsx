@@ -6,13 +6,17 @@ import { useContext } from "react";
 
 export default function Navbar() {
   const scrollPosition = useScrollPosition();
-  const { openModal } = useContext(AuthContext);
+  const { openModal, user, logout } = useContext(AuthContext);
+
+  const handleLogoutClick = () => {
+    logout();
+  };
 
   return (
     <nav
       className={`fixed left-0 top-0 z-20 w-full bg-transparent transition-colors duration-300 ${
         scrollPosition > 0
-          ? "border-b-[0.5px] border-gray-700 bg-slate-900/[.4] backdrop-blur-lg"
+          ? "border-b-[0.5px] border-gray-700 bg-slate-900/[0.4] backdrop-blur-lg"
           : "border-gray-800"
       }`}
     >
@@ -72,13 +76,17 @@ export default function Navbar() {
           </ul>
         </div>
         <SearchBar />
-        <button
-          type="button"
-          onClick={openModal}
-          className="btn btn-secondary bg-white/90"
-        >
-          Login
-        </button>
+        {user ? (
+          <button onClick={handleLogoutClick}>Log Out</button>
+        ) : (
+          <button
+            type="button"
+            onClick={openModal}
+            className="btn btn-secondary bg-white/90"
+          >
+            Login
+          </button>
+        )}
       </div>
     </nav>
   );
