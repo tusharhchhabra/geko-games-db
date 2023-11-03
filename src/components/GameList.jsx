@@ -28,7 +28,7 @@ const GamesList = ({ setOfGames }) => {
     <>
       {setOfGames.map((gameSet, index) => (
         <div key={index}>
-          <h2 className="text-white font-bold md:text-xl p-4">
+          <h2 className="text-white font-bold p-4 ml-10 text-3xl">
             {gameSet.title}
           </h2>
           <div className="relative flex items-center group">
