@@ -69,8 +69,5 @@ Follow these instructions to set up Games DB locally for development and testing
 
 ## Credits
 
-**IGDB API**: For providing the extensive game database.<br>
-**headlessUI**: For the combobox component.<br>
-**Tailwind CSS**: For the styling framework.<br>
-**Other Packages**: Thanks to the creators of various other packages used in this project.
+Thanks to the creators of IGDB for providing the extensive game database, and to the creators of all dependency packages listed above. Big thanks to our mentors at Lighthouse Labs for being there to guide us at numerous points in our journey.
 
