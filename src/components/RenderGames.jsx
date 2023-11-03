@@ -41,8 +41,8 @@ function RenderGames({ games }) {
   return games.map((game) => {
     const gameVideo = videos[game.id];
     return (
-      <div key={game.id} className="h-[400px]">
-        <h2>{game.name}</h2>
+      <div key={game.id} className=" w-[200px] h-[400px] m-5">
+        {/* <h2>{game.name}</h2> */}
         <img
           loading="lazy"
           src={game.coverUrl}
