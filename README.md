@@ -1,6 +1,6 @@
 # Games DB
 
-Games DB is a comprehensive games database web application built using Next.js, leveraging the IGDB API to fetch a vast collection of video game information. Users can search for games, filter results based on platforms or themes, view game details including screenshots, trailers, average ratings, release dates, and more. Additionally, users can save their favorite games to a personalized list.
+Games DB is a comprehensive games database web application built using Next.js, leveraging the IGDB API to fetch a vast collection of video game information. Users can search for games, filter results based on platforms and themes, view game details including screenshots, trailers, average ratings, release dates, and more. Registered users can also save their favorite games to a personalized Favorites list.
 
 ## Features
 
@@ -19,7 +19,7 @@ Follow these instructions to set up Games DB locally for development and testing
 ### Prerequisites
 
 - Node.js version >= 16.14
-- A Vercel PostgreSQL database (for managing user data and favorites)
+- A Vercel PostgreSQL database (for managing users and favorites)
 
 ### Installation
 
@@ -51,28 +51,28 @@ Follow these instructions to set up Games DB locally for development and testing
 
 ## Dependencies
 
-[React](https://www.npmjs.com/package/react)
+[React](https://www.npmjs.com/package/react) - UI
 
-[React-DOM](https://www.npmjs.com/package/react-router-dom)
+[React-DOM](https://www.npmjs.com/package/react-router-dom) - Client-side navigation
 
-[Next.js 13.5.6](https://nextjs.org/)
+[Next.js 13.5.6](https://nextjs.org/) - API routing and integration with Vercel services
 
-[Vercel Postgres](https://vercel.com/docs/storage/vercel-postgres)
+[Vercel Postgres](https://vercel.com/docs/storage/vercel-postgres) - Plays nicely with Next.js, easy deployment
 
-[bcrypt.js](https://www.npmjs.com/package/bcryptjs)
+[bcrypt.js](https://www.npmjs.com/package/bcryptjs) - Password hashing and verification
 
-[cookie](https://www.npmjs.com/package/cookie)
+[cookie](https://www.npmjs.com/package/cookie) - Secure cookies for authentication
 
-[jose](https://www.npmjs.com/package/jose)
+[jose](https://www.npmjs.com/package/jose) - JWT Signing and Authentication
 
-[Tailwind CSS](https://www.npmjs.com/package/tailwindcss)
+[Tailwind CSS](https://www.npmjs.com/package/tailwindcss) - Styling
 
-[HeadlessUI](https://headlessui.com)
+[HeadlessUI](https://headlessui.com) - Combobox for the Search bar
 
 ## Limitations
 
 - The token refresh mechanism for IGDB API has not been implemented.
-- Game information is sourced from the IGDB API and is read-only; it cannot be added or modified.
+- Game information is sourced from the IGDB API and is read-only - it cannot be added or modified.
 - Game data is user-submitted and may vary in completeness. However, most medium to large games have extensive information available.
 
 ## Credits
