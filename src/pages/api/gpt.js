@@ -41,7 +41,7 @@ const GPT = async (req, res) => {
       const item = req.query.term;
       const prompt = `
         You will be given an array of video game titles that belong to a users favourites in a video game database. You must respond the the names of other video games, DIFFERENT then those sent in that you think the user would like. Your response will be used to queryIGDB API.
-        Respond with all your suggested video game titles part of the query in one line. Example:
+        Respond with all your suggested video game titles part of the query in one line. Your suggestions MUST be different games then the input games. Try to be creative in choosing games they would like. Example:
         fields id, name; where (name ~ "Suggestion 1" | name ~ "Suggestion 2" | name ~ "Suggestion 3" | name ~ "Suggestion 4" | name ~ "Suggestion 5") & version_parent = null & parent_game = null; limit 5;
 
         The game is: ${item}
