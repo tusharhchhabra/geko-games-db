@@ -71,7 +71,7 @@ Follow these instructions to set up Games DB locally for development and testing
 
 ## Limitations
 
-- The token refresh mechanism for IGDB API has not been implemented.
+- Does not yet have the ability to refresh the JWT token for the logged in state.
 - Game information is sourced from the IGDB API and is read-only - it cannot be added or modified.
 - Game data is user-submitted and may vary in completeness. However, most medium to large games have extensive information available.
 
