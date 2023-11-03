@@ -1,14 +1,15 @@
 const buildQuery = ({
-  name = "",
-  genres = [],
-  themes = [],
-  platforms = [],
-  modes = [],
-  fromDate = "",
-  toDate = "",
-  ratings = [],
-  limit = 30,
-  offset = 0,
+  name,
+  genres,
+  themes,
+  platforms,
+  modes,
+  fromDate,
+  toDate,
+  minRating,
+  maxRating,
+  limit,
+  offset,
 }) => {
   console.log("NAMME", name);
   let query = `fields name, genres.name, themes.name, platforms.name, game_modes.name, first_release_date, total_rating;`;
@@ -51,12 +52,11 @@ const buildQuery = ({
     );
   }
 
-  if (ratings.length > 0) {
-    whereClauses.push(
-      `total_rating >= ${Math.min(...ratings)} & total_rating <= ${Math.max(
-        ...ratings
-      )}`
-    );
+  if (minRating !== undefined) {
+    whereClauses.push(`total_rating >= ${minRating}`);
+  }
+  if (maxRating !== undefined) {
+    whereClauses.push(`total_rating <= ${maxRating}`);
   }
 
   if (whereClauses.length > 0) {

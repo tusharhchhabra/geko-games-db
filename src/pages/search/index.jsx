@@ -1,23 +1,26 @@
-import AdvancedSearchTabs from "@/components/AdvancedSearchTabs";
+import AdvancedSearchTabGroup from "@/components/AdvancedSearchTabGroup";
 import fetchData from "@/helpers/fetchData";
 import queries from "@/helpers/queryStrings";
 import React, { useState, useEffect } from "react";
 
-const AdvancedSearch = () => {
+const AdvancedSearchPage = (props) => {
   const [searchParams, setSearchParams] = useState({
     name: "",
-    genres: [1],
-    themes: [1],
-    platforms: [1],
-    modes: [1],
+    genres: [],
+    themes: [],
+    platforms: [],
+    modes: [],
     fromDate: "",
     toDate: "",
-    ratings: [],
+    // minRating: null,
+    // maxRating: null,
     developers: [],
     publishers: [],
-    limit: 10,
+    limit: 30,
     offset: 0,
   });
+
+  const [selectedTab, setSelectedTab] = useState("Genre");
 
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -51,13 +54,26 @@ const AdvancedSearch = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <AdvancedSearchTabs />
+    <div className="max-w-2xl p-4">
+      <p className="text-2xl font-semibold w-full">Advanced Search</p>
+      <div className="">
+        <AdvancedSearchTabGroup
+          selectedTab={selectedTab}
+          setSelectedTab={setSelectedTab}
+          params={searchParams}
+          setParams={setSearchParams}
+          options={props}
+        />
+        <div className="flex">
+          <div className="w-60 h-60 bg-red-500"></div>
+          <div className="w-60 h-60 bg-red-500"></div>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default AdvancedSearch;
+export default AdvancedSearchPage;
 
 export async function getServerSideProps() {
   const [genresPromise, themesPromise, modesPromise, platformsPromise] =
@@ -82,5 +98,5 @@ export async function getServerSideProps() {
   // const modes = await modesRes.json();
   // const platforms = await modesRes.json();
 
-  return { props: {} };
+  return { props: { genres, themes, modes, platforms } };
 }

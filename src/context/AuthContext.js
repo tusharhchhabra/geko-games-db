@@ -24,8 +24,10 @@ export const AuthProvider = ({ children }) => {
     fetch("/api/user")
       .then((res) => res.json())
       .then((data) => {
-        console.log("user authorized", data);
-        setUser(data.user);
+        console.log(data);
+        if (data.user) {
+          setUser(data.user);
+        }
       })
       .catch((error) => {
         console.error("Failed to fetch user:", error);
