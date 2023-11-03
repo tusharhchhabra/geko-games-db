@@ -2,11 +2,10 @@
 
 import { getUserFavoriteGames } from "@/db/queries";
 import seedDatabase from "@/db/seed";
-import { sql } from "@vercel/postgres";
 
 export default async function handler(request, response) {
   try {
-    const result = await getUserFavoriteGames(1);
+    const result = await seedDatabase();
     return response.status(200).json({ result });
   } catch (error) {
     return response.status(500).json({ error });

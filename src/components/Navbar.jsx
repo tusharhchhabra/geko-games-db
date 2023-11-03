@@ -1,15 +1,22 @@
 import { useScrollPosition } from "@/hooks/useScrollPosition";
 import SearchBar from "./SearchBar";
 import Link from "next/link";
+import { AuthContext } from "@/context/AuthContext";
+import { useContext } from "react";
 
 export default function Navbar() {
   const scrollPosition = useScrollPosition();
+  const { openModal, user, logout } = useContext(AuthContext);
+
+  const handleLogoutClick = () => {
+    logout();
+  };
 
   return (
     <nav
       className={`fixed left-0 top-0 z-20 w-full bg-transparent transition-colors duration-300 ${
         scrollPosition > 0
-          ? "border-b border-gray-800 bg-black/[.35] backdrop-blur-lg"
+          ? "border-b-[0.5px] border-gray-700 bg-slate-900/[0.4] backdrop-blur-lg"
           : "border-gray-800"
       }`}
     >
@@ -23,7 +30,7 @@ export default function Navbar() {
           <button
             data-collapse-toggle="navbar-sticky"
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-transparent p-2 text-sm text-white hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-200 md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-transparent p-2 text-sm text-white hover:bg-slate-800/[0.1] focus:outline-none focus:ring-1 focus:ring-slate-700 md:hidden"
             aria-controls="navbar-sticky"
             aria-expanded="false"
           >
@@ -49,7 +56,7 @@ export default function Navbar() {
           className="hidden w-full items-center justify-between md:mr-auto md:ml-8 md:flex md:w-auto"
           id="navbar-sticky"
         >
-          <ul className="mt-4 flex flex-col rounded-lg border border-slate-100 p-4 font-medium md:mt-0 md:flex-row md:space-x-8 md:border-0 md:p-0 ">
+          <ul className="mt-4 flex flex-col rounded-lg border border-slate-100 p-4 font-normal md:mt-0 md:flex-row md:space-x-8 md:border-0 md:p-0 ">
             <li>
               <Link
                 href="/platforms"
@@ -69,9 +76,17 @@ export default function Navbar() {
           </ul>
         </div>
         <SearchBar />
-        <button type="button" className="btn btn-secondary bg-white/90">
-          Login
-        </button>
+        {user ? (
+          <button onClick={handleLogoutClick}>Log Out</button>
+        ) : (
+          <button
+            type="button"
+            onClick={openModal}
+            className="btn btn-secondary bg-white/90"
+          >
+            Login
+          </button>
+        )}
       </div>
     </nav>
   );

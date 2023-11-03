@@ -1,52 +1,83 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Games DB
+
+Games DB is a comprehensive games database web application built using Next.js, leveraging the IGDB API to fetch a vast collection of video game information. Users can search for games, filter results based on platforms or themes, view game details including screenshots, trailers, average ratings, release dates, and more. Additionally, users can save their favorite games to a personalized list.
+
+## Features
+
+- **Search Functionality**: Quickly find games with a robust search feature.
+- **Filter Options**: Narrow down search results by platforms or themes.
+- **Game Details**: View extensive information about each game, including media content and ratings.
+- **Favorites List**: Save and manage a list of your favorite games.
+- **Responsive Design**: Enjoy a seamless experience on both desktop and mobile devices.
+- **User Authentication**: Securely log in and manage your favorites list.
+- **Styling with Tailwind CSS**: A modern and responsive design.
 
 ## Getting Started
 
-First, run the development server:
+Follow these instructions to set up Games DB locally for development and testing purposes.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Prerequisites
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Node.js version >= 16.14
+- A Vercel PostgreSQL database (for managing user data and favorites)
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+### Installation
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+1. **Clone this project locally**:
+   ```sh
+   git clone <repository-url>
+   cd <repository-folder>
+   ```
+2. **Install dependencies**:
+   ```sh
+   npm install
+   ```
+3. **Set up environment variables**:
+   Copy the .env.example file to a new file named .env, and fill in the required API keys and database credentials.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+   ```makefile
+    # .env
+    IGDB_CLIENT_ID=your_igdb_client_id
+    IGDB_CLIENT_SECRET=your_igdb_client_secret
+    DATABASE_URL=your_database_url
+    JWT_SECRET=your_jwt_secret
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+4. **Run the app in development mode**:
+   ```sh
+    npm run dev
+   ```
+   The app will be accessible at http://localhost:3000.
 
-## Learn More
+## Dependencies
 
-To learn more about Next.js, take a look at the following resources:
+[React](https://www.npmjs.com/package/react)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+[React-DOM](https://www.npmjs.com/package/react-router-dom)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+[Next.js 13.5.6](https://nextjs.org/)
 
-## Deploy on Vercel
+[Vercel Postgres](https://vercel.com/docs/storage/vercel-postgres)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+[bcrypt.js](https://www.npmjs.com/package/bcryptjs)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[cookie](https://www.npmjs.com/package/cookie)
 
+[jose](https://www.npmjs.com/package/jose)
 
-create a .env file using .env.example
-to get client id sign up for a twitch account and create a developer application
-this will give you a Client ID. Create a client secret.
+[Tailwind CSS](https://www.npmjs.com/package/tailwindcss)
 
-make a curl request using:
-curl -X POST "https://id.twitch.tv/oauth2/token" -H "Content-Type: application/x-www-form-urlencoded" -d "client_id=YourClientID" -d "client_secret=YourClientSecret" -d "grant_type=client_credentials"
+[HeadlessUI](https://headlessui.com)
 
-this will give you a authtoken to use in .env
-TWITCH_CLIENT_ID="twitch client id token"
-TWITCH_AUTH_TOKEN=x8d2fu5yp44lclhi1sbovqoqj981f2
+## Limitations
+
+- The token refresh mechanism for IGDB API has not been implemented.
+- Game information is sourced from the IGDB API and is read-only; it cannot be added or modified.
+- Game data is user-submitted and may vary in completeness. However, most medium to large games have extensive information available.
+
+## Credits
+
+**IGDB API**: For providing the extensive game database.
+**headlessUI**: For the combobox component.
+**Tailwind CSS**: For the styling framework.
+**Other Packages**: Thanks to the creators of various other packages used in this project.
