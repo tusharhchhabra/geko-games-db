@@ -43,7 +43,7 @@ Follow these instructions to set up Games DB locally for development and testing
 
 ## Dependencies
 
-[React](https://www.npmjs.com/package/react) - UI
+[React](https://www.npmjs.com/package/react) - UI Library
 
 [React-DOM](https://www.npmjs.com/package/react-router-dom) - Client-side navigation
 
