@@ -33,15 +33,7 @@ Follow these instructions to set up Games DB locally for development and testing
    npm install
    ```
 3. **Set up environment variables**:
-   Copy the .env.example file to a new file named .env.development.local, and fill in the required API keys and database credentials.
-
-   ```makefile
-    # .env
-    IGDB_CLIENT_ID=your_igdb_client_id
-    IGDB_CLIENT_SECRET=your_igdb_client_secret
-    DATABASE_URL=your_database_url
-    JWT_SECRET=your_jwt_secret
-   ```
+   Copy the .env.example file to a new file named .env.development.local, and fill in the required API keys and database credentials. Credentials include Twitch Developer Client ID, Authorization Token, Vercel Postgres Database URL, and JWT secret key.
 
 4. **Run the app in development mode**:
    ```sh
