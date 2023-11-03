@@ -70,6 +70,10 @@ Follow these instructions to set up Games DB locally for development and testing
 ## Credits
 
 **IGDB API**: For providing the extensive game database.
+
 **headlessUI**: For the combobox component.
+
 **Tailwind CSS**: For the styling framework.
+
 **Other Packages**: Thanks to the creators of various other packages used in this project.
+
