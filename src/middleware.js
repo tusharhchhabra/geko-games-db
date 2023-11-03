@@ -2,7 +2,7 @@ import { jwtVerify } from "jose";
 import { NextResponse } from "next/server";
 
 export async function middleware(req) {
-  const token = req.cookies.auth_token;
+  const token = req.cookies.get("auth_token").value;
   if (!token) {
     return new NextResponse(
       JSON.stringify({ error: { message: "Authentication required" } }),
@@ -10,12 +10,14 @@ export async function middleware(req) {
     );
   }
 
+  console.log(token);
+
   try {
     await jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET));
     return NextResponse.next();
   } catch (error) {
     return new NextResponse(
-      JSON.stringify({ error: { message: "Authentication required" } }),
+      JSON.stringify({ error: { message: "Invalid token" } }),
       { status: 401 }
     );
   }

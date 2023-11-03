@@ -16,28 +16,34 @@ const queries = {
   newGames: `fields id, name, first_release_date; where total_rating_count >= 5 & first_release_date > ${getTimestamp30DaysAgo()}; sort total_rating desc; limit 10;`,
 
   genresForGame: function (game) {
+    if (!game.genres || game.genres.length === 0) return null;
     return `fields name; where id = (${game.genres.join(", ")});`;
   },
 
   platformsForGame: function (game) {
+    if (!game.platforms || game.platforms.length === 0) return null;
     return `fields name; where id = (${game.platforms.join(", ")});`;
   },
 
   videosForGame: function (game) {
+    if (!game.videos || game.videos.length === 0) return null;
     return `fields video_id; where id = (${game.videos.join(", ")});`;
   },
 
   screenshotsForGame: function (game) {
+    if (!game.screenshots || game.screenshots.length === 0) return null;
     return `fields url, width, height; where id = (${game.screenshots.join(
       ", "
     )});`;
   },
 
   websitesForGame: function (game) {
+    if (!game.websites || game.websites.length === 0) return null;
     return `fields url, category; where id = (${game.websites.join(", ")});`;
   },
 
   similarGames: function (game) {
+    if (!game.similar_games || game.similar_games.length === 0) return null;
     return `fields name, cover; where id = (${game.similar_games.join(", ")});`;
   },
 
@@ -87,13 +93,12 @@ const queries = {
   },
 
   top10GamesByPlatform: function (platformId) {
-    return ` fields name, id; where total_rating_count >= 100 & total_rating > 80 & platforms = [${platformId}] & version_parent = null & parent_game = null; sort total_rating desc; limit 10;`
+    return ` fields name, id; where total_rating_count >= 100 & total_rating > 80 & platforms = [${platformId}] & version_parent = null & parent_game = null; sort total_rating desc; limit 10;`;
   },
 
   newGamesByPlatform: function (platformId) {
     return `fields id, name, first_release_date; where total_rating_count >= 5 & platforms = [${platformId}]; sort first_release_date desc; limit 10;`;
   },
-
 };
 
 export default queries;
