@@ -4,8 +4,8 @@ Games DB is a comprehensive games database web application built using Next.js, 
 
 ## Features
 
-- **Search Functionality**: Quickly find games using the persistent search bar.
-- **Categorization**: Narrow down games by platforms or themes.
+- **Search**: Quickly find games using the persistent search bar.
+- **Categories**: Narrow down games by platforms or themes.
 - **Game Details**: View extensive information about each game, including screenshots, trailers and ratings.
 - **Favorites List**: Save and manage a list of your favorite games.
 - **Responsive Design**: Use on either desktop or your phone.
