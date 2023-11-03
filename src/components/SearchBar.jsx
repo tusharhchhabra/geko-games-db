@@ -28,7 +28,6 @@ function SearchBar() {
     router.push(`/games/${game.id}`);
   };
 
-  // Manage search request and results display
   useEffect(() => {
     if (!query) return;
 
@@ -48,7 +47,7 @@ function SearchBar() {
   }, [query]);
 
   return (
-    <div className="text-black min-w-[400px]">
+    <div className="min-w-[200px] sm:min-w-[200px] md:min-w-[250px] lg:min-w-[450px] mr-6 ml-auto">
       <MyCombobox
         query={query}
         setQuery={setQuery}
@@ -59,12 +58,6 @@ function SearchBar() {
         setSelected={handleGameSelect}
         canShowEmptyState={canShowEmptyState}
       ></MyCombobox>
-      <button
-        className="bg-gray-700 px-3 py-1 my-4 text-white"
-        onClick={() => search(query)}
-      >
-        Search
-      </button>
     </div>
   );
 }
