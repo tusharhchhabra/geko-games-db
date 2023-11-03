@@ -1,19 +1,19 @@
 import fetchData from "@/helpers/fetchData";
+import buildQuery from "@/helpers/queryBuilder";
 import queries from "@/helpers/queryStrings";
 
-export default async function search(req, res) {
-  if (req.method !== "GET") {
+export default async function advancedSearch(req, res) {
+  if (req.method !== "POST") {
     res.statusCode = 405;
     res.end("Method Not Allowed");
     return;
   }
 
-  const { searchTerm } = req.query;
+  const { searchParams } = req.body;
 
-  const gamesQuery = `fields *; where name ~ *"${searchTerm}"* & version_parent = null & parent_game = null; limit 10;`;
-  const endpoint = "games";
+  const gamesQuery = buildQuery(searchParams);
 
-  const games = await fetchData(gamesQuery, endpoint);
+  const games = await fetchData(gamesQuery, "games");
   const thumbnails = await fetchData(queries.coverArtForGames(games), "covers");
 
   const gamesWithThumbnails = queries.gamesWithCoverArt(
@@ -22,5 +22,5 @@ export default async function search(req, res) {
     "t_cover_small"
   );
 
-  res.send(gamesWithThumbnails);
+  res.send({ gamesWithThumbnails });
 }

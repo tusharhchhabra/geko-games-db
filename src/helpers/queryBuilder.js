@@ -7,9 +7,10 @@ const buildQuery = ({
   fromDate = "",
   toDate = "",
   ratings = [],
-  limit = 10,
+  limit = 30,
   offset = 0,
 }) => {
+  console.log("NAMME", name);
   let query = `fields name, genres.name, themes.name, platforms.name, game_modes.name, first_release_date, total_rating;`;
 
   const whereClauses = [];

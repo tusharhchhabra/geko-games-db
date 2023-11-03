@@ -1,6 +1,6 @@
 import { jwtVerify } from "jose";
 
-export default async function handler(req, res) {
+export default async function getUser(req, res) {
   const token = req.cookies.auth_token;
   if (!token) {
     return res.status(401).json({ error: "Not authenticated" });

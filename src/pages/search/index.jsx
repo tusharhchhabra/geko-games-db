@@ -1,28 +1,27 @@
+import AdvancedSearchTabs from "@/components/AdvancedSearchTabs";
 import fetchData from "@/helpers/fetchData";
-import buildQuery from "@/helpers/queryBuilder";
 import queries from "@/helpers/queryStrings";
 import React, { useState, useEffect } from "react";
 
 const AdvancedSearch = () => {
-  const [genres, setGenres] = useState([1]);
-  const [themes, setThemes] = useState([1]);
-  const [platforms, setPlatforms] = useState([1]);
-  const [modes, setModes] = useState([1]);
-  const [ratings, setRatings] = useState([]);
-  const [year, setYear] = useState([]);
+  const [searchParams, setSearchParams] = useState({
+    name: "",
+    genres: [1],
+    themes: [1],
+    platforms: [1],
+    modes: [1],
+    fromDate: "",
+    toDate: "",
+    ratings: [],
+    developers: [],
+    publishers: [],
+    limit: 10,
+    offset: 0,
+  });
 
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  const [searchParams, setSearchParams] = useState({
-    year: null,
-    genre: null,
-    theme: null,
-    platform: null,
-    mode: null,
-    rating: null,
-  });
 
   useEffect(() => {}, []);
 
@@ -34,75 +33,26 @@ const AdvancedSearch = () => {
   };
 
   const handleSearch = async () => {
-    const query = buildQuery(searchParams);
-    console.log(query);
     // setIsLoading(true);
     // setError(null);
-    // try {
-    //   const res = await fetch("/api/advanced-search", { params: searchParams });
-    //   setSearchResults(res.data);
-    // } catch (error) {
-    //   console.error("Error fetching games", error);
-    // }
+    try {
+      const response = await fetch(`/api/advanced-search`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ searchParams }),
+      });
+      console.log(await response.json());
+      // setSearchResults(data.data);
+    } catch (error) {
+      console.error("Error fetching games", error);
+    }
   };
 
   return (
     <div className="max-w-2xl mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">Advanced Search</h2>
-      <div className="grid grid-cols-1 gap-4 mb-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Year Released
-          </label>
-          <input
-            type="number"
-            value={searchParams.year}
-            onChange={(e) => handleChange({ value: e.target.value }, "year")}
-            className="mt-1 p-2 border w-full rounded-md"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Genre/Theme
-          </label>
-          Genres
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Platform
-          </label>
-          Platforms
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Mode
-          </label>
-          Modes
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Ratings
-          </label>
-          Ratings
-        </div>
-      </div>
-      <button
-        onClick={handleSearch}
-        className="px-4 py-2 font-bold text-white bg-blue-500 rounded-md hover:bg-blue-700"
-      >
-        Search
-      </button>
-
-      <div className="mt-6">
-        <h3 className="text-xl font-semibold mb-2">Search Results:</h3>
-        <ul>
-          {searchResults.map((game) => (
-            <li key={game.id} className="mb-1">
-              {game.name}
-            </li>
-          ))}
-        </ul>
-      </div>
+      <AdvancedSearchTabs />
     </div>
   );
 };
