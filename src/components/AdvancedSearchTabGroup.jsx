@@ -10,16 +10,16 @@ function AdvancedSearchTabGroup({
   setParams,
   options,
 }) {
-  const handleOptionChange = (selectedOption, name) => {
+  const handleOptionChange = (selectedOption, paramName) => {
     setParams({
       ...params,
-      [name]: selectedOption ? selectedOption : null,
+      [paramName]: selectedOption ? selectedOption : null,
     });
   };
 
-  const handleArrayOptionChange = (selectedOption, name) => {
+  const handleArrayOptionChange = (selectedOption, paramName) => {
     setParams((prevParams) => {
-      const existingArray = prevParams[name] || [];
+      const existingArray = prevParams[paramName] || [];
 
       let updatedArray;
       if (existingArray.includes(selectedOption)) {
@@ -32,7 +32,7 @@ function AdvancedSearchTabGroup({
 
       return {
         ...prevParams,
-        [name]: updatedArray,
+        [paramName]: updatedArray,
       };
     });
   };
@@ -40,45 +40,68 @@ function AdvancedSearchTabGroup({
   const handleYearChange = (event) => {
     const year = event.target.value;
 
-    const yearStartTimestamp = year
-      ? Math.floor(new Date(`${year}-01-01T00:00:00Z`).getTime() / 1000)
-      : null;
-    onYearChange(yearStartTimestamp);
+    if (!year) {
+      setParams((prev) => {
+        return { ...prev, fromDate: "", toDate: "" };
+      });
+    }
+
+    const fromDate = Math.floor(
+      new Date(`${year}-01-01T00:00:00Z`).getTime() / 1000
+    );
+
+    const toDate = Math.floor(Date.UTC(parseInt(year) + 1, 0, 1) / 1000) - 1;
+
+    setParams((prev) => {
+      return { ...prev, fromDate, toDate };
+    });
+  };
+
+  const getYearFromDates = () => {
+    const { fromDate, toDate } = params;
+    const fromYear = fromDate ? new Date(fromDate * 1000).getFullYear() : "";
+    return toDate ? new Date(toDate * 1000).getFullYear() : fromYear;
   };
 
   return (
-    <div>
+    <div className="w-full">
       <div className="font-medium text-center text-gray-400 border-b border-gray-700">
-        <ul className="flex flex-wrap -mb-px">
+        <ul className="mt-2 flex flex-wrap -mb-px">
           <AdvancedSearchTab
             name="Genre"
             isSelected={selectedTab === "Genre"}
             setSelected={setSelectedTab}
+            selectionCount={params.genres.length}
           />
           <AdvancedSearchTab
             name="Theme"
             isSelected={selectedTab === "Theme"}
             setSelected={setSelectedTab}
+            selectionCount={params.themes.length}
           />
           <AdvancedSearchTab
             name="Mode"
             isSelected={selectedTab === "Mode"}
             setSelected={setSelectedTab}
+            selectionCount={params.modes.length}
           />
           <AdvancedSearchTab
             name="Rating"
             isSelected={selectedTab === "Rating"}
             setSelected={setSelectedTab}
+            selectionCount={params.minRating || params.maxRating ? 1 : 0}
           />
           <AdvancedSearchTab
             name="Platform"
             isSelected={selectedTab === "Platform"}
             setSelected={setSelectedTab}
+            selectionCount={params.platforms.length}
           />
           <AdvancedSearchTab
             name="Year Released"
             isSelected={selectedTab === "Year Released"}
             setSelected={setSelectedTab}
+            selectionCount={params.fromDate || params.toDate ? 1 : 0}
           />
         </ul>
       </div>
@@ -87,8 +110,9 @@ function AdvancedSearchTabGroup({
           {options.genres.map((option) => (
             <SearchOptionButton
               key={option.id}
-              name={option.name}
-              option={option}
+              id={option.id}
+              label={option.name}
+              paramName={"genres"}
               isSelected={params.genres.includes(option.id)}
               handleOptionChange={handleArrayOptionChange}
             />
@@ -100,9 +124,10 @@ function AdvancedSearchTabGroup({
           {options.themes.map((option) => (
             <SearchOptionButton
               key={option.id}
-              name={option.name}
-              option={option}
-              isSelected={params.genres.includes(option.id)}
+              id={option.id}
+              label={option.name}
+              paramName={"themes"}
+              isSelected={params.themes.includes(option.id)}
               handleOptionChange={handleArrayOptionChange}
             />
           ))}
@@ -113,8 +138,9 @@ function AdvancedSearchTabGroup({
           {options.modes.map((option) => (
             <SearchOptionButton
               key={option.id}
-              name={option.name}
-              option={option}
+              id={option.id}
+              label={option.name}
+              paramName={"modes"}
               isSelected={params.modes.includes(option.id)}
               handleOptionChange={handleArrayOptionChange}
             />
@@ -122,7 +148,7 @@ function AdvancedSearchTabGroup({
         </div>
       )}
       {selectedTab === "Rating" && (
-        <div className="mt-4 flex gap-2 flex-wrap">
+        <div className="mt-4 flex gap-6 flex-wrap">
           <RatingInput
             label="Min Rating"
             value={params.minRating}
@@ -144,9 +170,10 @@ function AdvancedSearchTabGroup({
           {options.platforms.map((option) => (
             <SearchOptionButton
               key={option.id}
-              name={option.name}
-              option={option}
-              isSelected={params.genres.includes(option.id)}
+              id={option.id}
+              label={option.name}
+              paramName={"platforms"}
+              isSelected={params.platforms.includes(option.id)}
               handleOptionChange={handleArrayOptionChange}
             />
           ))}
@@ -155,7 +182,7 @@ function AdvancedSearchTabGroup({
       {selectedTab === "Year Released" && (
         <div className="mt-4">
           <YearSelector
-            selectedYear={params}
+            selectedYear={getYearFromDates()}
             handleYearChange={handleYearChange}
           />
         </div>

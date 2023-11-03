@@ -26,14 +26,9 @@ const AdvancedSearchPage = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  useEffect(() => {}, []);
-
-  const handleChange = (selectedOption, name) => {
-    setSearchParams({
-      ...searchParams,
-      [name]: selectedOption ? selectedOption.value : "",
-    });
-  };
+  useEffect(() => {
+    handleSearch();
+  }, [searchParams]);
 
   const handleSearch = async () => {
     // setIsLoading(true);
@@ -46,16 +41,17 @@ const AdvancedSearchPage = (props) => {
         },
         body: JSON.stringify({ searchParams }),
       });
-      console.log(await response.json());
-      // setSearchResults(data.data);
+      const games = await response.json();
+      console.log(games);
+      // setSearchResults(response);
     } catch (error) {
       console.error("Error fetching games", error);
     }
   };
 
   return (
-    <div className="max-w-2xl p-4">
-      <p className="text-2xl font-semibold w-full">Advanced Search</p>
+    <div className="mt-4 max-w-3xl px-2 md:px-4 xl:px-0">
+      <p className="text-2xl font-semibold">Advanced Search</p>
       <div className="">
         <AdvancedSearchTabGroup
           selectedTab={selectedTab}
@@ -65,8 +61,8 @@ const AdvancedSearchPage = (props) => {
           options={props}
         />
         <div className="flex">
-          <div className="w-60 h-60 bg-red-500"></div>
-          <div className="w-60 h-60 bg-red-500"></div>
+          {/* <div className="w-60 h-60 bg-red-500"></div>
+          <div className="w-60 h-60 bg-red-500"></div> */}
         </div>
       </div>
     </div>

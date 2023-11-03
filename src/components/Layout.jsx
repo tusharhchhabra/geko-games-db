@@ -12,7 +12,7 @@ const Layout = ({ children }) => {
   return (
     <main className="relative">
       <Navbar />
-      <div className={`p-16 flex justify-center ${inter.className}`}>
+      <div className={`py-16 xl:px-16 flex justify-center ${inter.className}`}>
         {children}
       </div>
       {isModalOpen && (

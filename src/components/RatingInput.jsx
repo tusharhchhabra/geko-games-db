@@ -6,7 +6,7 @@ function RatingInput({
   handleOptionChange,
 }) {
   return (
-    <div>
+    <div className="text-sm text-gray-400">
       <label htmlFor="email" className="text-md font-medium">
         {label}
       </label>
@@ -14,7 +14,7 @@ function RatingInput({
         className="w-20 mt-2 block border-none rounded-md py-2 pl-3 pr-10 text-sm leading-5 bg-gray-700/[0.3] text-white focus:ring-0"
         value={value || ""}
         placeholder={placeholder}
-        onChange={(event) => handleOptionChange(value, paramName)}
+        onChange={(e) => handleOptionChange(e.target.value, paramName)}
       />
     </div>
   );
