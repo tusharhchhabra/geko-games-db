@@ -80,6 +80,9 @@ const queries = {
     return `fields video_id; where game = ${gameID}; sort created_at desc; limit 1;`;
   },
 
+  genres: `fields id, name; limit 20; sort name asc;`,
+  themes: `fields id, name; limit 20; sort name asc;`,
+  modes: `fields id, name; limit 20; sort name asc;`,
   platforms: `fields id, name; limit 10; sort generation desc; where id = (6,48, 38, 9, 49, 12, 11, 130, 41, 20);`,
 
   topPlatforms: `fields id, name; limit 10; sort generation desc; where id = (6, 169, 167, 48, 38, 9, 49, 12, 11, 130, 41, 20);`,
