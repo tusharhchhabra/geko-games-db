@@ -41,7 +41,7 @@ function RenderGames({ games }) {
   return games.map((game) => {
     const gameVideo = videos[game.id];
     return (
-      <div key={game.id} className=" w-[200px] h-[400px] m-5">
+      <div key={game.id} className=" w-[200px] h-[300px] ml-5 ">
         {/* <h2>{game.name}</h2> */}
         <img
           loading="lazy"
@@ -49,7 +49,7 @@ function RenderGames({ games }) {
           alt={game.name}
           onMouseEnter={() => fetchVideo(game.id)}
           className={
-            gameVideo && game.id === hoveredGameId ? "hidden" : "block"
+            gameVideo && game.id === hoveredGameId ? "hidden" : "block "
           }
         />
         <div
