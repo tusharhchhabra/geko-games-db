@@ -4,13 +4,13 @@ Games DB is a comprehensive games database web application built using Next.js, 
 
 ## Features
 
-- **Search Functionality**: Quickly find games with a robust search feature.
-- **Filter Options**: Narrow down search results by platforms or themes.
-- **Game Details**: View extensive information about each game, including media content and ratings.
+- **Search Functionality**: Quickly find games using the persistent search bar.
+- **Categorization**: Narrow down games by platforms or themes.
+- **Game Details**: View extensive information about each game, including screenshots, trailers and ratings.
 - **Favorites List**: Save and manage a list of your favorite games.
-- **Responsive Design**: Enjoy a seamless experience on both desktop and mobile devices.
-- **User Authentication**: Securely log in and manage your favorites list.
-- **Styling with Tailwind CSS**: A modern and responsive design.
+- **Responsive Design**: Use on either desktop or your phone.
+- **User Authentication**: Create an account with your email and manage your favorites list.
+- **Modern, dynamic UI**: Made with love and care.
 
 ## Getting Started
 
@@ -33,7 +33,7 @@ Follow these instructions to set up Games DB locally for development and testing
    npm install
    ```
 3. **Set up environment variables**:
-   Copy the .env.example file to a new file named .env, and fill in the required API keys and database credentials.
+   Copy the .env.example file to a new file named .env.development.local, and fill in the required API keys and database credentials.
 
    ```makefile
     # .env
