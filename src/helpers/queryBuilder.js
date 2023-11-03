@@ -10,7 +10,7 @@ const buildQuery = ({
   limit = 10,
   offset = 0,
 }) => {
-  let query = `fields name, genres.name, themes.name, platforms.name, game_modes.name, first_release_date, total_rating, involved_companies.company.name;`;
+  let query = `fields name, genres.name, themes.name, platforms.name, game_modes.name, first_release_date, total_rating;`;
 
   const whereClauses = [];
 
@@ -66,3 +66,5 @@ const buildQuery = ({
 
   return query;
 };
+
+export default buildQuery;

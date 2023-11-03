@@ -1,15 +1,20 @@
 import fetchData from "@/helpers/fetchData";
+import buildQuery from "@/helpers/queryBuilder";
 import queries from "@/helpers/queryStrings";
 import React, { useState, useEffect } from "react";
 
 const AdvancedSearch = () => {
-  const [genres, setGenres] = useState([]);
-  const [themes, setThemes] = useState([]);
-  const [platforms, setPlatforms] = useState([]);
-  const [modes, setModes] = useState([]);
+  const [genres, setGenres] = useState([1]);
+  const [themes, setThemes] = useState([1]);
+  const [platforms, setPlatforms] = useState([1]);
+  const [modes, setModes] = useState([1]);
   const [ratings, setRatings] = useState([]);
   const [year, setYear] = useState([]);
+
   const [searchResults, setSearchResults] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const [searchParams, setSearchParams] = useState({
     year: null,
     genre: null,
@@ -29,12 +34,16 @@ const AdvancedSearch = () => {
   };
 
   const handleSearch = async () => {
-    try {
-      const res = await fetch("/api/advanced-search", { params: searchParams });
-      setSearchResults(res.data);
-    } catch (error) {
-      console.error("Error fetching games", error);
-    }
+    const query = buildQuery(searchParams);
+    console.log(query);
+    // setIsLoading(true);
+    // setError(null);
+    // try {
+    //   const res = await fetch("/api/advanced-search", { params: searchParams });
+    //   setSearchResults(res.data);
+    // } catch (error) {
+    //   console.error("Error fetching games", error);
+    // }
   };
 
   return (
@@ -105,7 +114,7 @@ export async function getServerSideProps() {
     await Promise.allSettled([
       fetchData(queries.genres, "genres"),
       fetchData(queries.themes, "themes"),
-      fetchData(queries.modes, "genres"),
+      fetchData(queries.modes, "game_modes"),
       fetchData(queries.platforms, "platforms"),
     ]);
 
