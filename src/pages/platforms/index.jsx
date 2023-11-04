@@ -154,9 +154,13 @@ const PlatformsGameList = ({
         setAllDataLoaded={setAllDataLoaded}
       />
       {filteredGamesFetched ? (
-        <GamesList setOfGames={filteredGames} />
+        <div className="w-full absolute left-10">
+          <GamesList setOfGames={filteredGames} />
+        </div>
       ) : (
-        <GamesList setOfGames={gameSets} />
+        <div className="w-full absolute left-10">
+          <GamesList setOfGames={gameSets} />
+        </div>
       )}
       {loading && (
         <p className="text-3xl font-bold text-gray-700 mt-4">
