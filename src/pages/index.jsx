@@ -66,13 +66,20 @@ const HomePage = ({ initialGameSets, initialThemes }) => {
   }, [handleScroll]);
 
   return (
-    <div className="w-full">
+    <div className="w-screen">
+      <img
+        alt="Featured-game"
+        src="/assets/rocketLeague.svg"
+        className="w-screen object-fill h-[650px] z-0 absolute top-10 left-0"
+      />
+      <div className="w-full absolute top-[700px]">
       <GamesList setOfGames={gameSets} />
       {loading && (
-        <p className="text-3xl font-bold text-gray-700 mt-4">
+        <p className="text-3xl font-bold text-gray-700 mt-4 z-5">
           Loading more games...
         </p>
       )}
+      </div>
     </div>
   );
 };
