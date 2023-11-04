@@ -65,7 +65,7 @@ function GameListItem({ games }) {
             clearTimeout(gameListRef.current);
           }}
           className={
-            gameVideo && game.id === hoveredGameId ? "hidden" : "block "
+            gameVideo && game.id === hoveredGameId ? "hidden" : "block rounded-lg "
           }
         />
 
