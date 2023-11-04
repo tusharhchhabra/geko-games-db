@@ -4,24 +4,30 @@ import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 
 const GamesList = ({ setOfGames }) => {
 
-  const sliderRefs = useRef(new Array(setOfGames.length));
+  const sliderRefs = useRef(new Array(setOfGames.length).fill(null));
 
-
-  const slide = (index, direction) => {
+const slide = (index, direction) => {
     const slider = sliderRefs.current[index];
     if (slider) {
-      const scrollAmount = direction === 'left' ? -300 : 300;
+      const scrollAmount = direction === 'left' ? -500 : 500;
       let newScrollPosition = slider.scrollLeft + scrollAmount;
-  
-      if (newScrollPosition >= slider.scrollWidth - slider.clientWidth) {
-        slider.scrollLeft = 0;
-      } else if (newScrollPosition <= 0) {
-        slider.scrollLeft = slider.scrollWidth - 2 * slider.clientWidth;
-      } else {
-        slider.scrollLeft = newScrollPosition;
+
+      if (direction === 'right' && newScrollPosition + slider.clientWidth > slider.scrollWidth) {
+        newScrollPosition = 0;
       }
+
+      if (direction === 'left' && newScrollPosition < 0) {
+        newScrollPosition = 1500;
+      }
+
+      slider.scrollTo({
+        left: newScrollPosition,
+        behavior: 'smooth'
+      });
     }
-  };
+};
+
+  
   
 
   return (
