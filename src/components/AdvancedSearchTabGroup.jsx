@@ -60,6 +60,7 @@ function AdvancedSearchTabGroup({
 
     const toDate = Math.floor(Date.UTC(parseInt(year) + 1, 0, 1) / 1000) - 1;
 
+    console.log(fromDate, toDate);
     setParams((prev) => {
       return { ...prev, fromDate, toDate };
     });
@@ -118,7 +119,7 @@ function AdvancedSearchTabGroup({
           />
         </ul>
       </div>
-      <div className="mt-6 h-56 sm:h-30 md:h-28">
+      <div className="mt-6 md:h-28">
         {selectedTab === "Genre" && (
           <div className="flex gap-2 flex-wrap">
             {options.genres.map((option) => (
@@ -195,6 +196,12 @@ function AdvancedSearchTabGroup({
         )}
         {selectedTab === "Year Released" && (
           <div className="mt-4">
+            <label
+              htmlFor="countries"
+              className="block mb-2 text-sm font-medium text-white"
+            >
+              Select Year
+            </label>
             <YearSelector
               selectedYear={getYearFromDates()}
               handleYearChange={handleYearChange}

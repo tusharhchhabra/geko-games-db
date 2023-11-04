@@ -25,7 +25,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-1.5 translate-y-1">
           <Image
             src="/logo.png"
-            className="w-full h-auto translate-y-1"
+            className="w-full h-auto translate-y-0.5"
             width={24}
             height={24}
             alt="logo"

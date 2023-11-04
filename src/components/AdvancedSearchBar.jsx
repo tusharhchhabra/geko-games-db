@@ -16,7 +16,7 @@ function AdvancedSearchBar({
       <input
         className="w-full max-w-sm mt-2 block border-none rounded-md py-2 pl-3 pr-10 text-sm leading-5 bg-gray-700/[0.3] text-white focus:ring-0"
         value={searchTerm || ""}
-        placeholder="Search..."
+        placeholder="Type something..."
         onChange={onChange}
       />
     </div>

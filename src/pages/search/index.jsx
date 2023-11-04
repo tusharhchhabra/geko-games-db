@@ -2,7 +2,7 @@ import AdvancedSearchTabGroup from "@/components/AdvancedSearchTabGroup";
 import SearchedGamesList from "@/components/SearchedGamesList";
 import fetchData from "@/helpers/fetchData";
 import queries from "@/helpers/queryStrings";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const AdvancedSearchPage = (props) => {
   const [searchParams, setSearchParams] = useState({
@@ -24,11 +24,17 @@ const AdvancedSearchPage = (props) => {
   const [selectedTab, setSelectedTab] = useState("Genre");
 
   const [searchResults, setSearchResults] = useState([]);
+  const isMounted = useRef(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    handleSearch();
+    console.log(searchParams);
+    if (isMounted.current) {
+      handleSearch();
+    } else {
+      isMounted.current = true;
+    }
   }, [searchParams]);
 
   const handleSearch = async () => {
@@ -51,7 +57,7 @@ const AdvancedSearchPage = (props) => {
   };
 
   return (
-    <div className="mt-4 mb-20 max-w-4xl w-full px-6 md:px-4 xl:px-0">
+    <div className="mt-10 mb-20 max-w-4xl w-full px-6 xl:px-0">
       <p className="text-2xl sm:text-4xl font-semibold">Advanced Search</p>
       <div className="">
         <AdvancedSearchTabGroup
@@ -61,7 +67,9 @@ const AdvancedSearchPage = (props) => {
           setParams={setSearchParams}
           options={props}
         />
-        <SearchedGamesList games={searchResults} />
+        <div className="-mt-4 sm:mt-0">
+          <SearchedGamesList games={searchResults} />
+        </div>
       </div>
     </div>
   );

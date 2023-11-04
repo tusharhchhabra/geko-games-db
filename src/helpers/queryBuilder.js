@@ -38,9 +38,7 @@ const buildQuery = ({
 
   if (fromDate && toDate) {
     whereClauses.push(
-      `first_release_date >= ${
-        new Date(fromDate).getTime() / 1000
-      } & first_release_date <= ${new Date(toDate).getTime() / 1000}`
+      `first_release_date >= ${fromDate} & first_release_date <= ${toDate}`
     );
   } else if (fromDate) {
     whereClauses.push(

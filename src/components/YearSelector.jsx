@@ -4,12 +4,6 @@ function YearSelector({ selectedYear, handleYearChange }) {
 
   return (
     <div className="relative">
-      {/* <label
-        for="countries"
-        className="block mb-2 text-sm font-medium text-white"
-      >
-        Select Year
-      </label> */}
       <select
         id="year"
         value={selectedYear}
