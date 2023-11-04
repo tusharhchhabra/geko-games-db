@@ -49,7 +49,7 @@ function GameListItem({ games }) {
     return (
       <div
         key={game.id}
-        className="w-[264px] h-[352px] inline-block cursor-pointer relative p-2 ml-10"
+        className="w-[240px] h-[352px] inline-block cursor-pointer relative p-2 ml-10"
       >
         <img
           id={game.id}
@@ -59,7 +59,7 @@ function GameListItem({ games }) {
           onMouseEnter={() => {
             gameListRef.current = setTimeout(() => {
               fetchVideo(game.id);
-            }, 750);
+            }, 1200);
           }}
           onMouseLeave={() => {
             clearTimeout(gameListRef.current);
