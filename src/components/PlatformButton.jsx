@@ -11,7 +11,7 @@ const PlatformButton = ({ platforms, setSelectedPlatform, setGameThemesId, setGa
 
 
   return (
-    <div className="flex space-x-4 absolute left-11">
+    <div className="flex space-x-4 absolute left-11 top-16">
       {platforms.map((platform, index) => (
         <button
           onClick={() => selectPlatform(platform.id)}
