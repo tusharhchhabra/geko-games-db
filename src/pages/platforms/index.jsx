@@ -144,7 +144,7 @@ const PlatformsGameList = ({
 
   // Render JSX
   return (
-    <div className="p-10">
+    <div className="p-10 w-full">
       <PlatformButton
         platforms={initialPlatforms}
         setSelectedPlatform={setSelectedPlatform}

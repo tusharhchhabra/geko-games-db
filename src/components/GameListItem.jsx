@@ -1,10 +1,14 @@
-import { set } from "lodash";
 import React, { useState, useRef } from "react";
+import Link from "next/link";
+import { Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
 
 function GameListItem({ games }) {
   const [videos, setVideos] = useState({});
   const [hoveredGameId, setHoveredGameId] = useState(null);
   const gameListRef = useRef(null);
+
 
   async function fetchVideo(gameId) {
     try {
@@ -57,7 +61,7 @@ function GameListItem({ games }) {
               fetchVideo(game.id);
             }, 750);
           }}
-          onMouseOut={() => {
+          onMouseLeave={() => {
             clearTimeout(gameListRef.current);
           }}
           className={
@@ -73,19 +77,31 @@ function GameListItem({ games }) {
           }}
         >
           {gameVideo && (
-            <iframe
-              className={
-                gameVideo && game.id === hoveredGameId
-                  ? "absolute top-0 bottom-0 left-0 right-0 z-10"
-                  : "hidden"
-              }
-              width="560"
-              height="400"
-              src={`https://www.youtube.com/embed/${gameVideo.video_id}?si=rKISgJFVYRGMtTwG&amp;start=10&autoplay=1&mute=1&controls=0&showinfo=0`}
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            ></iframe>
+            <div className="absolute top-0 bottom-0 left-0 right-0 z-10 w-[425px] h-[332px] bg-violet-500 rounded-lg">
+              <iframe
+                className={
+                  gameVideo && game.id === hoveredGameId
+                    ? "absolute top-0 bottom-0 left-0 right-0 z-10 rounded-lg"
+                    : "hidden"
+                }
+                width="425"
+                height="275"
+                src={`https://www.youtube.com/embed/${gameVideo.video_id}?si=rKISgJFVYRGMtTwG&amp;start=10&autoplay=1&mute=1&controls=0&showinfo=0`}
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              ></iframe>
+              <p
+              className="absolute bottom-4 left-5 text-white"
+              >Heart Icon</p>
+              <Link
+              href={`/games/${game.id}`}>
+              <button
+              className={`text-white absolute bottom-2 right-5 ${inter.className} bg-black px-4 py-2 rounded-2xl hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black`}
+              >Game Details
+              </button>
+              </Link>
+            </div>
           )}
           {/* <div
             className={
