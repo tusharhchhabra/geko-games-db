@@ -1,4 +1,5 @@
 import AdvancedSearchTabGroup from "@/components/AdvancedSearchTabGroup";
+import SearchedGamesList from "@/components/SearchedGamesList";
 import fetchData from "@/helpers/fetchData";
 import queries from "@/helpers/queryStrings";
 import React, { useState, useEffect } from "react";
@@ -41,16 +42,16 @@ const AdvancedSearchPage = (props) => {
         },
         body: JSON.stringify({ searchParams }),
       });
-      const games = await response.json();
-      console.log(games);
-      // setSearchResults(response);
+      const data = await response.json();
+      console.log(data.games);
+      setSearchResults(data.games);
     } catch (error) {
       console.error("Error fetching games", error);
     }
   };
 
   return (
-    <div className="mt-4 max-w-3xl px-2 md:px-4 xl:px-0">
+    <div className="mt-4 max-w-3xl w-full px-6 md:px-4 xl:px-0">
       <p className="text-2xl font-semibold">Advanced Search</p>
       <div className="">
         <AdvancedSearchTabGroup
@@ -60,10 +61,7 @@ const AdvancedSearchPage = (props) => {
           setParams={setSearchParams}
           options={props}
         />
-        <div className="flex">
-          {/* <div className="w-60 h-60 bg-red-500"></div>
-          <div className="w-60 h-60 bg-red-500"></div> */}
-        </div>
+        <SearchedGamesList games={searchResults} />
       </div>
     </div>
   );
@@ -74,9 +72,9 @@ export default AdvancedSearchPage;
 export async function getServerSideProps() {
   const [genresPromise, themesPromise, modesPromise, platformsPromise] =
     await Promise.allSettled([
-      fetchData(queries.genres, "genres"),
-      fetchData(queries.themes, "themes"),
-      fetchData(queries.modes, "game_modes"),
+      fetchData(queries.genresForSearch, "genres"),
+      fetchData(queries.themesForSearch, "themes"),
+      fetchData(queries.modesForSearch, "game_modes"),
       fetchData(queries.platforms, "platforms"),
     ]);
 

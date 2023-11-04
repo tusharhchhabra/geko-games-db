@@ -12,15 +12,12 @@ export default async function advancedSearch(req, res) {
   const { searchParams } = req.body;
 
   const gamesQuery = buildQuery(searchParams);
-
   const games = await fetchData(gamesQuery, "games");
-  const thumbnails = await fetchData(queries.coverArtForGames(games), "covers");
 
-  const gamesWithThumbnails = queries.gamesWithCoverArt(
+  const gamesWithSizedCoverUrl = queries.searchedGamesWithSizedCovers(
     games,
-    thumbnails,
-    "t_cover_small"
+    "t_cover_big"
   );
 
-  res.send({ gamesWithThumbnails });
+  res.send({ games: gamesWithSizedCoverUrl });
 }

@@ -12,7 +12,7 @@ const buildQuery = ({
   offset,
 }) => {
   console.log("NAMME", name);
-  let query = `fields name, genres.name, themes.name, platforms.name, game_modes.name, first_release_date, total_rating;`;
+  let query = `fields name, cover.url, genres.name, themes.name, platforms.name, game_modes.name, first_release_date, total_rating;`;
 
   const whereClauses = [];
 

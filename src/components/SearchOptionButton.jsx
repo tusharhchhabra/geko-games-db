@@ -5,14 +5,12 @@ function SearchOptionButton({
   isSelected,
   handleOptionChange,
 }) {
-  console.log(isSelected);
-
   return (
     <button
       onClick={() => handleOptionChange(id, paramName)}
       className={`px-3 py-1 text-left flex-grow-0 ${
-        isSelected ? "bg-violet-500" : "bg-gray-800"
-      } rounded-md`}
+        isSelected ? "bg-violet-600" : "bg-gray-800"
+      } rounded-md border-[0.5px] border-gray-700`}
     >
       {label}
     </button>

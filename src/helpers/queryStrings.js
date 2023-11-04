@@ -61,17 +61,24 @@ const queries = {
     return `fields game, url; where game = ${game.id};`;
   },
 
-  gamesWithCoverArt: function top10GamesWithCoverArt(
-    games,
-    covers,
-    coverFormat
-  ) {
+  gamesWithCoverArt: function (games, covers, coverFormat) {
     return games.map((game) => {
       const cover = covers.find((cover) => cover.game === game.id);
       const coverUrl = cover ? adjustImageUrl(cover.url, coverFormat) : null;
       return {
         ...game,
         coverUrl,
+      };
+    });
+  },
+
+  searchedGamesWithSizedCovers: function (games, coverFormat) {
+    return games.map((game) => {
+      if (!game.cover) return game;
+      const formattedUrl = adjustImageUrl(game.cover.url, coverFormat);
+      return {
+        ...game,
+        cover: { ...game.cover, url: formattedUrl },
       };
     });
   },
@@ -83,6 +90,10 @@ const queries = {
   genres: `fields id, name; limit 20; sort name asc;`,
   themes: `fields id, name; limit 20; sort name asc;`,
   modes: `fields id, name; limit 20; sort name asc;`,
+
+  genresForSearch: `fields id, name; limit 20; sort name asc; where id = (31,33,35,4,32,36,7,8,2,9,26,10,11,12,5,14,15);`,
+  themesForSearch: `fields id, name; limit 20; sort name asc; where id = (1,28,27,31,34,17,22,19,43,32,38,44,33,18,23,21);`,
+  modesForSearch: `fields id, name; limit 20; sort name asc;`,
   platforms: `fields id, name; limit 10; sort generation desc; where id = (6,48, 38, 9, 49, 12, 11, 130, 41, 20);`,
 
   topPlatforms: `fields id, name; limit 10; sort generation desc; where id = (6, 169, 167, 48, 38, 9, 49, 12, 11, 130, 41, 20);`,

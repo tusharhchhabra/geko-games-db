@@ -10,6 +10,9 @@ const nextConfig = {
       },
     ];
   },
+  images: {
+    domains: ["images.igdb.com"],
+  },
 };
 
 module.exports = nextConfig;

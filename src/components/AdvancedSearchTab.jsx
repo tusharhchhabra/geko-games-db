@@ -7,7 +7,7 @@ function AdvancedSearchTab({ name, isSelected, setSelected, selectionCount }) {
           isSelected
             ? "text-violet-500 border-violet-500"
             : "hover:text-gray-300 hover:border-gray-300"
-        } border-transparent rounded-t-lg`}
+        } border-transparent rounded-t-lg transition-colors duration-150`}
       >
         {name}
         <div
