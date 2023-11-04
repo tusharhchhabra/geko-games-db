@@ -49,7 +49,7 @@ function GameListItem({ games }) {
     return (
       <div
         key={game.id}
-        className="w-[240px] h-[352px] inline-block cursor-pointer relative p-2 ml-10"
+        className="w-[240px] h-[352px] inline-block cursor-pointer relative p-2"
       >
         <img
           id={game.id}

@@ -33,14 +33,14 @@ const GamesList = ({ setOfGames }) => {
     <>
       {setOfGames.map((gameSet, index) => (
         <div key={index}>
-          <h2 className="text-violet-500 font-bold p-4 ml-10 text-4xl [text-shadow:2px_2px_3px_var(--tw-shadow-color)] shadow-black ">
+          <h2 className="text-violet-500 font-bold p-4 ml-10 mt-5 text-4xl [text-shadow:2px_2px_3px_var(--tw-shadow-color)] shadow-black ">
             {gameSet.title}
           </h2>
 
           <div className="relative flex items-center group">
             <MdChevronLeft
               onClick={() => slide(index, "left")}
-              className="bg-white rounded-full absolute opacity-50 hover:opacity-100 cursor-pointer z-10 left-0 text-black"
+              className="bg-white rounded-full absolute opacity-50 hover:opacity-100 cursor-pointer z-10 left-[-37px] text-black"
               size={70}
             />
             <div
