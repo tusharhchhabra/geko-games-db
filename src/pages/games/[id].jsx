@@ -21,11 +21,13 @@ function GameDetailsPage({ game }) {
           ))}
         </div>
       </div>
-      <div className="flex gap-2">
-        {game.platforms.map((platform) => (
-          <span key={platform.id}>{platform.name}</span>
-        ))}
-      </div>
+      {game.platforms && (
+        <div className="flex gap-2">
+          {game.platforms.map((platform) => (
+            <span key={platform.id}>{platform.name}</span>
+          ))}
+        </div>
+      )}
       <div className="flex gap-2">
         {game.screenshots.map((screenshot) => (
           <img key={screenshot.id} src={screenshot.url} loading="lazy" />

@@ -1,3 +1,5 @@
+import { useState } from "react";
+import AdvancedSearchBar from "./AdvancedSearchBar";
 import AdvancedSearchTab from "./AdvancedSearchTab";
 import RatingInput from "./RatingInput";
 import SearchOptionButton from "./SearchOptionButton";
@@ -10,6 +12,12 @@ function AdvancedSearchTabGroup({
   setParams,
   options,
 }) {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearchTermChange = () => {
+    setParams({ ...params, name: searchTerm });
+  };
+
   const handleOptionChange = (selectedOption, paramName) => {
     setParams({
       ...params,
@@ -65,8 +73,13 @@ function AdvancedSearchTabGroup({
 
   return (
     <div className="w-full">
+      <AdvancedSearchBar
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        handleSearchTermChange={handleSearchTermChange}
+      />
       <div className="font-medium text-center text-gray-400 border-b border-gray-700">
-        <ul className="mt-2 flex flex-wrap -mb-px">
+        <ul className="mt-4 flex flex-wrap -mb-px gap-1">
           <AdvancedSearchTab
             name="Genre"
             isSelected={selectedTab === "Genre"}
@@ -105,88 +118,90 @@ function AdvancedSearchTabGroup({
           />
         </ul>
       </div>
-      {selectedTab === "Genre" && (
-        <div className="mt-4 flex gap-2 flex-wrap">
-          {options.genres.map((option) => (
-            <SearchOptionButton
-              key={option.id}
-              id={option.id}
-              label={option.name}
-              paramName={"genres"}
-              isSelected={params.genres.includes(option.id)}
-              handleOptionChange={handleArrayOptionChange}
+      <div className="mt-6 h-56 sm:h-30 md:h-28">
+        {selectedTab === "Genre" && (
+          <div className="flex gap-2 flex-wrap">
+            {options.genres.map((option) => (
+              <SearchOptionButton
+                key={option.id}
+                id={option.id}
+                label={option.name}
+                paramName={"genres"}
+                isSelected={params.genres.includes(option.id)}
+                handleOptionChange={handleArrayOptionChange}
+              />
+            ))}
+          </div>
+        )}
+        {selectedTab === "Theme" && (
+          <div className="mt-4 flex gap-2 flex-wrap">
+            {options.themes.map((option) => (
+              <SearchOptionButton
+                key={option.id}
+                id={option.id}
+                label={option.name}
+                paramName={"themes"}
+                isSelected={params.themes.includes(option.id)}
+                handleOptionChange={handleArrayOptionChange}
+              />
+            ))}
+          </div>
+        )}
+        {selectedTab === "Mode" && (
+          <div className="mt-4 flex gap-2 flex-wrap">
+            {options.modes.map((option) => (
+              <SearchOptionButton
+                key={option.id}
+                id={option.id}
+                label={option.name}
+                paramName={"modes"}
+                isSelected={params.modes.includes(option.id)}
+                handleOptionChange={handleArrayOptionChange}
+              />
+            ))}
+          </div>
+        )}
+        {selectedTab === "Rating" && (
+          <div className="mt-4 flex gap-6 flex-wrap">
+            <RatingInput
+              label="Min Rating"
+              value={params.minRating}
+              placeholder={"0"}
+              paramName={"minRating"}
+              handleOptionChange={handleOptionChange}
             />
-          ))}
-        </div>
-      )}
-      {selectedTab === "Theme" && (
-        <div className="mt-4 flex gap-2 flex-wrap">
-          {options.themes.map((option) => (
-            <SearchOptionButton
-              key={option.id}
-              id={option.id}
-              label={option.name}
-              paramName={"themes"}
-              isSelected={params.themes.includes(option.id)}
-              handleOptionChange={handleArrayOptionChange}
+            <RatingInput
+              label="Max Rating"
+              value={params.maxRating}
+              placeholder={"10"}
+              paramName={"maxRating"}
+              handleOptionChange={handleOptionChange}
             />
-          ))}
-        </div>
-      )}
-      {selectedTab === "Mode" && (
-        <div className="mt-4 flex gap-2 flex-wrap">
-          {options.modes.map((option) => (
-            <SearchOptionButton
-              key={option.id}
-              id={option.id}
-              label={option.name}
-              paramName={"modes"}
-              isSelected={params.modes.includes(option.id)}
-              handleOptionChange={handleArrayOptionChange}
+          </div>
+        )}
+        {selectedTab === "Platform" && (
+          <div className="mt-4 flex gap-2 flex-wrap">
+            {options.platforms.map((option) => (
+              <SearchOptionButton
+                key={option.id}
+                id={option.id}
+                label={option.name}
+                paramName={"platforms"}
+                isSelected={params.platforms.includes(option.id)}
+                handleOptionChange={handleArrayOptionChange}
+              />
+            ))}
+          </div>
+        )}
+        {selectedTab === "Year Released" && (
+          <div className="mt-4">
+            <YearSelector
+              selectedYear={getYearFromDates()}
+              handleYearChange={handleYearChange}
             />
-          ))}
-        </div>
-      )}
-      {selectedTab === "Rating" && (
-        <div className="mt-4 flex gap-6 flex-wrap">
-          <RatingInput
-            label="Min Rating"
-            value={params.minRating}
-            placeholder={"0"}
-            paramName={"minRating"}
-            handleOptionChange={handleOptionChange}
-          />
-          <RatingInput
-            label="Max Rating"
-            value={params.maxRating}
-            placeholder={"10"}
-            paramName={"maxRating"}
-            handleOptionChange={handleOptionChange}
-          />
-        </div>
-      )}
-      {selectedTab === "Platform" && (
-        <div className="mt-4 flex gap-2 flex-wrap">
-          {options.platforms.map((option) => (
-            <SearchOptionButton
-              key={option.id}
-              id={option.id}
-              label={option.name}
-              paramName={"platforms"}
-              isSelected={params.platforms.includes(option.id)}
-              handleOptionChange={handleArrayOptionChange}
-            />
-          ))}
-        </div>
-      )}
-      {selectedTab === "Year Released" && (
-        <div className="mt-4">
-          <YearSelector
-            selectedYear={getYearFromDates()}
-            handleYearChange={handleYearChange}
-          />
-        </div>
-      )}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

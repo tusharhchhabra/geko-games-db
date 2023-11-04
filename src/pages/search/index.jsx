@@ -51,8 +51,8 @@ const AdvancedSearchPage = (props) => {
   };
 
   return (
-    <div className="mt-4 max-w-3xl w-full px-6 md:px-4 xl:px-0">
-      <p className="text-2xl font-semibold">Advanced Search</p>
+    <div className="mt-4 mb-20 max-w-4xl w-full px-6 md:px-4 xl:px-0">
+      <p className="text-2xl sm:text-4xl font-semibold">Advanced Search</p>
       <div className="">
         <AdvancedSearchTabGroup
           selectedTab={selectedTab}
