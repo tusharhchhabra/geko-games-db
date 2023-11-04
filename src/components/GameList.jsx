@@ -8,7 +8,7 @@ const GamesList = ({ setOfGames }) => {
   const slide = (index, direction) => {
     const slider = sliderRefs.current[index];
     if (slider) {
-      const scrollAmount = direction === "left" ? -400 : 400;
+      const scrollAmount = direction === "left" ? -250 : 250;
       let newScrollPosition = slider.scrollLeft + scrollAmount;
 
       if (
@@ -19,7 +19,7 @@ const GamesList = ({ setOfGames }) => {
       }
 
       if (direction === "left" && newScrollPosition < 0) {
-        newScrollPosition = 1200;
+        newScrollPosition = 800;
       }
 
       slider.scrollTo({
@@ -33,7 +33,7 @@ const GamesList = ({ setOfGames }) => {
     <>
       {setOfGames.map((gameSet, index) => (
         <div key={index}>
-          <h2 className="text-violet-500 font-bold p-4 ml-10 mt-5 text-4xl [text-shadow:2px_2px_3px_var(--tw-shadow-color)] shadow-black ">
+          <h2 className="text-violet-500 font-bold p-2 ml-10 mt-5 text-4xl [text-shadow:2px_2px_3px_var(--tw-shadow-color)] shadow-black ">
             {gameSet.title}
           </h2>
 
