@@ -23,7 +23,7 @@ export default async function gptGames (req, res) {
 
   const gamesObject = {
     games: gamesWithCovers,
-    title: "AI Suggested Games"
+    title: "Games We Think You'll Like"
   };
 
   res.send(gamesObject);
