@@ -33,7 +33,12 @@ const GamesList = ({ setOfGames }) => {
     <>
       {setOfGames.map((gameSet, index) => (
         <div key={index}>
-          <h2 className="text-violet-500 font-bold p-2 ml-10 mt-5 text-4xl [text-shadow:2px_2px_3px_var(--tw-shadow-color)] shadow-black ">
+          <h2 className="text-violet-500 font-bold   [text-shadow:2px_2px_3px_var(--tw-shadow-color)] shadow-black
+          lg:text-4xl lg:ml-10 lg:mt-5 lg:p-2
+          md:text-3xl md:ml-5 md:mt-5 md:p-2
+          sm:text-2xl sm:ml-5 sm:mt-5 sm:p-1
+          text-xl ml-5 mt-0 p-0
+          ">
             {gameSet.title}
           </h2>
 
