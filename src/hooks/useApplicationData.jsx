@@ -34,9 +34,7 @@ function reducer(state, action) {
 }
 
 // should take in userId
-const useApplicationData = () => {
-  const userId = 1;
-
+const useApplicationData = (userId) => {
   const initialState = {
     favourites: [],
   };
@@ -44,13 +42,12 @@ const useApplicationData = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    // should take in userId
+    if (!userId) {
+      return;
+    }
     const fetchFavourites = async () => {
-      let userId = 1;
       try {
-        const response = await fetch(
-          `/api/fetchFavourites?userId=${encodeURIComponent(userId)}`
-        );
+        const response = await fetch(`/api/fetchFavourites?userId=${userId}`);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -68,7 +65,7 @@ const useApplicationData = () => {
     }
   }, [userId]);
 
-  const toggleFavourite = async (userId, gameId) => {
+  const toggleFavourite = async (gameId) => {
     const isFavourite = state.favourites.some((fav) => fav.game_id === gameId);
     const endpoint = isFavourite
       ? "/api/deleteFavourite"

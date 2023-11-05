@@ -17,10 +17,10 @@ function FavouritesListItem({ games }) {
     return state.favourites.some((favourite) => favourite.game_id === gameId);
   };
 
-  const handleFavouriteClick = (gameId, userId) => {
+  const handleFavouriteClick = (gameId) => {
     setIsUpdating(true);
     isFavourite(gameId);
-    toggleFavourite(userId, gameId)
+    toggleFavourite(gameId)
       .then(() => {
         setIsUpdating(false);
       })
@@ -36,7 +36,7 @@ function FavouritesListItem({ games }) {
         key={game.id}
         className="m-6 p-4 transform transition-transform duration-300 hover:scale-105 rounded-lg shadow-md hover:shadow-lg"
       >
-        <div onClick={() => handleFavouriteClick(game.id, 1)}>
+        <div onClick={() => handleFavouriteClick(game.id)}>
           {isFavourite(game.id) ? heartFilled : heart}
         </div>
         <Link

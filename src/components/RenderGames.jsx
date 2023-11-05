@@ -2,11 +2,13 @@ import React, { useState, useContext } from "react";
 import FavouritesContext from "@/context/FavouritesContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { AuthContext } from "@/context/AuthContext";
 
 function RenderGames({ games }) {
   const [videos, setVideos] = useState({});
   const [hoveredGameId, setHoveredGameId] = useState(null);
   const { toggleFavourite, state } = useContext(FavouritesContext);
+  const { user } = useContext(AuthContext);
   const [isUpdating, setIsUpdating] = useState(false);
 
   const heart = <FontAwesomeIcon icon={faHeart} size="lg" />;
@@ -48,10 +50,10 @@ function RenderGames({ games }) {
     setHoveredGameId(null);
   }
 
-  const handleFavouriteClick = (gameId, userId) => {
+  const handleFavouriteClick = (gameId) => {
     setIsUpdating(true);
     isFavourite(gameId);
-    toggleFavourite(userId, gameId)
+    toggleFavourite(gameId)
       .then(() => {
         setIsUpdating(false);
       })
@@ -65,9 +67,11 @@ function RenderGames({ games }) {
     const gameVideo = videos[game.id];
     return (
       <div key={game.id} className="h-[400px]">
-        <div onClick={() => handleFavouriteClick(game.id, 1)}>
-          {isFavourite(game.id) ? heartFilled : heart}
-        </div>
+        {user && (
+          <div onClick={() => handleFavouriteClick(game.id)}>
+            {isFavourite(game.id) ? heartFilled : heart}
+          </div>
+        )}
         <h2>{game.name}</h2>
         <img
           loading="lazy"
