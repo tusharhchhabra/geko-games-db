@@ -12,10 +12,8 @@ function AdvancedSearchTabGroup({
   setParams,
   options,
 }) {
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const handleSearchTermChange = () => {
-    setParams({ ...params, name: searchTerm });
+  const handleSearchTermChange = (e) => {
+    setParams({ ...params, name: e.target.value });
   };
 
   const handleOptionChange = (selectedOption, paramName) => {
@@ -75,8 +73,7 @@ function AdvancedSearchTabGroup({
   return (
     <div className="w-full">
       <AdvancedSearchBar
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
+        searchTerm={params.name}
         handleSearchTermChange={handleSearchTermChange}
       />
       <div className="font-medium text-center text-gray-400 border-b border-gray-700">

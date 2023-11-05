@@ -2,7 +2,8 @@ import AdvancedSearchTabGroup from "@/components/AdvancedSearchTabGroup";
 import SearchedGamesList from "@/components/SearchedGamesList";
 import fetchData from "@/helpers/fetchData";
 import queries from "@/helpers/queryStrings";
-import React, { useState, useEffect, useRef } from "react";
+import { useDebounce } from "@/hooks/useDebounce";
+import { useState, useRef, useEffect } from "react";
 
 const AdvancedSearchPage = (props) => {
   const [searchParams, setSearchParams] = useState({
@@ -13,8 +14,6 @@ const AdvancedSearchPage = (props) => {
     modes: [],
     fromDate: "",
     toDate: "",
-    // minRating: 0,
-    // maxRating: 10,
     developers: [],
     publishers: [],
     limit: 30,
@@ -28,33 +27,39 @@ const AdvancedSearchPage = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const debouncedSearchParams = useDebounce(searchParams, 400);
+
   useEffect(() => {
-    console.log(searchParams);
+    const handleSearch = async (params) => {
+      setIsLoading(true);
+      setError(null);
+      if (params) {
+        console.log(params);
+        try {
+          const response = await fetch(`/api/advanced-search`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ searchParams: params }),
+          });
+          const data = await response.json();
+          console.log(data.games);
+          setSearchResults(data.games);
+        } catch (error) {
+          console.error("Error fetching games", error);
+        }
+      }
+      setIsLoading(false);
+      setError(null);
+    };
+
     if (isMounted.current) {
-      handleSearch();
+      handleSearch(debouncedSearchParams);
     } else {
       isMounted.current = true;
     }
-  }, [searchParams]);
-
-  const handleSearch = async () => {
-    // setIsLoading(true);
-    // setError(null);
-    try {
-      const response = await fetch(`/api/advanced-search`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ searchParams }),
-      });
-      const data = await response.json();
-      console.log(data.games);
-      setSearchResults(data.games);
-    } catch (error) {
-      console.error("Error fetching games", error);
-    }
-  };
+  }, [debouncedSearchParams]);
 
   return (
     <div className="mt-10 mb-20 max-w-4xl w-full px-6 xl:px-0">
