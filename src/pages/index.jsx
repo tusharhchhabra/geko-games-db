@@ -16,6 +16,7 @@ const HomePage = ({ initialGameSets, initialThemes }) => {
   const [gameThemes, setGameThemes] = useState(() =>
     extractNameAsAnArray(initialThemes)
   );
+  
 
   const fetchMoreGames = useCallback(async () => {
     if (!gameThemesId.length && !gameThemes.length) {
