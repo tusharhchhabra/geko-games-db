@@ -35,7 +35,6 @@ export default function AuthModal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-      console.log("validated");
       if (isLogin) {
         const response = await fetch("/api/login", {
           method: "POST",
@@ -65,8 +64,6 @@ export default function AuthModal() {
           const user = await response.json();
           setUser(user);
           closeModal();
-        } else {
-          console.log("Login failed");
         }
       }
     }
