@@ -12,9 +12,6 @@ const heartFilled = (
 function FavouritesListItem({ games }) {
   const { toggleFavourite, state } = useContext(FavouritesContext);
   const [isUpdating, setIsUpdating] = useState(false);
-
-  
-
   const isFavourite = (gameId) => {
     return state.favourites.some((favourite) => favourite.game_id === gameId);
   };
@@ -32,18 +29,16 @@ function FavouritesListItem({ games }) {
       });
   };
 
-
-
   return games.map((game) => {
     return (
       <div key={game.id} className="inline-block cursor-pointer relative p-2">
         <div>
-            <div
-              onClick={() => handleFavouriteClick(game.id, 1)}
-              className="absolute top-8 left-9 z-10"
-            >
-              {isFavourite(game.id) ? heartFilled : heart}
-            </div>
+          <div
+            onClick={() => handleFavouriteClick(game.id)}
+            className="absolute top-8 left-9 z-10"
+          >
+            {isFavourite(game.id) ? heartFilled : heart}
+          </div>
           <Link href={`/games/${game.id}`} className="">
             <img
               loading="lazy"
@@ -53,7 +48,6 @@ function FavouritesListItem({ games }) {
             />
           </Link>
         </div>
-        {/* <h2 className="text-white text-2xl mb-4">{game.name}</h2> */}
       </div>
     );
   });

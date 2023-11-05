@@ -69,11 +69,6 @@ function GameListItem({ games }) {
       });
   };
 
-
-  const handleClick = () => {
-    console.log("CLICKED!!!");
-  };
-
   return games.map((game) => {
     const gameVideo = videos[game.id];
     return (
@@ -82,12 +77,12 @@ function GameListItem({ games }) {
         className="w-[240px] h-[352px] inline-block cursor-pointer relative p-2"
       >
         {user && (
-        <div
-          onClick={() => handleFavouriteClick(game.id, 1)}
-          className="absolute top-2.5 left-3.5"
-        >
-          {isFavourite(game.id) ? heartFilled : heart}
-        </div>
+          <div
+            onClick={() => handleFavouriteClick(game.id)}
+            className="absolute top-2.5 left-3.5"
+          >
+            {isFavourite(game.id) ? heartFilled : heart}
+          </div>
         )}
         <img
           id={game.id}
@@ -111,7 +106,6 @@ function GameListItem({ games }) {
 
         <div
           className="relative w-[560px] h-[400px]"
-          onClick={handleClick}
           onMouseLeave={() => {
             clearVideo(game.id);
           }}
@@ -132,49 +126,36 @@ function GameListItem({ games }) {
                 allowFullScreen
               ></iframe>
               <Link href={`/games/${game.id}`}>
-                {/* <button
-                  className={`text-white absolute bottom-2 right-5 bg-black px-4 py-2 rounded-2xl hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black`}
-                >
-                  Game Details
-                </button> */}
                 <div className="absolute bottom-1 right-3">
-                <button class="relative cursor-pointer opacity-90 hover:opacity-100 transition-opacity p-[2px] bg-black rounded-[16px] active:scale-95">
-                  <span class="w-full h-full flex items-center gap-2 px-2 py-2 bg-black text-white rounded-[14px] bg-gradient-to-t from-black to-black text-lg font-bold">
-                    <svg
-                      stroke-width="2"
-                      stroke-linejoin="round"
-                      stroke-linecap="round"
-                      stroke="currentColor"
-                      fill="none"
-                      class="w-5 h-5"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M8 13V9m-2 2h4m5-2v.001M18 12v.001m4-.334v5.243a3.09 3.09 0 0 1-5.854 1.382L16 18a3.618 3.618 0 0 0-3.236-2h-1.528c-1.37 0-2.623.774-3.236 2l-.146.292A3.09 3.09 0 0 1 2 16.91v-5.243A6.667 6.667 0 0 1 8.667 5h6.666A6.667 6.667 0 0 1 22 11.667Z"></path>
-                    </svg>
-                    More Details
-                  </span>
-                </button>
-
+                  <button class="relative cursor-pointer opacity-90 hover:opacity-100 transition-opacity p-[2px] bg-black rounded-[16px] active:scale-95">
+                    <span class="w-full h-full flex items-center gap-2 px-2 py-2 bg-black text-white rounded-[14px] bg-gradient-to-t from-black to-black text-lg font-bold">
+                      <svg
+                        stroke-width="2"
+                        stroke-linejoin="round"
+                        stroke-linecap="round"
+                        stroke="currentColor"
+                        fill="none"
+                        class="w-5 h-5"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M8 13V9m-2 2h4m5-2v.001M18 12v.001m4-.334v5.243a3.09 3.09 0 0 1-5.854 1.382L16 18a3.618 3.618 0 0 0-3.236-2h-1.528c-1.37 0-2.623.774-3.236 2l-.146.292A3.09 3.09 0 0 1 2 16.91v-5.243A6.667 6.667 0 0 1 8.667 5h6.666A6.667 6.667 0 0 1 22 11.667Z"></path>
+                      </svg>
+                      More Details
+                    </span>
+                  </button>
                 </div>
               </Link>
               {user && (
-              <div
-                onClick={() => handleFavouriteClick(game.id, 1)}
-                className="absolute bottom-4 left-5"
-              >
-                {isFavourite(game.id) ? heartFilledBig : heartBig}
-              </div>
+                <div
+                  onClick={() => handleFavouriteClick(game.id)}
+                  className="absolute bottom-4 left-5"
+                >
+                  {isFavourite(game.id) ? heartFilledBig : heartBig}
+                </div>
               )}
             </div>
           )}
-          {/* <div
-            className={
-              !gameVideo && game.id !== hoveredGameId
-                ? "hidden"
-                : "absolute top-0 left-0 w-full h-full bg-transparent cursor-pointer z-10"
-            }
-          ></div> */}
         </div>
       </div>
     );
