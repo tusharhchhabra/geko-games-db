@@ -12,7 +12,6 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     fetch("/api/logout")
       .then((res) => {
-        console.log(res.json());
         setUser(null);
       })
       .catch((error) => {
@@ -28,7 +27,7 @@ export const AuthProvider = ({ children }) => {
         setUser(data.user);
       })
       .catch((error) => {
-        console.error("Failed to fetch user:", error);
+        console.error("An error occurred while fetching the user:", error);
       });
   }, []);
 

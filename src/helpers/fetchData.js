@@ -1,4 +1,5 @@
 const fetchData = async (fetchQuery, endpoint) => {
+  if (fetchQuery === null) return null;
   const igdbApiUrl = `https://api.igdb.com/v4/${endpoint}`;
 
   const headers = new Headers({
@@ -6,8 +7,6 @@ const fetchData = async (fetchQuery, endpoint) => {
     Authorization: process.env.TWITCH_AUTH_TOKEN,
     Accept: "application/json",
   });
-
-  fetchQuery;
 
   try {
     const res = await fetch(igdbApiUrl, {
