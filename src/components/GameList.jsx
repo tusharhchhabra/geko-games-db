@@ -51,7 +51,7 @@ const GamesList = ({ setOfGames }) => {
             </div>
             <MdChevronRight
               onClick={() => slide(index, "right")}
-              className="bg-white rounded-full absolute opacity-50 hover:opacity-100 cursor-pointer z-10 left-[1579px] text-black"
+              className="bg-white rounded-full absolute opacity-50 hover:opacity-100 cursor-pointer z-10 right-20 text-black"
               size={70}
             />
           </div>
