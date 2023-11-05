@@ -1,14 +1,24 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import Link from "next/link";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
+import FavouritesContext from "@/context/FavouritesContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 function GameListItem({ games }) {
   const [videos, setVideos] = useState({});
   const [hoveredGameId, setHoveredGameId] = useState(null);
   const gameListRef = useRef(null);
+  const { toggleFavourite, state } = useContext(FavouritesContext);
+  const [isUpdating, setIsUpdating] = useState(false);
 
+  const heart = <FontAwesomeIcon icon={faHeart} size="xl" />;
+  const heartFilled = (
+    <FontAwesomeIcon icon={faHeart} size="xl" style={{ color: "#FF0000" }} />
+  );
+
+  const isFavourite = (gameId) => {
+    return state.favourites.some((favourite) => favourite.game_id === gameId);
+  };
 
   async function fetchVideo(gameId) {
     try {
@@ -40,6 +50,19 @@ function GameListItem({ games }) {
     setHoveredGameId(null);
   }
 
+  const handleFavouriteClick = (gameId, userId) => {
+    setIsUpdating(true);
+    isFavourite(gameId);
+    toggleFavourite(userId, gameId)
+      .then(() => {
+        setIsUpdating(false);
+      })
+      .catch((error) => {
+        console.error("Error toggling favourite:", error);
+        setIsUpdating(false);
+      });
+  };
+
   const handleClick = () => {
     console.log("CLICKED!!!");
   };
@@ -51,6 +74,9 @@ function GameListItem({ games }) {
         key={game.id}
         className="w-[240px] h-[352px] inline-block cursor-pointer relative p-2"
       >
+        <div onClick={() => handleFavouriteClick(game.id, 1)} className="absolute top-2 left-4">
+          {isFavourite(game.id) ? heartFilled : heart}
+        </div>
         <img
           id={game.id}
           loading="lazy"
@@ -65,7 +91,9 @@ function GameListItem({ games }) {
             clearTimeout(gameListRef.current);
           }}
           className={
-            gameVideo && game.id === hoveredGameId ? "hidden" : "block rounded-lg "
+            gameVideo && game.id === hoveredGameId
+              ? "hidden"
+              : "block rounded-lg "
           }
         />
 
@@ -91,16 +119,17 @@ function GameListItem({ games }) {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
               ></iframe>
-              <p
-              className="absolute bottom-4 left-5 text-white"
-              >Heart Icon</p>
-              <Link
-              href={`/games/${game.id}`}>
-              <button
-              className={`text-white absolute bottom-2 right-5 ${inter.className} bg-black px-4 py-2 rounded-2xl hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black`}
-              >Game Details
-              </button>
+              <p className="absolute bottom-4 left-5 text-white">Heart Icon</p>
+              <Link href={`/games/${game.id}`}>
+                <button
+                  className={`text-white absolute bottom-2 right-5 bg-black px-4 py-2 rounded-2xl hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black`}
+                >
+                  Game Details
+                </button>
               </Link>
+              <div onClick={() => handleFavouriteClick(game.id, 1)}>
+                {isFavourite(game.id) ? heartFilled : heart}
+              </div>
             </div>
           )}
           {/* <div
