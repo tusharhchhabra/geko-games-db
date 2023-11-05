@@ -40,8 +40,14 @@ const GamesList = ({ setOfGames }) => {
           <div className="relative flex items-center group">
             <MdChevronLeft
               onClick={() => slide(index, "left")}
-              className="bg-white rounded-full absolute opacity-50 hover:opacity-100 cursor-pointer z-10 left-[-37px] text-black"
-              size={70}
+              className="bg-white rounded-full absolute opacity-50 hover:opacity-100 cursor-pointer z-10 text-black 
+              xl:w-[80px] xl:h-[80px] xl:left-[0px] xl:top-[40%]
+              lg:w-[70px] lg:h-[70px] lg:left-[0px] lg:top-[40%]
+              md:w-[50px] md:h-[50px] md:left-[0px] md:top-[45%]
+              sm:w-[30px] sm:h-[30px] sm:left-[0px] sm:top-[45%]
+              w-[20px] h-[20px] left-[0px] top-[45%]
+              "
+              
             />
             <div
               ref={(el) => (sliderRefs.current[index] = el)}
@@ -51,8 +57,14 @@ const GamesList = ({ setOfGames }) => {
             </div>
             <MdChevronRight
               onClick={() => slide(index, "right")}
-              className="bg-white rounded-full absolute opacity-50 hover:opacity-100 cursor-pointer z-10 right-20 text-black"
-              size={70}
+              className="bg-white rounded-full absolute opacity-50 hover:opacity-100 cursor-pointer z-10 text-black
+              xl:w-[80px] xl:h-[80px] xl:right-[70px] xl:top-[40%]
+              lg:w-[70px] lg:h-[70px] lg:right-[0px] lg:top-[40%]
+              md:w-[50px] md:h-[50px] md:right-[0px] md:top-[45%]
+              sm:w-[30px] sm:h-[30px] sm:right-[0px] sm:top-[45%]
+              w-[20px] h-[20px] right-[0px] top-[45%]
+
+              "
             />
           </div>
         </div>
