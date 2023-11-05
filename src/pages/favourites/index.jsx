@@ -88,7 +88,6 @@ const Favourites = ({ games }) => {
 
   return (
     <div>
-      <SearchBar />
       {gamesFetched ? (
         <FavouritesList setOfGames={fetchedGames} />
       ) : (
