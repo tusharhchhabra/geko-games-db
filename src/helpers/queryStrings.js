@@ -4,7 +4,7 @@ import adjustImageUrl from "./adjustImageUrl";
 
 const queries = {
   game: function (id) {
-    return `fields *; where id = ${id};`;
+    return `fields *; where id = ${id}; limit 50;`;
   },
 
   top10Games:
@@ -54,7 +54,7 @@ const queries = {
   },
 
   coverArtForGames: function (games) {
-    return `fields game, url; where game = ${extractId(games)};`;
+    return `fields game, url; where game = ${extractId(games)}; limit 50;`;
   },
 
   coverArtForGame: function (game) {

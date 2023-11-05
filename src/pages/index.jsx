@@ -5,6 +5,7 @@ import queries from "@/helpers/queryStrings";
 import extractIdAsAnArray from "@/helpers/extractIdsAsArray";
 import extractNameAsAnArray from "@/helpers/extractNameAsArray";
 
+
 const HomePage = ({ initialGameSets, initialThemes }) => {
   const [gameSets, setGameSets] = useState(initialGameSets);
   const [loading, setLoading] = useState(false);
@@ -15,6 +16,7 @@ const HomePage = ({ initialGameSets, initialThemes }) => {
   const [gameThemes, setGameThemes] = useState(() =>
     extractNameAsAnArray(initialThemes)
   );
+  
 
   const fetchMoreGames = useCallback(async () => {
     if (!gameThemesId.length && !gameThemes.length) {
