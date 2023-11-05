@@ -15,6 +15,10 @@ function GameListItem({ games }) {
   const heartFilled = (
     <FontAwesomeIcon icon={faHeart} size="xl" style={{ color: "#FF0000" }} />
   );
+  const heartBig = <FontAwesomeIcon icon={faHeart} size="2xl" />;
+  const heartFilledBig = (
+    <FontAwesomeIcon icon={faHeart} size="2xl" style={{ color: "#FF0000" }} />
+  );
 
   const isFavourite = (gameId) => {
     return state.favourites.some((favourite) => favourite.game_id === gameId);
@@ -74,7 +78,7 @@ function GameListItem({ games }) {
         key={game.id}
         className="w-[240px] h-[352px] inline-block cursor-pointer relative p-2"
       >
-        <div onClick={() => handleFavouriteClick(game.id, 1)} className="absolute top-2 left-4">
+        <div onClick={() => handleFavouriteClick(game.id, 1)} className="absolute top-2.5 left-3.5">
           {isFavourite(game.id) ? heartFilled : heart}
         </div>
         <img
@@ -119,7 +123,6 @@ function GameListItem({ games }) {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
               ></iframe>
-              <p className="absolute bottom-4 left-5 text-white">Heart Icon</p>
               <Link href={`/games/${game.id}`}>
                 <button
                   className={`text-white absolute bottom-2 right-5 bg-black px-4 py-2 rounded-2xl hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black`}
@@ -127,8 +130,8 @@ function GameListItem({ games }) {
                   Game Details
                 </button>
               </Link>
-              <div onClick={() => handleFavouriteClick(game.id, 1)}>
-                {isFavourite(game.id) ? heartFilled : heart}
+              <div onClick={() => handleFavouriteClick(game.id, 1)} className="absolute bottom-4 left-5">
+                {isFavourite(game.id) ? heartFilledBig : heartBig}
               </div>
             </div>
           )}
