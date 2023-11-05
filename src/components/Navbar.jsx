@@ -73,6 +73,14 @@ export default function Navbar() {
                 Advanced Search
               </Link>
             </li>
+            <li>
+              <Link
+                href="/favourites"
+                className="block rounded py-2 pl-3 pr-4 text-white hover:bg-slate-100 md:p-0 md:hover:bg-transparent md:hover:text-violet-500"
+              >
+                Favourites
+              </Link>
+            </li>
           </ul>
         </div>
         <SearchBar />
