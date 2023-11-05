@@ -60,6 +60,3 @@ const GPT = async (req, res) => {
 
 export default GPT;
 
-// Respond with all titles in an array. Example:
-//         [Valheim, Minecraft, Terraria]. Respond only with the array.
-//         Always give 5 games back in the response.

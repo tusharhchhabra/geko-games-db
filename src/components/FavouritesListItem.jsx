@@ -32,25 +32,24 @@ function FavouritesListItem({ games }) {
 
   return games.map((game) => {
     return (
-      <div
-        key={game.id}
-        className="m-6 p-4 transform transition-transform duration-300 hover:scale-105 rounded-lg shadow-md hover:shadow-lg"
-      >
-        <div onClick={() => handleFavouriteClick(game.id, 1)}>
-          {isFavourite(game.id) ? heartFilled : heart}
+      <div key={game.id} className="inline-block cursor-pointer relative p-2">
+        <div>
+            <div
+              onClick={() => handleFavouriteClick(game.id, 1)}
+              className="absolute top-8 left-9 z-10"
+            >
+              {isFavourite(game.id) ? heartFilled : heart}
+            </div>
+          <Link href={`/games/${game.id}`} className="">
+            <img
+              loading="lazy"
+              src={game.coverUrl}
+              alt={game.name}
+              className="block cursor-pointer relative p-2 rounded-lg m-3"
+            />
+          </Link>
         </div>
-        <Link
-          href={`/games/${game.id}`}
-          className="block rounded py-2 pl-3 pr-4 text-white hover:bg-slate-100 md:p-0 md:hover:bg-transparent md:hover:text-violet-500"
-        >
-          <img
-            loading="lazy"
-            src={game.coverUrl}
-            alt={game.name}
-            className="w-full h-[250px] object-cover mb-4 rounded-md"
-          />
-        </Link>
-        <h2 className="text-white text-2xl mb-4">{game.name}</h2>
+        {/* <h2 className="text-white text-2xl mb-4">{game.name}</h2> */}
       </div>
     );
   });
