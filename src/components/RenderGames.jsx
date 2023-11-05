@@ -48,10 +48,10 @@ function RenderGames({ games }) {
     setHoveredGameId(null);
   }
 
-  const handleFavouriteClick = (gameId, userId) => {
+  const handleFavouriteClick = (gameId) => {
     setIsUpdating(true);
     isFavourite(gameId);
-    toggleFavourite(userId, gameId)
+    toggleFavourite(gameId)
       .then(() => {
         setIsUpdating(false);
       })
@@ -65,7 +65,7 @@ function RenderGames({ games }) {
     const gameVideo = videos[game.id];
     return (
       <div key={game.id} className="h-[400px]">
-        <div onClick={() => handleFavouriteClick(game.id, 1)}>
+        <div onClick={() => handleFavouriteClick(game.id)}>
           {isFavourite(game.id) ? heartFilled : heart}
         </div>
         <h2>{game.name}</h2>

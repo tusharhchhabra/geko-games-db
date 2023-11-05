@@ -23,6 +23,7 @@ export default async function login(req, res) {
     }
 
     const token = await generateToken({
+      id: user.id,
       username: user.username,
       email: user.email,
     });
