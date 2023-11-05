@@ -38,7 +38,7 @@ async function createFavoriteGame(gameId, userId) {
   const favoriteGame = await sql`
     INSERT INTO favorite_games (game_id, user_id)
     VALUES (${gameId}, ${userId})
-    RETURNING *;
+    RETURNING id, game_id, user_id;
   `;
   return favoriteGame;
 }
@@ -51,10 +51,10 @@ async function getUserFavoriteGames(userId) {
   return favoriteGames;
 }
 
-async function deleteFavoriteGame(favoriteGameId) {
+async function deleteFavoriteGame(gameId, userId) {
   const deletedFavoriteGame = await sql`
     DELETE FROM favorite_games
-    WHERE id = ${favoriteGameId}
+    WHERE user_id = ${userId} AND game_id = ${gameId}
     RETURNING *;
   `;
   return deletedFavoriteGame;

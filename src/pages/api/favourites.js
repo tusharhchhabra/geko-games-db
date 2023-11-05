@@ -8,13 +8,21 @@ export default async function search(req, res) {
     return;
   }
 
-  const { nextThemeId, nextTheme, platformId } = req.query;
+  const { game_id } = req.query;
 
-  const gamesQuery = queries.gamesByThemeAndPlatform(nextThemeId, platformId);
+  const formatIds = function (gameIdString) {
+    const gameIdsArray = gameIdString.split(",").map(Number);
+    const uniqueIds = [...new Set(gameIdsArray)];
+    const formattedIds = `(${uniqueIds.join(", ")})`;
+    return formattedIds;
+  };
+  const gameIds = formatIds(game_id);
+  const gamesQuery = queries.game(gameIds);
   const endpoint = "games";
-  
+
   const games = await fetchData(gamesQuery, endpoint);
   const covers = await fetchData(queries.coverArtForGames(games), "covers");
+
   const gamesWithCovers = queries.gamesWithCoverArt(
     games,
     covers,
@@ -23,8 +31,8 @@ export default async function search(req, res) {
 
   const gamesObject = {
     games: gamesWithCovers,
-    title: nextTheme,
+    title: "Favourites",
   };
 
-  res.send(gamesObject);
+  res.send([gamesObject]);
 }
