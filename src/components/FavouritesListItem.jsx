@@ -13,6 +13,8 @@ function FavouritesListItem({ games }) {
   const { toggleFavourite, state } = useContext(FavouritesContext);
   const [isUpdating, setIsUpdating] = useState(false);
 
+  
+
   const isFavourite = (gameId) => {
     return state.favourites.some((favourite) => favourite.game_id === gameId);
   };
@@ -29,6 +31,8 @@ function FavouritesListItem({ games }) {
         setIsUpdating(false);
       });
   };
+
+
 
   return games.map((game) => {
     return (

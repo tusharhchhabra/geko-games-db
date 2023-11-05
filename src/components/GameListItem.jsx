@@ -3,6 +3,7 @@ import Link from "next/link";
 import FavouritesContext from "@/context/FavouritesContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { AuthContext } from "@/context/AuthContext";
 
 function GameListItem({ games }) {
   const [videos, setVideos] = useState({});
@@ -10,6 +11,7 @@ function GameListItem({ games }) {
   const gameListRef = useRef(null);
   const { toggleFavourite, state } = useContext(FavouritesContext);
   const [isUpdating, setIsUpdating] = useState(false);
+  const { user } = useContext(AuthContext);
 
   const heart = <FontAwesomeIcon icon={faHeart} size="xl" />;
   const heartFilled = (
@@ -54,10 +56,10 @@ function GameListItem({ games }) {
     setHoveredGameId(null);
   }
 
-  const handleFavouriteClick = (gameId, userId) => {
+  const handleFavouriteClick = (gameId) => {
     setIsUpdating(true);
     isFavourite(gameId);
-    toggleFavourite(userId, gameId)
+    toggleFavourite(gameId)
       .then(() => {
         setIsUpdating(false);
       })
@@ -66,6 +68,7 @@ function GameListItem({ games }) {
         setIsUpdating(false);
       });
   };
+
 
   const handleClick = () => {
     console.log("CLICKED!!!");
@@ -78,12 +81,14 @@ function GameListItem({ games }) {
         key={game.id}
         className="w-[240px] h-[352px] inline-block cursor-pointer relative p-2"
       >
+        {user && (
         <div
           onClick={() => handleFavouriteClick(game.id, 1)}
           className="absolute top-2.5 left-3.5"
         >
           {isFavourite(game.id) ? heartFilled : heart}
         </div>
+        )}
         <img
           id={game.id}
           loading="lazy"
@@ -153,12 +158,14 @@ function GameListItem({ games }) {
 
                 </div>
               </Link>
+              {user && (
               <div
                 onClick={() => handleFavouriteClick(game.id, 1)}
                 className="absolute bottom-4 left-5"
               >
                 {isFavourite(game.id) ? heartFilledBig : heartBig}
               </div>
+              )}
             </div>
           )}
           {/* <div
