@@ -70,7 +70,7 @@ const HomePage = ({ initialGameSets, initialThemes }) => {
       <img
         alt="Featured-game"
         src="/assets/rocketLeague.png"
-        className="w-screen object-cover h-[650px] z-0 absolute top-16 left-0 rounded-2xl"
+        className="w-screen object-cover lg:h-[650px] md:h-[450px] sm:h-[250px] z-0 absolute top-16 left-0 rounded-2xl"
       />
       <div className="w-full absolute top-[700px]">
         <GamesList setOfGames={gameSets} />
