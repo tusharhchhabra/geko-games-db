@@ -94,7 +94,7 @@ export default HomePage;
 
 export async function getServerSideProps() {
   try {
-    const themesPromise = fetchData(queries.themes, "themes");
+    const themesPromise = fetchData(queries.themesForSearch, "themes");
 
     const top10GamesPromise = fetchData(queries.top10Games, "games");
     const newGamesPromise = fetchData(queries.newGames, "games");
