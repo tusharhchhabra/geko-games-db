@@ -17,10 +17,10 @@ function FavouritesListItem({ games }) {
     return state.favourites.some((favourite) => favourite.game_id === gameId);
   };
 
-  const handleFavouriteClick = (gameId, userId) => {
+  const handleFavouriteClick = (gameId) => {
     setIsUpdating(true);
     isFavourite(gameId);
-    toggleFavourite(userId, gameId)
+    toggleFavourite(gameId)
       .then(() => {
         setIsUpdating(false);
       })

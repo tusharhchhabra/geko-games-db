@@ -13,13 +13,13 @@ export default async function register(req, res) {
   const passwordDigest = bcrypt.hashSync(password, salt);
 
   try {
-    await createUser(username, email, passwordDigest);
+    const createdUser = await createUser(username, email, passwordDigest);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal Server Error" });
   }
 
-  const userTokenContent = { username, email };
+  const userTokenContent = { id: createdUser.id, username, email };
 
   const token = generateToken(userTokenContent);
 
