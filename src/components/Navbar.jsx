@@ -3,6 +3,7 @@ import SearchBar from "./SearchBar";
 import Link from "next/link";
 import { AuthContext } from "@/context/AuthContext";
 import { useContext } from "react";
+import Image from "next/image";
 
 export default function Navbar() {
   const scrollPosition = useScrollPosition();
@@ -16,12 +17,19 @@ export default function Navbar() {
     <nav
       className={`fixed left-0 top-0 z-20 w-full bg-transparent transition-colors duration-300 ${
         scrollPosition > 0
-          ? "border-b-[0.5px] border-gray-700 bg-slate-900/[0.4] backdrop-blur-lg"
+          ? "border-b-[0.5px] border-gray-700 bg-slate-900/[0.35] backdrop-blur-lg"
           : "border-gray-800"
       }`}
     >
       <div className="mx-auto flex max-w-full flex-wrap items-baseline justify-between px-6 py-2">
-        <Link href="/" className="flex items-center">
+        <Link href="/" className="flex items-center gap-1.5 translate-y-1">
+          <Image
+            src="/logo.png"
+            className="w-full h-auto translate-y-0.5"
+            width={24}
+            height={24}
+            alt="logo"
+          ></Image>
           <span className="self-center whitespace-nowrap text-2xl font-semibold">
             geko
           </span>
@@ -53,7 +61,7 @@ export default function Navbar() {
           </button>
         </div>
         <div
-          className="hidden w-full items-center justify-between md:mr-auto md:ml-8 md:flex md:w-auto"
+          className="hidden w-full items-center justify-between md:ml-auto md:mr-8 md:flex md:w-auto"
           id="navbar-sticky"
         >
           <ul className="mt-4 flex flex-col rounded-lg border border-slate-100 p-4 font-normal md:mt-0 md:flex-row md:space-x-8 md:border-0 md:p-0 ">

@@ -21,11 +21,13 @@ function GameDetailsPage({ game }) {
           ))}
         </div>
       </div>
-      <div className="flex gap-2">
-        {game.platforms.map((platform) => (
-          <span key={platform.id}>{platform.name}</span>
-        ))}
-      </div>
+      {game.platforms && (
+        <div className="flex gap-2">
+          {game.platforms.map((platform) => (
+            <span key={platform.id}>{platform.name}</span>
+          ))}
+        </div>
+      )}
       <div className="flex gap-2">
         {game.screenshots.map((screenshot) => (
           <img key={screenshot.id} src={screenshot.url} loading="lazy" />
@@ -67,7 +69,6 @@ export async function getServerSideProps(context) {
   const games = await fetchData(queries.game(id), "games");
 
   if (games.length === 0) {
-    console.log("No games found for this ID!");
     return;
   }
 
@@ -112,8 +113,6 @@ export async function getServerSideProps(context) {
   let formattedCoverUrl = null;
   if (covers.length !== 0) {
     formattedCoverUrl = adjustImageUrl(covers[0].url, "t_cover_big");
-  } else {
-    console.log("No covers found for this game!");
   }
 
   let formattedScreenshots = screenshots;
@@ -124,8 +123,6 @@ export async function getServerSideProps(context) {
         url: adjustImageUrl(screenshot.url, "t_screenshot_med"),
       };
     });
-  } else {
-    console.log("No screenshots found for this game!");
   }
 
   const gameDetails = {
