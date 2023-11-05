@@ -3,9 +3,12 @@ import SearchedGamesList from "@/components/SearchedGamesList";
 import fetchData from "@/helpers/fetchData";
 import queries from "@/helpers/queryStrings";
 import { useDebounce } from "@/hooks/useDebounce";
+import { useRouter } from "next/router";
 import { useState, useRef, useEffect } from "react";
 
 const AdvancedSearchPage = (props) => {
+  const router = useRouter();
+
   const [searchParams, setSearchParams] = useState({
     name: "",
     genres: [],
@@ -33,26 +36,30 @@ const AdvancedSearchPage = (props) => {
     const handleSearch = async (params) => {
       setIsLoading(true);
       setError(null);
-      if (params) {
-        console.log(params);
-        try {
-          const response = await fetch(`/api/advanced-search`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ searchParams: params }),
-          });
-          const data = await response.json();
-          console.log(data.games);
-          setSearchResults(data.games);
-        } catch (error) {
-          console.error("Error fetching games", error);
-        }
+      try {
+        const response = await fetch(`/api/advanced-search`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ searchParams: params }),
+        });
+        router.replace(
+          {
+            pathname: "/search",
+            query: debouncedSearchParams,
+          },
+          undefined,
+          { shallow: true }
+        );
+        const data = await response.json();
+        setSearchResults(data.games);
+      } catch (error) {
+        console.error("Error fetching games", error);
       }
-      setIsLoading(false);
-      setError(null);
     };
+    setIsLoading(false);
+    setError(null);
 
     if (isMounted.current) {
       handleSearch(debouncedSearchParams);
@@ -60,6 +67,28 @@ const AdvancedSearchPage = (props) => {
       isMounted.current = true;
     }
   }, [debouncedSearchParams]);
+
+  useEffect(() => {
+    if (router.isReady) {
+      const queryFilters = router.query;
+
+      let paramsCopy = { ...searchParams };
+
+      Object.keys(searchParams).forEach((key) => {
+        if (queryFilters[key]) {
+          if (["themes", "modes", "genres", "platforms"].includes(key)) {
+            paramsCopy[key] = Array.isArray(queryFilters[key])
+              ? queryFilters[key].map((val) => parseInt(val))
+              : [parseInt(queryFilters[key])];
+          } else {
+            paramsCopy[key] = queryFilters[key];
+          }
+        }
+      });
+
+      setSearchParams(paramsCopy);
+    }
+  }, []);
 
   return (
     <div className="mt-10 mb-20 max-w-4xl w-full px-6 xl:px-0">
@@ -97,13 +126,6 @@ export async function getServerSideProps() {
     modesPromise.value,
     platformsPromise.value,
   ];
-
-  console.log(genres, themes, modes, platforms);
-
-  // const genres = await genresRes.json();
-  // const themes = await themesRes.json();
-  // const modes = await modesRes.json();
-  // const platforms = await modesRes.json();
 
   return { props: { genres, themes, modes, platforms } };
 }

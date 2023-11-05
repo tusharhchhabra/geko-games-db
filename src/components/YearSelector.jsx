@@ -10,7 +10,7 @@ function YearSelector({ selectedYear, handleYearChange }) {
         onChange={handleYearChange}
         className="block border appearance-none text-sm rounded-lg w-40 p-2.5 bg-gray-800 border-gray-600 placeholder-gray-400 text-white focus:ring-violet-500 focus:border-violet-500"
       >
-        <option value="">No year selected</option>
+        <option value="none">No year selected</option>
         {years.map((year) => (
           <option key={year} value={year}>
             {year}

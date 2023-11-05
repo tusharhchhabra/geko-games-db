@@ -69,7 +69,6 @@ export async function getServerSideProps(context) {
   const games = await fetchData(queries.game(id), "games");
 
   if (games.length === 0) {
-    console.log("No games found for this ID!");
     return;
   }
 
@@ -114,8 +113,6 @@ export async function getServerSideProps(context) {
   let formattedCoverUrl = null;
   if (covers.length !== 0) {
     formattedCoverUrl = adjustImageUrl(covers[0].url, "t_cover_big");
-  } else {
-    console.log("No covers found for this game!");
   }
 
   let formattedScreenshots = screenshots;
@@ -126,8 +123,6 @@ export async function getServerSideProps(context) {
         url: adjustImageUrl(screenshot.url, "t_screenshot_med"),
       };
     });
-  } else {
-    console.log("No screenshots found for this game!");
   }
 
   const gameDetails = {

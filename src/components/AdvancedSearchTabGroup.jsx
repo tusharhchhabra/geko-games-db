@@ -1,4 +1,3 @@
-import { useState } from "react";
 import AdvancedSearchBar from "./AdvancedSearchBar";
 import AdvancedSearchTab from "./AdvancedSearchTab";
 import RatingInput from "./RatingInput";
@@ -46,7 +45,7 @@ function AdvancedSearchTabGroup({
   const handleYearChange = (event) => {
     const year = event.target.value;
 
-    if (!year) {
+    if (year === "none") {
       setParams((prev) => {
         return { ...prev, fromDate: "", toDate: "" };
       });
@@ -58,7 +57,6 @@ function AdvancedSearchTabGroup({
 
     const toDate = Math.floor(Date.UTC(parseInt(year) + 1, 0, 1) / 1000) - 1;
 
-    console.log(fromDate, toDate);
     setParams((prev) => {
       return { ...prev, fromDate, toDate };
     });

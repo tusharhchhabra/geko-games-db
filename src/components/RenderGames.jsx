@@ -70,7 +70,13 @@ function RenderGames({ games }) {
               allowFullScreen
             ></iframe>
           )}
-          <div className={!gameVideo && game.id !== hoveredGameId ? "hidden" : "absolute top-0 left-0 w-full h-full bg-transparent cursor-pointer z-10" }></div>
+          <div
+            className={
+              !gameVideo && game.id !== hoveredGameId
+                ? "hidden"
+                : "absolute top-0 left-0 w-full h-full bg-transparent cursor-pointer z-10"
+            }
+          ></div>
         </div>
       </div>
     );
