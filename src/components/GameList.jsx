@@ -8,7 +8,7 @@ const GamesList = ({ setOfGames }) => {
   const slide = (index, direction) => {
     const slider = sliderRefs.current[index];
     if (slider) {
-      const scrollAmount = direction === "left" ? -250 : 250;
+      const scrollAmount = direction === "left" ? -260 : 260;
       let newScrollPosition = slider.scrollLeft + scrollAmount;
 
       if (
@@ -19,7 +19,7 @@ const GamesList = ({ setOfGames }) => {
       }
 
       if (direction === "left" && newScrollPosition < 0) {
-        newScrollPosition = 800;
+        newScrollPosition = 790;
       }
 
       slider.scrollTo({
