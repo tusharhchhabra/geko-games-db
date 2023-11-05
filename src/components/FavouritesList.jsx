@@ -5,7 +5,7 @@ const FavouritesList = ({ setOfGames }) => {
     <div>
       {setOfGames.map((gameSet, index) => (
         <div key={index}>
-          <span className="text-4xl font-extrabold text-indigo-600 px-6 py-4 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 ">
+          <span className="text-violet-500 font-bold p-2 ml-10 mt-5 text-4xl [text-shadow:2px_2px_3px_var(--tw-shadow-color)] shadow-black">
             {gameSet.title}
           </span>
           <div className="grid grid-cols-5">

@@ -134,7 +134,7 @@ function GameListItem({ games }) {
                 </button> */}
                 <div className="absolute bottom-1 right-3">
                 <button class="relative cursor-pointer opacity-90 hover:opacity-100 transition-opacity p-[2px] bg-black rounded-[16px] active:scale-95">
-                  <span class="w-full h-full flex items-center gap-2 px-2 py-2 bg-black text-white rounded-[14px] bg-gradient-to-t from-black to-violet-800 text-lg font-bold">
+                  <span class="w-full h-full flex items-center gap-2 px-2 py-2 bg-black text-white rounded-[14px] bg-gradient-to-t from-black to-black text-lg font-bold">
                     <svg
                       stroke-width="2"
                       stroke-linejoin="round"
