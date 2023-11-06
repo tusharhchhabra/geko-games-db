@@ -31,11 +31,11 @@ function FavouritesListItem({ games }) {
 
   return games.map((game) => {
     return (
-      <div key={game.id} className="inline-block cursor-pointer relative p-2 ">
+      <div key={game.id} className="block cursor-pointer relative lg:p-2 ">
         <div>
           <div
             onClick={() => handleFavouriteClick(game.id)}
-            className="absolute top-5 left-6 z-10 "
+            className="absolute top-5 left-6 z-10"
           >
             {isFavourite(game.id) ? heartFilled : heart}
           </div>
@@ -44,7 +44,12 @@ function FavouritesListItem({ games }) {
               loading="lazy"
               src={game.coverUrl}
               alt={game.name}
-              className="block cursor-pointer relative m-2 rounded-lg"
+              className="block cursor-pointer relative  rounded-lg
+              lg:w-[240px] lg:h-[335px] lg: m-2
+              md:w-[250px] md:h-[315px]
+              sm:w-[150px] sm:h-[185px]
+              w-[250px] h-[305px] m-0 p-1
+              "
             />
           </Link>
         </div>
