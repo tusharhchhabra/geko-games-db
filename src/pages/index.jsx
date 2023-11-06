@@ -4,6 +4,7 @@ import GamesList from "@/components/GameList";
 import queries from "@/helpers/queryStrings";
 import extractIdAsAnArray from "@/helpers/extractIdsAsArray";
 import extractNameAsAnArray from "@/helpers/extractNameAsArray";
+import EasterEgg from "@/components/EasterEgg";
 
 const HomePage = ({ initialGameSets, initialThemes }) => {
   const [gameSets, setGameSets] = useState(initialGameSets);
@@ -74,6 +75,10 @@ const HomePage = ({ initialGameSets, initialThemes }) => {
       />
       <div className="w-full absolute top-[700px]">
         <GamesList setOfGames={gameSets} />
+        {allDataLoaded && (
+          <EasterEgg />
+        )}
+        
         {loading && (
           <div
             role="status"
