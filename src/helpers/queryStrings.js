@@ -44,7 +44,9 @@ const queries = {
 
   similarGames: function (game) {
     if (!game.similar_games || game.similar_games.length === 0) return null;
-    return `fields name, cover; where id = (${game.similar_games.join(", ")});`;
+    return `fields name, cover.url; where id = (${game.similar_games.join(
+      ", "
+    )});`;
   },
 
   themes: "fields id, name;",
