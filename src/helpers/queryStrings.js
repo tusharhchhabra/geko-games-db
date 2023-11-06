@@ -22,7 +22,7 @@ const queries = {
 
   platformsForGame: function (game) {
     if (!game.platforms || game.platforms.length === 0) return null;
-    return `fields name; where id = (${game.platforms.join(", ")});`;
+    return `fields abbreviation; where id = (${game.platforms.join(", ")});`;
   },
 
   videosForGame: function (game) {
