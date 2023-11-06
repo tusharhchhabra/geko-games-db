@@ -124,7 +124,6 @@ const Favourites = ({ games }) => {
       {fullGptGamesFetched && (
         <div>
           <FavouritesList setOfGames={[suggestedFavourites]} />
-          <EasterEgg />
         </div>
       )}
     </div>
