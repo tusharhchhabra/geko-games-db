@@ -2,13 +2,13 @@ import adjustImageUrl from "@/helpers/adjustImageUrl";
 import fetchData from "@/helpers/fetchData";
 import { getYearFromUnixTimestamp } from "@/helpers/findTime";
 import queries from "@/helpers/queryStrings";
-import websiteCategores from "@/helpers/websiteCategories";
+import websiteCategories from "@/helpers/websiteCategories";
 import Image from "next/image";
 import Link from "next/link";
 
 function GameDetailsPage({ game }) {
   return (
-    <div key={game.id} className="px-6 xl:px-0 max-w-3xl text-zinc-200">
+    <div key={game.id} className="px-6 xl:px-0 max-w-3xl mb-28 text-zinc-200">
       <div
         className={`absolute left-0 right-0 -z-10 h-[50vh] bg-cover bg-center ${
           game.screenshotsBig ? "" : "bg-indigo-950"
@@ -19,28 +19,19 @@ function GameDetailsPage({ game }) {
             : "",
         }}
       >
-        {/* {game.screenshotsBig ? (
-          <img
-            src={game.screenshotsBig[0].url}
-            alt={game.name + " Screenshot"}
-            className="absolute w-full -z-20 object-cover object-center max-h-[50vh]"
-          ></img>
-        ) : (
-          <div className="absolute w-full -z-20 h-[50vh] bg-indigo-950"></div>
-        )} */}
         <div class="absolute w-full h-[50vh] max-h-[50vh] bg-gradient-to-t from-neutral-900 via-transparent to-zinc-900" />
       </div>
-      <div className="flex mt-[20vh] gap-6 md:gap-9">
+      <div className="flex mt-[10vh] sm:mt-[20vh] flex-col sm:flex-row gap-6 sm:gap-9 text-center sm:text-left">
         {game.coverUrl && (
           <img
             loading="lazy"
-            className="w-40 h-auto object-cover lg:w-56 rounded-lg shadow-lg"
+            className="w-40 h-auto mx-auto object-cover lg:w-56 rounded-lg shadow-lg"
             src={game.coverUrl}
             alt={game.name}
           />
         )}
         <div className="mt-auto">
-          <p className="font-semibold text-3xl py-0.5 text-white line-clamp-2 max-w-md xl:text-4xl">
+          <p className="font-semibold line-clamp-2 leading-snug max-w-md py-0.5 text-white text-4xl xl:text-4xl text-center mx-auto sm:text-left sm:mx-0">
             {game.name}
           </p>
           <div className="mt-4 flex gap-4 justify-between">
@@ -65,45 +56,44 @@ function GameDetailsPage({ game }) {
         </div>
       </div>
       {game.screenshotsSmall && (
-        <div className="mt-4 px-6 absolute left-0 right-0 w-screen py-5 flex gap-2.5 overflow-scroll">
+        <div className="mt-4 px-6 absolute left-0 right-0 w-screen py-6 flex gap-2.5 overflow-scroll">
           {game.screenshotsSmall.map((screenshot) => (
             <img
               key={screenshot.id}
               src={screenshot.url}
-              className="w-40 xl:w-56 h-auto shadow-lg rounded-md hover:z-20 hover:scale-125 hover:brightness-125 transition duration-300 ease-in-out cursor-pointer"
+              className="w-52 xl:w-60 h-auto shadow-lg rounded-md hover:z-20 hover:scale-125 hover:brightness-110 transition duration-300 ease-in-out cursor-pointer"
               loading="lazy"
             />
           ))}
         </div>
       )}
-      <div
-        className={`${
-          game.screenshotsSmall ? "mt-44  xl:mt-52" : "mt-20"
-        } max-w-xl`}
-      >
-        <p className="text-3xl font-normal">Summary</p>
-        <p className="mt-6">{game.summary}</p>
+      <div className={`${game.screenshotsSmall ? "mt-56" : "mt-20"} max-w-2xl`}>
+        <p className="text-3xl font-normal text-white">Summary</p>
+        <p className="mt-6 text-lg lg:text-xl font-light leading-[1.7] lg:leading-relaxed">
+          {game.summary}
+        </p>
       </div>
 
-      <div className="mt-14">
-        <p className="text-3xl font-normal">Links</p>
-        <div className="flex mt-6 gap-6 flex-wrap overflow-hidden">
+      <div className="mt-20">
+        <p className="text-3xl font-normal text-white">Links</p>
+        <div className="flex mt-6 gap-x-8 sm:gap-x-10 gap-y-6 flex-wrap items-center font-normal text-lg overflow-hidden">
           {game.websites &&
             game.websites.map((website) => (
               <Link key={website.id} href={website.url} target="_blank">
-                {websiteCategores[website.category].name}
+                {websiteCategories[website.category].icon ||
+                  websiteCategories[website.category].name}
               </Link>
             ))}
         </div>
       </div>
 
-      <p className="mt-14 text-3xl font-normal">More Like This</p>
-      <div className="mt-6 grid gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5">
+      <p className="mt-20 text-3xl font-normal text-white">More Like This</p>
+      <div className="mt-10 grid gap-x-6 gap-y-8 xl:gap-y-14 md:gap-y-12 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5">
         {game.similarGamesWithCover &&
           game.similarGamesWithCover.map(
             (game) =>
               game.coverUrl && (
-                <div key={game.id} className="w-full w-32 lg:w-40">
+                <div key={game.id} className="w-32">
                   <img
                     src={game.coverUrl}
                     className="w-32 lg:w-40 shadow-lg rounded-md"
@@ -213,10 +203,10 @@ export async function getServerSideProps(context) {
     screenshotsSmall,
     screenshotsBig,
     similarGamesWithCover,
-    websites,
+    websites: websites.sort((a, b) => (a.category < b.category ? -1 : 1)),
   };
 
-  console.log(similarGamesWithCover);
+  console.log(gameDetails);
 
   return { props: { game: gameDetails } };
 }

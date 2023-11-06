@@ -15,7 +15,7 @@ export default function MyCombobox({
       <div className="relative mt-1">
         <div className="relative w-full cursor-default overflow-hidden rounded-md text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 sm:text-sm">
           <Combobox.Input
-            className="w-full rounded-md py-2 pl-3 pr-10 text-sm leading-5 bg-gray-700/[0.3] border-[0.5px] border-gray-700 text-white focus:ring-0"
+            className="w-full rounded-md py-2 pl-3 pr-10 text-sm leading-5 bg-neutral-700/[0.2] backdrop-blur-md border-[0.5px] text-white focus:ring-0"
             displayValue={query}
             placeholder="Search..."
             onChange={(event) => setQuery(event.target.value)}

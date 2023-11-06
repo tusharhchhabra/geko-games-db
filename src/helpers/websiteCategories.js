@@ -1,21 +1,127 @@
-const websiteCategores = {
-  1: { name: "Official", icon: "official-icon.png" },
-  2: { name: "Wikia", icon: "wikia-icon.png" },
-  3: { name: "Wikipedia", icon: "wikipedia-icon.png" },
-  4: { name: "Facebook", icon: "facebook-icon.png" },
-  5: { name: "X", icon: "x-icon.png" },
-  6: { name: "Twitch", icon: "twitch-icon.png" },
-  8: { name: "Instagram", icon: "instagram-icon.png" },
-  9: { name: "Youtube", icon: "youtube-icon.png" },
-  10: { name: "iPhone", icon: "iphone-icon.png" },
-  11: { name: "iPad", icon: "ipad-icon.png" },
-  12: { name: "Android", icon: "android-icon.png" },
-  13: { name: "Steam", icon: "steam-icon.png" },
-  14: { name: "Reddit", icon: "reddit-icon.png" },
-  15: { name: "Itch", icon: "itch-icon.png" },
-  16: { name: "Epic Games", icon: "epicgames-icon.png" },
-  17: { name: "GOG", icon: "gog-icon.png" },
-  18: { name: "Discord", icon: "discord-icon.png" },
+import {
+  faTwitch,
+  faXTwitter,
+  faFacebook,
+  faWikipediaW,
+  faInstagram,
+  faYoutube,
+  faSteam,
+  faReddit,
+  faItchIo,
+  faDiscord,
+  faAndroid,
+  faAppStoreIos,
+} from "@fortawesome/free-brands-svg-icons";
+import { faFire } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+const websiteCategories = {
+  1: { name: "Official" },
+  2: {
+    name: "Wikia",
+    icon: (
+      <FontAwesomeIcon className="fa-fw text-2xl xl:text-3xl" icon={faFire} />
+    ),
+  },
+  3: {
+    name: "Wikipedia",
+    icon: (
+      <FontAwesomeIcon
+        className="fa-fw text-2xl xl:text-3xl"
+        icon={faWikipediaW}
+      />
+    ),
+  },
+  4: {
+    name: "Facebook",
+    icon: (
+      <FontAwesomeIcon
+        className="fa-fw text-2xl xl:text-3xl"
+        icon={faFacebook}
+      />
+    ),
+  },
+  5: {
+    name: "X",
+    icon: (
+      <FontAwesomeIcon
+        className="fa-fw text-2xl xl:text-3xl"
+        icon={faXTwitter}
+      />
+    ),
+  },
+  6: {
+    name: "Twitch",
+    icon: (
+      <FontAwesomeIcon className="fa-fw text-2xl xl:text-3xl" icon={faTwitch} />
+    ),
+  },
+  8: {
+    name: "Instagram",
+    icon: (
+      <FontAwesomeIcon
+        className="fa-fw text-2xl xl:text-3xl"
+        icon={faInstagram}
+      />
+    ),
+  },
+  9: {
+    name: "Youtube",
+    icon: (
+      <FontAwesomeIcon
+        className="fa-fw text-2xl xl:text-3xl"
+        icon={faYoutube}
+      />
+    ),
+  },
+  10: {
+    name: "iPhone",
+    icon: (
+      <FontAwesomeIcon
+        className="fa-fw text-2xl xl:text-3xl"
+        icon={faAppStoreIos}
+      />
+    ),
+  },
+  11: {
+    name: "iPad",
+    icon: (
+      <FontAwesomeIcon
+        className="fa-fw text-2xl xl:text-3xl"
+        icon={faAppStoreIos}
+      />
+    ),
+  },
+  12: {
+    name: "Android",
+    icon: (
+      <FontAwesomeIcon
+        className="fa-fw text-2xl xl:text-3xl"
+        icon={faAndroid}
+      />
+    ),
+  },
+  13: {
+    name: "Steam",
+    icon: (
+      <FontAwesomeIcon className="fa-fw text-2xl xl:text-3xl" icon={faSteam} />
+    ),
+  },
+  14: {
+    name: "Reddit",
+    icon: (
+      <FontAwesomeIcon className="fa-fw text-2xl xl:text-3xl" icon={faReddit} />
+    ),
+  },
+  15: {
+    name: "Itch",
+    icon: (
+      <FontAwesomeIcon className="fa-fw text-2xl xl:text-3xl" icon={faItchIo} />
+    ),
+  },
+  16: { name: "Epic" },
+  17: { name: "GOG" },
+  18: { name: "Discord", icon: <FontAwesomeIcon icon={faDiscord} /> },
 };
 
-export default websiteCategores;
+export default websiteCategories;
