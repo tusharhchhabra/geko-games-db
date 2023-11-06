@@ -1,7 +1,7 @@
 import { getUserFavoriteGames } from "@/db/queries";
 import React, { useState, useEffect } from "react";
 import FavouritesList from "@/components/FavouritesList";
-import SearchBar from "@/components/SearchBar";
+import EasterEgg from "@/components/EasterEgg";
 
 const Favourites = ({ games }) => {
   const [gamesFetched, setGamesFetched] = useState(false);
@@ -122,7 +122,10 @@ const Favourites = ({ games }) => {
         </div>
       )}
       {fullGptGamesFetched && (
-        <FavouritesList setOfGames={[suggestedFavourites]} />
+        <div>
+          <FavouritesList setOfGames={[suggestedFavourites]} />
+          <EasterEgg />
+        </div>
       )}
     </div>
   );
