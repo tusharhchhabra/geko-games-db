@@ -89,14 +89,16 @@ export default function Navbar() {
                 Advanced Search
               </Link>
             </li>
-            <li>
-              <Link
-                href="/favourites"
-                className="block rounded-md py-2 pl-3 pr-4 text-white hover:bg-violet-800 md:p-0 md:hover:bg-transparent md:hover:text-violet-500"
-              >
-                Favourites
-              </Link>
-            </li>
+            {user && (
+              <li>
+                <Link
+                  href="/favourites"
+                  className="block rounded-md py-2 pl-3 pr-4 text-white hover:bg-violet-800 md:p-0 md:hover:bg-transparent md:hover:text-violet-500"
+                >
+                  Favourites
+                </Link>
+              </li>
+            )}
           </ul>
           <div className="lg:pl-7">
             <SearchBar />
