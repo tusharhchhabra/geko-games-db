@@ -138,13 +138,13 @@ function GameListItem({ games }) {
               <Link href={`/games/${game.id}`}>
                 {/* button position */}
                 <div className="absolute bottom-[0px] right-[5px] sm:bottom-[3px] sm:right-[5px] md:bottom-[5px] md:right-[5px] lg:bottom-1 lg:right-3">
-                  <button class="relative cursor-pointer opacity-90 hover:opacity-100 transition-opacity p-[2px] bg-black rounded-[16px] active:scale-95">
+                  <button className="relative cursor-pointer opacity-90 hover:opacity-100 transition-opacity p-[2px] bg-black rounded-[16px] active:scale-95">
                     {/* px & py to control button size */}
-                    <span class="w-[50px] h-[10px] sm:w-[70px] sm:h-[22px] md:w-full md:h-full lg:w-full lg:h-full flex items-center gap-2 px-[1px] py-[0px] sm:px-[1px] sm:py-[2px] lg:px-2 lg:py-2 bg-black text-white rounded-[14px] bg-gradient-to-t from-black to-black text-[4px] sm:text-[7.25px] md:text-md lg:text-lg font-bold">
+                    <span className="w-[50px] h-[10px] sm:w-[70px] sm:h-[22px] md:w-full md:h-full lg:w-full lg:h-full flex items-center gap-2 px-[1px] py-[0px] sm:px-[1px] sm:py-[2px] lg:px-2 lg:py-2 bg-black text-white rounded-[14px] bg-gradient-to-t from-black to-black text-[4px] sm:text-[7.25px] md:text-md lg:text-lg font-bold">
                       <svg
-                        stroke-width="2"
-                        stroke-linejoin="round"
-                        stroke-linecap="round"
+                        strokeWidth="2"
+                        strokeLinejoin="round"
+                        strokeLinecap="round"
                         stroke="currentColor"
                         fill="none"
                         className="w-[10px] h-[10px] sm:w-[15px] sm:h-[15px] lg:w-5 lg:h-5" // Controller size
