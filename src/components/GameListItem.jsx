@@ -166,6 +166,7 @@ function GameListItem({ games }) {
             </div>
           )}
         </div>
+        <div className="inline-block" style={{ width: '105px' }}></div>
       </div>
     );
   });
