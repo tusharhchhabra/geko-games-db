@@ -170,8 +170,8 @@ const PlatformsGameList = ({
         setAllDataLoaded={setAllDataLoaded}
       />
       {filteredGamesFetched ? (
-        <div className="w-full absolute lg:left-10 top-48 ">
-          <h1 className="lg:text-[50px] font-bold text-gray-700 mt-5">
+        <div className=" w-full absolute lg:left-10 top-48 lg:top-44 ">
+          <h1 className="lg:text-[50px] font-bold text-gray-700 mt-5 lg:mt-10">
             {selectedPlatformName}
           </h1>
           <GamesList setOfGames={filteredGames} />

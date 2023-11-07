@@ -20,8 +20,8 @@ const PlatformButton = ({
     <div
       className="
       flex flex-wrap justify-center items-center
-      space-x-1 space-y-[2px] lg:space-x-4 lg:space-y-0
-      absolute top-28 sm:top-16 lg:top-32 lg:left-20 md:left-4 md:top-24 
+      space-x-1 space-y-[2px] lg:space-x-4 lg:space-y-[2px]
+      absolute top-20 sm:top-16 lg:top-32 lg:left-20 md:left-4 md:top-24 
     "
     >
       {platforms &&
@@ -34,8 +34,8 @@ const PlatformButton = ({
               onClick={() => selectPlatform(platform.id)}
               key={index}
               className="
-              w-20 h-7
-              text-[7px]
+              w-20 h-10
+              text-[9px]
               px-4 py-1
               font-bold
               bg-black text-white rounded-full
