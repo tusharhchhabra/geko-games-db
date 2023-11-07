@@ -2,10 +2,13 @@ import { useScrollPosition } from "@/hooks/useScrollPosition";
 import SearchBar from "./SearchBar";
 import Link from "next/link";
 import { AuthContext } from "@/context/AuthContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import Image from "next/image";
+import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
   const scrollPosition = useScrollPosition();
   const { openModal, user, logout } = useContext(AuthContext);
 
@@ -13,11 +16,24 @@ export default function Navbar() {
     logout();
   };
 
+  const handleWindowResize = () => {
+    if (window.innerWidth > 768) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleWindowResize);
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, []);
+
   return (
     <nav
       className={`fixed left-0 top-0 z-20 w-full bg-transparent transition-colors duration-300 ${
         scrollPosition > 0
-          ? "border-b-[0.5px] border-gray-700 bg-slate-900/[0.35] backdrop-blur-lg"
+          ? "border-b-[0.5px] border-gray-700 bg-zinc-900/[0.45] backdrop-blur-lg"
           : "border-gray-800"
       }`}
     >
@@ -34,49 +50,41 @@ export default function Navbar() {
             geko
           </span>
         </Link>
+
         <div className="flex">
           <button
             data-collapse-toggle="navbar-sticky"
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-transparent p-2 text-sm text-white hover:bg-slate-800/[0.1] focus:outline-none focus:ring-1 focus:ring-slate-700 md:hidden"
+            onClick={() => setIsOpen((prev) => !prev)}
+            className="inline-flex h-10 w-10 text-xl items-center justify-center rounded-lg bg-transparent p-2 -mr-2 text-white hover:bg-slate-800/[0.1] focus:outline-none md:hidden"
             aria-controls="navbar-sticky"
             aria-expanded="false"
           >
             <span className="sr-only">Open main menu</span>
-            <svg
-              className="h-5 w-5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 17 14"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M1 1h15M1 7h15M1 13h15"
-              />
-            </svg>
+            <FontAwesomeIcon icon={isOpen ? faXmark : faBars} />
           </button>
         </div>
         <div
-          className="hidden w-full items-center justify-between md:ml-auto md:mr-8 md:flex md:w-auto"
+          className={`${
+            isOpen
+              ? "block bg-zinc-800 absolute w-full top-14 left-0 pb-8 md:static"
+              : "hidden"
+          } w-full md:items-center md:justify-between md:static md:ml-auto md:gap-x-4 md:flex md:w-auto`}
           id="navbar-sticky"
         >
-          <ul className="mt-4 flex flex-col rounded-lg border border-slate-100 p-4 font-normal md:mt-0 md:flex-row md:space-x-8 md:border-0 md:p-0 ">
+          <ul className="mt-4 flex flex-col text-lg md:text-base rounded-lg p-4 font-normal md:mt-0 md:flex-row md:gap-x-4 lg:gap-x-8 xl:gap-x-12 md:border-0 md:p-0 ">
             <li>
               <Link
                 href="/platforms"
-                className="block rounded py-2 pl-3 pr-4 text-white hover:bg-slate-100 md:p-0 md:hover:bg-transparent md:hover:text-violet-500"
+                className="block rounded-md py-2 pl-3 pr-4 text-white hover:bg-violet-800 md:p-0 md:hover:bg-transparent md:hover:text-violet-500"
               >
-                Browse by Platform
+                Platforms
               </Link>
             </li>
             <li>
               <Link
                 href="/search"
-                className="block rounded py-2 pl-3 pr-4 text-white hover:bg-slate-100 md:p-0 md:hover:bg-transparent md:hover:text-violet-500"
+                className="block rounded-md py-2 pl-3 pr-4 text-white hover:bg-violet-800 md:p-0 md:hover:bg-transparent md:hover:text-violet-500"
               >
                 Advanced Search
               </Link>
@@ -84,25 +92,29 @@ export default function Navbar() {
             <li>
               <Link
                 href="/favourites"
-                className="block rounded py-2 pl-3 pr-4 text-white hover:bg-slate-100 md:p-0 md:hover:bg-transparent md:hover:text-violet-500"
+                className="block rounded-md py-2 pl-3 pr-4 text-white hover:bg-violet-800 md:p-0 md:hover:bg-transparent md:hover:text-violet-500"
               >
                 Favourites
               </Link>
             </li>
           </ul>
+          <div className="lg:pl-7">
+            <SearchBar />
+          </div>
+          <div className={`${isOpen ? "mt-6" : "mt-0"} px-7 md:p-0`}>
+            {user ? (
+              <button onClick={handleLogoutClick}>Log Out</button>
+            ) : (
+              <button
+                type="button"
+                onClick={openModal}
+                className="btn btn-secondary bg-white/90 self-center"
+              >
+                Login
+              </button>
+            )}
+          </div>
         </div>
-        <SearchBar />
-        {user ? (
-          <button onClick={handleLogoutClick}>Log Out</button>
-        ) : (
-          <button
-            type="button"
-            onClick={openModal}
-            className="btn btn-secondary bg-white/90"
-          >
-            Login
-          </button>
-        )}
       </div>
     </nav>
   );

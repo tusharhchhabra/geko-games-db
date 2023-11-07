@@ -1,18 +1,11 @@
-import { AuthContext } from "@/context/AuthContext";
 import { getYearFromUnixTimestamp } from "@/helpers/findTime";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useContext } from "react";
 
 function SearchedGamesList({ games }) {
   const router = useRouter();
-  const { user, openModal } = useContext(AuthContext);
 
   const handleGameClick = (game) => {
-    if (!user) {
-      openModal();
-      return;
-    }
     router.push(`/games/${game.id}`);
   };
 

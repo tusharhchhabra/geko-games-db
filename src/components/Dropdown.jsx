@@ -13,9 +13,9 @@ export default function MyCombobox({
   return (
     <Combobox value={selected} onChange={setSelected}>
       <div className="relative mt-1">
-        <div className="relative w-full cursor-default overflow-hidden rounded-md text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 sm:text-sm">
+        <div className="relative w-full cursor-default rounded-md text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 md:text-sm">
           <Combobox.Input
-            className="w-full rounded-md py-2 pl-3 pr-10 text-sm leading-5 bg-gray-700/[0.3] border-[0.5px] border-gray-700 text-white focus:ring-0"
+            className="w-full rounded-md py-2 pl-3 pr-10 text-md leading-5 bg-zinc-700 md:bg-zinc-700/[0.2] md:backdrop-blur-md text-white focus:ring-0"
             displayValue={query}
             placeholder="Search..."
             onChange={(event) => setQuery(event.target.value)}
@@ -31,7 +31,7 @@ export default function MyCombobox({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Combobox.Options className="absolute mt-1 py-2 max-h-96 w-full overflow-auto rounded-md bg-gray-700 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+            <Combobox.Options className="absolute mt-1 py-2 max-h-96 w-full overflow-auto rounded-md bg-zinc-700 text-base shadow-lg ring-1 ring-black/5 focus:outline-none md:text-sm">
               {games.length === 0 && query !== "" && canShowEmptyState ? (
                 <div className="relative cursor-default select-none py-3 px-4 text-gray-400">
                   Nothing found.
