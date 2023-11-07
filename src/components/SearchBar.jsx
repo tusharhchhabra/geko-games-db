@@ -47,7 +47,7 @@ function SearchBar() {
   }, [query]);
 
   return (
-    <div className="min-w-[200px] sm:min-w-[200px] md:min-w-[250px] lg:min-w-[450px] mr-6">
+    <div className="min-w-[200px] xl:min-w-[450px]">
       <MyCombobox
         query={query}
         setQuery={setQuery}
