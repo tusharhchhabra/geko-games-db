@@ -10,6 +10,7 @@ const PlatformsGameList = ({
   initialGames,
   initialPlatforms,
   initialThemes,
+  platforms,
 }) => {
   // States
   const [selectedPlatform, setSelectedPlatform] = useState(null);
@@ -18,10 +19,10 @@ const PlatformsGameList = ({
   const [loading, setLoading] = useState(false);
   const [allDataLoaded, setAllDataLoaded] = useState(false);
   const [platformId, setPlatformId] = useState(() =>
-    extractIdAsAnArray(initialPlatforms)
+    extractIdAsAnArray(platforms)
   );
   const [gamePlatforms, setGamePlatform] = useState(() =>
-    extractNameAsAnArray(initialPlatforms)
+    extractNameAsAnArray(platforms)
   );
   const [gameThemesId, setGameThemesId] = useState(() =>
     extractIdAsAnArray(initialThemes)
@@ -30,6 +31,21 @@ const PlatformsGameList = ({
     extractNameAsAnArray(initialThemes)
   );
   const [filteredGamesFetched, setFilteredGamesFetched] = useState(false);
+  const[allPlatforms, setAllPlatforms] = useState(initialPlatforms)
+  const [selectedPlatformName, setSelectedPlatformName] = useState(null);
+
+  console.log("platforms", platforms);
+  console.log("initialPlatforms", initialPlatforms);
+
+   useEffect(() => {
+     if (selectedPlatform !== null) {
+       allPlatforms.map((platform) => {
+         if (platform.id === selectedPlatform) {
+           setSelectedPlatformName(platform.name)
+         }
+       })
+     }
+   }, [selectedPlatform])
 
   // Fetch Initial Games When a Platform is Selected
   useEffect(() => {
@@ -144,7 +160,7 @@ const PlatformsGameList = ({
 
   // Render JSX
   return (
-    <div className="p-10 w-full">
+    <div className="lg:p-24 w-full p-2">
       <PlatformButton
         platforms={initialPlatforms}
         setSelectedPlatform={setSelectedPlatform}
@@ -154,11 +170,14 @@ const PlatformsGameList = ({
         setAllDataLoaded={setAllDataLoaded}
       />
       {filteredGamesFetched ? (
-        <div className="w-full absolute left-10">
+        <div className=" w-full absolute lg:left-10 top-48 lg:top-44 ">
+          <h1 className="lg:text-[50px] font-bold text-gray-700 mt-5 lg:mt-10">
+            {selectedPlatformName}
+          </h1>
           <GamesList setOfGames={filteredGames} />
         </div>
       ) : (
-        <div className="w-full absolute left-10">
+        <div className="w-full absolute lg:left-10 top-48 mt-5 lg:mt-2">
           <GamesList setOfGames={gameSets} />
         </div>
       )}
@@ -199,8 +218,9 @@ export default PlatformsGameList;
 
 // Initial Data Fetching
 export async function getServerSideProps() {
-  const platforms = await fetchData(queries.topPlatforms, "platforms");
-  const themes = await fetchData(queries.themes, "themes");
+  const platforms = await fetchData(queries.platforms, "platforms");
+  const initialPlatforms = await fetchData(queries.topPlatforms, "platforms");
+  const themes = await fetchData(queries.themesForSearch, "themes");
 
   const seriesXGames = await fetchData(queries.gamesByPlatform(169), "games");
   const seriesXGamesCovers = await fetchData(
@@ -236,8 +256,9 @@ export async function getServerSideProps() {
 
   return {
     props: {
+      platforms: platforms,
       initialGames: setOfGames,
-      initialPlatforms: platforms,
+      initialPlatforms: initialPlatforms,
       initialThemes: themes,
     },
   };

@@ -109,7 +109,7 @@ function GameDetailsPage({ game }) {
         </div>
       </div>
 
-      {game.similarGames && (
+      {game.similarGamesWithCover && (
         <p className="mt-20 text-3xl font-normal text-white">More Like This</p>
       )}
       <div className="mt-10 grid gap-x-6 gap-y-8 xl:gap-y-14 md:gap-y-12 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">

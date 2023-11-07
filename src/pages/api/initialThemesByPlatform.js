@@ -27,7 +27,7 @@ export default async function search(req, res) {
     title: "Top 10 Games",
   };
 
-  const newPlatforms = [167, 48, 169, 6, 49, 130];
+  const newPlatforms = [6, 169, 167, 48, 38, 9, 49, 12, 11, 130, 41, 20];
   if (newPlatforms.includes(query)) {
     const newGamesQuery = queries.newGamesByPlatform(query);
     const newGames = await fetchData(newGamesQuery, endpoint);
