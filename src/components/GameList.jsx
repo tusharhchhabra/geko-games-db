@@ -8,26 +8,32 @@ const GamesList = ({ setOfGames }) => {
   const slide = (index, direction) => {
     const slider = sliderRefs.current[index];
     if (slider) {
-      const scrollAmount = direction === "left" ? -260 : 260;
+      let scrollAmount = direction === "left" ? -200 : 200;
+      if (slider.clientWidth < 600) {
+        scrollAmount = direction === "left" ? -125 : 125;
+      } else if (slider.clientWidth >= 600 && slider.clientWidth < 1024) {
+        scrollAmount = direction === "left" ? -180 : 180;
+      } else if (slider.clientWidth >= 1024) {
+        scrollAmount = direction === "left" ? -200 : 200;
+      } else if (slider.clientWidth >= 1500) {
+        console.log("slider.clientWidth", slider.clientWidth);
+        scrollAmount = direction === "left" ? -25 : 25;
+      }
+  
       let newScrollPosition = slider.scrollLeft + scrollAmount;
-
-      if (
-        direction === "right" &&
-        newScrollPosition + slider.clientWidth > slider.scrollWidth
-      ) {
+      if (direction === "right" && newScrollPosition + slider.clientWidth > slider.scrollWidth) {
         newScrollPosition = 0;
       }
-
       if (direction === "left" && newScrollPosition < 0) {
-        newScrollPosition = 790;
+        newScrollPosition = slider.scrollWidth - slider.clientWidth;
       }
-
       slider.scrollTo({
         left: newScrollPosition,
         behavior: "smooth",
       });
     }
   };
+  
 
   return (
     <>
@@ -56,7 +62,7 @@ const GamesList = ({ setOfGames }) => {
             />
             <div
               ref={(el) => (sliderRefs.current[index] = el)}
-              className="flex flex-row overflow-x-hidden overflow-y-hidden p object-fill"
+              className="flex flex-row overflow-x-hidden overflow-y-hidden p object-fill whitespace-nowrap"
             >
               <GamesListItem games={gameSet.games} />
             </div>

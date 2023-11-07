@@ -84,6 +84,7 @@ function GameListItem({ games }) {
             {isFavourite(game.id) ? heartFilled : heart}
           </div>
         )}
+        <Link href={`/games/${game.id}`}>
         <img
           id={game.id}
           loading="lazy"
@@ -103,6 +104,8 @@ function GameListItem({ games }) {
               : "block rounded-lg"
           }
         />
+        
+        </Link>
 
         <div
           className="relative w-[100px] h-[125px] sm:w-[150px] sm:h-[185px] md:w-[180px] md:h-[215px] lg:w-[240px] lg:h-[352px] inline-block cursor-pointer relative p-2"
@@ -166,6 +169,7 @@ function GameListItem({ games }) {
             </div>
           )}
         </div>
+        <div className="inline-block" style={{ width: '105px' }}></div>
       </div>
     );
   });
