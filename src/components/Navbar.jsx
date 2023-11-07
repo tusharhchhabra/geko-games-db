@@ -92,7 +92,7 @@ export default function Navbar() {
             {user && (
               <li>
                 <Link
-                  href="/favourites"
+                  href={`/favourites/${user.id}`}
                   className="block rounded-md py-2 pl-3 pr-4 text-white hover:bg-violet-800 md:p-0 md:hover:bg-transparent md:hover:text-violet-500"
                 >
                   Favourites
