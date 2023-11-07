@@ -144,7 +144,7 @@ function GameListItem({ games }) {
                         stroke-linecap="round"
                         stroke="currentColor"
                         fill="none"
-                        class="w-[10px] h-[10px] sm:w-[15px] sm:h-[15px] lg:w-5 lg:h-5" // Controller size
+                        className="w-[10px] h-[10px] sm:w-[15px] sm:h-[15px] lg:w-5 lg:h-5" // Controller size
                         viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg"
                       >

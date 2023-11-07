@@ -22,7 +22,7 @@ function GameDetailsPage({ game }) {
             : "",
         }}
       >
-        <div class="absolute w-full h-[50vh] max-h-[50vh] bg-gradient-to-t from-neutral-900 via-transparent to-zinc-900" />
+        <div className="absolute w-full h-[50vh] max-h-[50vh] bg-gradient-to-t from-neutral-900 via-transparent to-zinc-900" />
       </div>
       <div className="flex w-full mt-[10vh] sm:mt-[20vh] items-center flex-col sm:flex-row gap-6 sm:gap-9">
         {game.coverUrl && (
@@ -141,58 +141,20 @@ export default GameDetailsPage;
 export async function getServerSideProps(context) {
   const { id } = context.query;
 
-  const games = await fetchData(queries.game(id), "games");
-
-  if (games.length === 0) {
-    return;
+  const gameData = await fetchData(queries.gameDetails(id), "games");
+  if (!gameData) {
+    return { props: { gameDetails: {} } };
   }
-
-  const game = games[0];
-
-  const [
-    coversPromise,
-    genresPromise,
-    platformsPromise,
-    videosPromise,
-    screenshotsPromise,
-    websitesPromise,
-    similarGamesPromise,
-  ] = await Promise.allSettled([
-    fetchData(queries.coverArtForGame(game), "covers"),
-    fetchData(queries.genresForGame(game), "genres"),
-    fetchData(queries.platformsForGame(game), "platforms"),
-    fetchData(queries.videosForGame(game), "game_videos"),
-    fetchData(queries.screenshotsForGame(game), "screenshots"),
-    fetchData(queries.websitesForGame(game), "websites"),
-    fetchData(queries.similarGames(game), "games"),
-  ]);
-
-  const [
-    covers,
-    genres,
-    platforms,
-    videos,
-    screenshots,
-    websites,
-    similarGames,
-  ] = [
-    coversPromise.value,
-    genresPromise.value,
-    platformsPromise.value,
-    videosPromise.value,
-    screenshotsPromise.value,
-    websitesPromise.value,
-    similarGamesPromise.value,
-  ];
+  const game = gameData[0];
 
   let formattedCoverUrl = null;
-  if (covers.length !== 0) {
-    formattedCoverUrl = adjustImageUrl(covers[0].url, "t_cover_big_2x");
+  if (game.cover) {
+    formattedCoverUrl = adjustImageUrl(game.cover.url, "t_cover_big_2x");
   }
 
-  let screenshotsSmall = screenshots;
-  if (screenshots && screenshots.length !== 0) {
-    screenshotsSmall = screenshots.map((screenshot) => {
+  let screenshotsSmall = game.screenshots;
+  if (game.screenshots) {
+    screenshotsSmall = game.screenshots.map((screenshot) => {
       return {
         ...screenshot,
         url: adjustImageUrl(screenshot.url, "t_screenshot_med"),
@@ -200,9 +162,9 @@ export async function getServerSideProps(context) {
     });
   }
 
-  let screenshotsBig = screenshots;
-  if (screenshots && screenshots.length !== 0) {
-    screenshotsBig = screenshots.map((screenshot) => {
+  let screenshotsBig = game.screenshots;
+  if (game.screenshots) {
+    screenshotsBig = game.screenshots.map((screenshot) => {
       return {
         ...screenshot,
         url: adjustImageUrl(screenshot.url, "t_screenshot_huge_2x"),
@@ -210,9 +172,9 @@ export async function getServerSideProps(context) {
     });
   }
 
-  let similarGamesWithCover = [];
-  if (similarGames && similarGames.length !== 0) {
-    similarGamesWithCover = similarGames.map((game) => {
+  let similarGamesWithCover = game.similar_games;
+  if (game.similar_games) {
+    similarGamesWithCover = game.similar_games.map((game) => {
       return {
         ...game,
         coverUrl: game.cover
@@ -225,13 +187,12 @@ export async function getServerSideProps(context) {
   const gameDetails = {
     ...game,
     coverUrl: formattedCoverUrl,
-    genres,
-    platforms,
-    videos,
     screenshotsSmall,
     screenshotsBig,
     similarGamesWithCover,
-    websites: websites.sort((a, b) => (a.category < b.category ? -1 : 1)),
+    websites: game.websites
+      ? game.websites.sort((a, b) => (a.category < b.category ? -1 : 1))
+      : null,
   };
 
   return { props: { game: gameDetails } };
