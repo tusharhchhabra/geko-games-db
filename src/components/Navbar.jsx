@@ -38,7 +38,7 @@ export default function Navbar() {
       }`}
     >
       <div className="mx-auto flex max-w-full flex-wrap items-baseline justify-between px-6 py-2">
-        <Link href="/" className="flex items-center gap-1.5 translate-y-1">
+        <Link href="/" className="flex items-center gap-1.5 translate-y-0.5">
           <Image
             src="/logo.png"
             className="w-full h-auto translate-y-0.5"
@@ -100,7 +100,7 @@ export default function Navbar() {
               </li>
             )}
           </ul>
-          <div className="lg:pl-7">
+          <div className="px-7 lg:pl-7">
             <SearchBar />
           </div>
           <div className={`${isOpen ? "mt-6" : "mt-0"} px-7 md:p-0`}>
