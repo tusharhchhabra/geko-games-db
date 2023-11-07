@@ -7,17 +7,22 @@ const UIOverlay = ({ score }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowInitialMessage(false);
-    }, 3000);
+    }, 5000);
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <div className="fixed top-24 inset-x-0 mx-auto flex flex-col items-center z-50">
       {showInitialMessage && (
-        <div className="w-max p-4 mb-4 bg-green-500 text-white rounded-md shadow-md">
-          <div className="text-xl font-bold">
-            The pond has been attacked by BUGS! Hurry and clean them up before
-            Larry finds out!
+        <div className="flex flex-col items-center space-y-4 mb-4">
+          <div className="w-max p-4 bg-green-500 text-white rounded-md shadow-md">
+            <div className="text-xl font-bold">
+              The pond has been attacked by BUGS! Hurry and clean them up before
+              Larry finds out!
+            </div>
+          </div>
+          <div className=" p-4 absolute top-0">
+            <img src="../assets/controls.png" alt="controls" className="w-[1300px] h-[700px]"/>
           </div>
         </div>
       )}

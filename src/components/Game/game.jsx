@@ -150,7 +150,7 @@ const GameComponent = () => {
       player.batSwing = this.anims.create({
         key: "batSwing",
         frames: this.anims.generateFrameNumbers("bat"),
-        frameRate: 25,
+        frameRate: 35,
         repeat: 1,
       });
 
