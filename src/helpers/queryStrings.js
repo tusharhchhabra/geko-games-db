@@ -7,6 +7,10 @@ const queries = {
     return `fields *; where id = ${id}; limit 50;`;
   },
 
+  gameDetails: function (id) {
+    return `fields name, category, cover.url, first_release_date, game_modes, genres.name, platforms.abbreviation, screenshots.url, summary, themes.name, websites.category, websites.url, similar_games.name, similar_games.cover.url, total_rating, videos.video_id; where id = ${id};`;
+  },
+
   top10Games:
     "fields name, id; where total_rating_count >= 100; sort total_rating desc; limit 10;",
 
