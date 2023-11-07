@@ -74,7 +74,7 @@ function GameListItem({ games }) {
     return (
       <div
         key={game.id}
-        className="w-[240px] h-[352px] inline-block cursor-pointer relative p-2"
+        className="w-[100px] h-[125px] sm:w-[150px] sm:h-[185px] md:w-[180px] md:h-[215px] lg:w-[240px] lg:h-[352px] inline-block cursor-pointer relative p-2"
       >
         {user && (
           <div
@@ -100,42 +100,51 @@ function GameListItem({ games }) {
           className={
             gameVideo && game.id === hoveredGameId
               ? "hidden"
-              : "block rounded-lg "
+              : "block rounded-lg"
           }
         />
 
         <div
-          className="relative w-[560px] h-[400px]"
+          className="relative w-[100px] h-[125px] sm:w-[150px] sm:h-[185px] md:w-[180px] md:h-[215px] lg:w-[240px] lg:h-[352px] inline-block cursor-pointer relative p-2"
           onMouseLeave={() => {
             clearVideo(game.id);
           }}
         >
           {gameVideo && (
-            <div className="absolute top-0 bottom-0 left-0 right-0 z-10 w-[425px] h-[332px] bg-violet-500 rounded-lg">
+            // Box With video in it
+            <div
+              className="absolute top-0 bottom-0 left-0 right-0 z-10 
+            w-[150px] h-[120px]
+            sm:w-[200px] sm:h-[166px]
+            md:w-[300px] md:h-[210px]
+            lg:w-[425px] lg:h-[330px]
+            bg-violet-500 rounded-lg"
+            >
               <iframe
                 className={
+                  // Video size
                   gameVideo && game.id === hoveredGameId
-                    ? "absolute top-0 bottom-0 left-0 right-0 z-10 rounded-lg"
+                    ? "absolute top-0 bottom-0 left-0 right-0 z-10 rounded-lg w-[150px] h-[100px] sm:w-[200px] sm:h-[135px] md:w-[300px] md:h-[175px] lg:w-[425px] lg:h-[275px]"
                     : "hidden"
                 }
-                width="425"
-                height="275"
                 src={`https://www.youtube.com/embed/${gameVideo.video_id}?si=rKISgJFVYRGMtTwG&amp;start=10&autoplay=1&mute=1&controls=0&showinfo=0`}
                 title="YouTube video player"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
               ></iframe>
               <Link href={`/games/${game.id}`}>
-                <div className="absolute bottom-1 right-3">
+                {/* button position */}
+                <div className="absolute bottom-[0px] right-[5px] sm:bottom-[3px] sm:right-[5px] md:bottom-[5px] md:right-[5px] lg:bottom-1 lg:right-3">
                   <button class="relative cursor-pointer opacity-90 hover:opacity-100 transition-opacity p-[2px] bg-black rounded-[16px] active:scale-95">
-                    <span class="w-full h-full flex items-center gap-2 px-2 py-2 bg-black text-white rounded-[14px] bg-gradient-to-t from-black to-black text-lg font-bold">
+                    {/* px & py to control button size */}
+                    <span class="w-[50px] h-[10px] sm:w-[70px] sm:h-[22px] md:w-full md:h-full lg:w-full lg:h-full flex items-center gap-2 px-[1px] py-[0px] sm:px-[1px] sm:py-[2px] lg:px-2 lg:py-2 bg-black text-white rounded-[14px] bg-gradient-to-t from-black to-black text-[4px] sm:text-[7.25px] md:text-md lg:text-lg font-bold">
                       <svg
                         stroke-width="2"
                         stroke-linejoin="round"
                         stroke-linecap="round"
                         stroke="currentColor"
                         fill="none"
-                        class="w-5 h-5"
+                        class="w-[10px] h-[10px] sm:w-[15px] sm:h-[15px] lg:w-5 lg:h-5" // Controller size
                         viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg"
                       >
