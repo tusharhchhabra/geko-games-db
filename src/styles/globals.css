@@ -15,3 +15,16 @@
     @apply border-gray-300 text-slate-900 hover:bg-gray-50 focus:ring-violet-400;
   }
 }
+
+@layer utilities {
+  @variants responsive {
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+  }
+}
