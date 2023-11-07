@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 function AdvancedSearchBar({ searchTerm, handleSearchTermChange }) {
   return (
     <div className="mt-6 text-sm text-gray-300">
