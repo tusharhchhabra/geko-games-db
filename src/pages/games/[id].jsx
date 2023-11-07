@@ -234,7 +234,5 @@ export async function getServerSideProps(context) {
     websites: websites.sort((a, b) => (a.category < b.category ? -1 : 1)),
   };
 
-  console.log(gameDetails);
-
   return { props: { game: gameDetails } };
 }
