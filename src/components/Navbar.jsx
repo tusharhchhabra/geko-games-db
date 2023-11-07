@@ -17,7 +17,7 @@ export default function Navbar() {
     <nav
       className={`fixed left-0 top-0 z-20 w-full bg-transparent transition-colors duration-300 ${
         scrollPosition > 0
-          ? "border-b-[0.5px] border-gray-700 bg-slate-900/[0.35] backdrop-blur-lg"
+          ? "border-b-[0.5px] border-gray-700 bg-zinc-900/[0.45] backdrop-blur-lg"
           : "border-gray-800"
       }`}
     >
