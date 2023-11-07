@@ -34,7 +34,7 @@ function GameDetailsPage({ game }) {
           />
         )}
         <div className="mt-auto w-full flex flex-col items-center text-center sm:items-start sm:text-left">
-          <p className="font-semibold leading-snug tracking-tight max-w-md py-0.5 text-white text-4xl xl:text-4xl text-center sm:text-left [text-shadow:_0_1px_40px_rgb(0_0_0_/_70%)]">
+          <p className="font-semibold leading-tight tracking-tight max-w-md py-0.5 text-white text-3xl xl:text-4xl text-center sm:text-left [text-shadow:_0_1px_40px_rgb(0_0_0_/_70%)]">
             {game.name}
           </p>
           <div className="mt-2.5 flex gap-4 items-baseline font-medium">
@@ -66,21 +66,25 @@ function GameDetailsPage({ game }) {
           )}
         </div>
       </div>
-      {game.screenshotsSmall && (
-        <div className="mt-4 px-6 py-10 absolute left-0 right-0 w-screen flex gap-2.5 overflow-scroll">
-          {game.screenshotsSmall.map((screenshot) => (
-            <img
-              key={screenshot.id}
-              src={screenshot.url}
-              className="w-52 xl:w-60 h-auto shadow-xl-center shadow-black/[0.3] border border-zinc-800 hover:border-none rounded-lg hover:z-20 hover:scale-125 hover:brightness-110 transition duration-300 ease-in-out cursor-pointer"
-              loading="lazy"
-            />
-          ))}
-        </div>
-      )}
+      <div className="relative">
+        {game.screenshotsSmall && (
+          <div className="mt-4 py-10 -mx-6 px-6 md:-pl-8 lg:pr-20 lg:-mr-20 flex gap-2.5 overflow-x-scroll no-scrollbar">
+            {game.screenshotsSmall.map((screenshot) => (
+              <img
+                key={screenshot.id}
+                src={screenshot.url}
+                className="w-52 h-auto xl:w-60 h-auto shadow-xl-center shadow-black/[0.3] border border-zinc-700 hover:border-none rounded-lg hover:scale-125 hover:brightness-110 transition duration-300 ease-in-out cursor-pointer"
+                loading="lazy"
+              />
+            ))}
+          </div>
+        )}
+        <div className="absolute top-0 left-0 mt-5 w-8 -ml-6 md:-ml-6 h-40 xl:h-44 bg-gradient-to-r from-neutral-900 via-neutral-900/50 to-transparent"></div>
+        <div className="absolute top-0 right-0 mt-5 w-8 -mr-6 lg:-mr-20 lg:w-20 h-40 xl:h-44 bg-gradient-to-l from-neutral-900 to-transparent"></div>
+      </div>
       <div
         className={`${
-          game.screenshotsSmall ? "mt-56 xl:mt-60" : "mt-20"
+          game.screenshotsSmall ? "mt-0 xl:mt-0" : "mt-20"
         } max-w-2xl`}
       >
         <p className="text-3xl font-normal text-white">Summary</p>
