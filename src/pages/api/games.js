@@ -18,7 +18,7 @@ export default async function getGames(req, res) {
   const gamesWithCovers = queries.gamesWithCoverArt(
     games,
     covers,
-    "t_cover_big"
+    "t_cover_big_2x"
   );
 
   const gamesObject = {

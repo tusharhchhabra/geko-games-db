@@ -151,10 +151,13 @@ const Favourites = ({ games }) => {
 
 export default Favourites;
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+  const { id } = context.query;
+
+
   let games;
   try {
-    games = await getUserFavoriteGames(user.id);
+    games = await getUserFavoriteGames(id);
   } catch (error) {
     console.error("Error fetching initial data: ", error);
     return { props: { games: [] } };
