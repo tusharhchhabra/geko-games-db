@@ -16,7 +16,7 @@ export default async function register(req, res) {
     const createdUser = await createUser(username, email, passwordDigest);
     const userTokenContent = { id: createdUser.id, username, email };
 
-    const token = generateToken(userTokenContent);
+    const token = await generateToken(userTokenContent);
 
     res.setHeader(
       "Set-Cookie",
