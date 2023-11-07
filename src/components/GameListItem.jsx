@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import Link from "next/link";
 import FavouritesContext from "@/context/FavouritesContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -69,6 +69,18 @@ function GameListItem({ games }) {
       });
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (gameListRef.current) {
+        clearTimeout(gameListRef.current);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return games.map((game) => {
     const gameVideo = videos[game.id];
     return (
@@ -92,7 +104,7 @@ function GameListItem({ games }) {
           onMouseEnter={() => {
             gameListRef.current = setTimeout(() => {
               fetchVideo(game.id);
-            }, 1500);
+            }, 400);
           }}
           onMouseLeave={() => {
             clearTimeout(gameListRef.current);
