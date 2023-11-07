@@ -24,15 +24,16 @@ const PlatformButton = ({
       absolute top-28 sm:top-16 lg:top-32 lg:left-20 md:left-4 md:top-24 
     "
     >
-      {platforms.map((platform, index) => {
-        const platformName =
-          platform.name === "PC (Microsoft Windows)" ? "PC" : platform.name;
+      {platforms &&
+        platforms.map((platform, index) => {
+          const platformName =
+            platform.name === "PC (Microsoft Windows)" ? "PC" : platform.name;
 
-        return (
-          <button
-            onClick={() => selectPlatform(platform.id)}
-            key={index}
-            className="
+          return (
+            <button
+              onClick={() => selectPlatform(platform.id)}
+              key={index}
+              className="
               w-20 h-7
               text-[7px]
               px-4 py-1
@@ -45,15 +46,12 @@ const PlatformButton = ({
               lg:w-40 lg:h-16
               lg:text-[18px]
               transition duration-300 ease-in-out
-
-              
-              
               "
-          >
-            {platformName}
-          </button>
-        );
-      })}
+            >
+              {platformName}
+            </button>
+          );
+        })}
     </div>
   );
 };
