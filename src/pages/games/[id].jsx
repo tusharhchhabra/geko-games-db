@@ -41,6 +41,7 @@ function GameDetailsPage({ game }) {
             <span className="text-neutral-300">
               {getYearFromUnixTimestamp(game.first_release_date)}
             </span>
+            <div className="h-[18px] w-[0.5px] bg-zinc-300 self-center -translate-y-px" />
             {game.total_rating && (
               <Rating count={Math.round(game.total_rating) / 10} />
             )}
