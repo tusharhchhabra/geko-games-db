@@ -3,7 +3,6 @@ import React, { useState, useEffect, useContext } from "react";
 import FavouritesList from "@/components/FavouritesList";
 import { AuthContext } from "@/context/AuthContext";
 import Link from "next/link";
-import EasterEgg from "@/components/EasterEgg";
 
 const Favourites = ({ games }) => {
   const [gamesFetched, setGamesFetched] = useState(false);
@@ -122,7 +121,7 @@ const Favourites = ({ games }) => {
             >
               <svg
                 aria-hidden="true"
-                class="w-11 h-11 text-gray-200 animate-spin dark:text-gray-600 fill-violet-500"
+                className="w-11 h-11 text-gray-200 animate-spin dark:text-gray-600 fill-violet-500"
                 viewBox="0 0 100 101"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
