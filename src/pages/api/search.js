@@ -19,7 +19,7 @@ export default async function search(req, res) {
   const gamesWithThumbnails = queries.gamesWithCoverArt(
     games,
     thumbnails,
-    "t_cover_small"
+    "t_cover_small_2x"
   );
 
   res.send(gamesWithThumbnails);
