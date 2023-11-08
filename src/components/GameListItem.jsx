@@ -1,17 +1,22 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import Link from "next/link";
 import FavouritesContext from "@/context/FavouritesContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "@/context/AuthContext";
 
-function GameListItem({ games }) {
+function GameListItem({ games, gameSetRef, index }) {
   const [videos, setVideos] = useState({});
   const [hoveredGameId, setHoveredGameId] = useState(null);
   const gameListRef = useRef(null);
   const { toggleFavourite, state } = useContext(FavouritesContext);
   const [isUpdating, setIsUpdating] = useState(false);
   const { user } = useContext(AuthContext);
+
+  
+  const gameSetIndex = index;
+  
+  
 
   const heart = <FontAwesomeIcon icon={faHeart} size="xl" />;
   const heartFilled = (
@@ -69,12 +74,42 @@ function GameListItem({ games }) {
       });
   };
 
-  return games.map((game) => {
+
+  return games.map((game, index) => {
     const gameVideo = videos[game.id];
+
+    let style = "translate-x-0";
+
+    gameSetRef.map((ref) => {
+      if (ref.index === gameSetIndex) {
+        if (ref.slidePosition === 0 && index === 6) {
+          style = "lg:-translate-x-28";
+        } else if (ref.slidePosition === 0 && index === 7) {
+          style = "lg:-translate-x-72";
+        } else if (ref.slidePosition === 200 && index === 7) {
+          style = "lg:-translate-x-40";
+        } else if (ref.slidePosition === 200 && index === 8) {
+          style = "lg:-translate-x-80";
+        } else if (ref.slidePosition === 200 && index === 0) {
+         style = "lg:translate-x-48"; 
+        } else if (ref.slidePosition === 400 && index === 8) {
+          style = "lg:-translate-x-52";
+        } else if (ref.slidePosition === 400 && index === 9) {
+          style = "lg:-translate-x-96";
+        } else if (ref.slidePosition === 400 && index === 1) {
+          style = "lg:translate-x-44";
+        } else if ((ref.slidePosition === 600 || ref.slidePosition === 610) && index === 9) {
+          style = "lg:-translate-x-56";
+        } else if ((ref.slidePosition === 600 || ref.slidePosition === 610) && index === 2) {
+          style = "lg:translate-x-36";
+        }
+      }
+    });
+
     return (
       <div
         key={game.id}
-        className="w-[100px] h-[125px] sm:w-[150px] sm:h-[185px] md:w-[180px] md:h-[215px] lg:w-[240px] lg:h-[352px] inline-block cursor-pointer relative p-2"
+        className={`w-[100px] h-[125px] sm:w-[150px] sm:h-[185px] md:w-[180px] md:h-[215px] lg:w-[240px] lg:h-[352px] inline-block cursor-pointer relative p-2 `}
       >
         {user && (
           <div
@@ -85,26 +120,25 @@ function GameListItem({ games }) {
           </div>
         )}
         <Link href={`/games/${game.id}`}>
-        <img
-          id={game.id}
-          loading="lazy"
-          src={game.coverUrl}
-          alt={game.name}
-          onMouseEnter={() => {
-            gameListRef.current = setTimeout(() => {
-              fetchVideo(game.id);
-            }, 1500);
-          }}
-          onMouseLeave={() => {
-            clearTimeout(gameListRef.current);
-          }}
-          className={
-            gameVideo && game.id === hoveredGameId
-              ? "hidden"
-              : "block rounded-lg  shadow-xl shadow-violet-500/[0.5] hover:shadow-violet-700/[.9] hover:shadow-lg transition duration-200 ease-in-out hover:scale-105 hover:brightness-110"
-          }
-        />
-        
+          <img
+            id={game.id}
+            loading="lazy"
+            src={game.coverUrl}
+            alt={game.name}
+            onMouseEnter={() => {
+              gameListRef.current = setTimeout(() => {
+                fetchVideo(game.id);
+              }, 1500);
+            }}
+            onMouseLeave={() => {
+              clearTimeout(gameListRef.current);
+            }}
+            className={
+              gameVideo && game.id === hoveredGameId
+                ? "hidden"
+                : `block rounded-lg  shadow-lg shadow-neutral-500/[0.8] hover:shadow-violet-700/[1] hover:shadow-xl transition duration-200 ease-in-out hover:scale-105 hover:brightness-110`
+            }
+          />
         </Link>
 
         <div
@@ -116,20 +150,23 @@ function GameListItem({ games }) {
           {gameVideo && (
             // Box With video in it
             <div
-              className="absolute top-0 bottom-0 left-0 right-0 z-50 
+              className={`absolute top-0 bottom-0 left-0 right-0 
             w-[150px] h-[120px]
             sm:w-[200px] sm:h-[166px]
             md:w-[300px] md:h-[210px]
             lg:w-[425px] lg:h-[330px]
-            bg-violet-500 rounded-lg
+            bg-violet-500/[0.9] rounded-lg
+            z-40
+            ${style}
+            `}
             
-            "
+            
             >
               <iframe
                 className={
                   // Video size
                   gameVideo && game.id === hoveredGameId
-                    ? "absolute top-0 bottom-0 left-0 right-0 z-10 rounded-lg w-[150px] h-[100px] sm:w-[200px] sm:h-[135px] md:w-[300px] md:h-[175px] lg:w-[425px] lg:h-[275px] z-100"
+                    ? "absolute top-0 bottom-0 left-0 right-0 rounded-lg w-[150px] h-[100px] sm:w-[200px] sm:h-[135px] md:w-[300px] md:h-[175px] lg:w-[425px] lg:h-[275px] z-40"
                     : "hidden"
                 }
                 src={`https://www.youtube.com/embed/${gameVideo.video_id}?si=rKISgJFVYRGMtTwG&amp;start=10&autoplay=1&mute=1&controls=0&showinfo=0`}
@@ -171,7 +208,7 @@ function GameListItem({ games }) {
             </div>
           )}
         </div>
-        <div className="inline-block" style={{ width: '105px' }}></div>
+        <div className="inline-block" style={{ width: "105px" }}></div>
       </div>
     );
   });
