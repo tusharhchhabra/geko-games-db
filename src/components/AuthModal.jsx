@@ -1,5 +1,7 @@
 import { AuthContext } from "@/context/AuthContext";
 import React, { useContext, useState } from "react";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function AuthModal() {
   const { closeModal, setUser } = useContext(AuthContext);
@@ -70,12 +72,12 @@ export default function AuthModal() {
   };
 
   return (
-    <div className="bg-gray-800 relative w-full max-w-md rounded-2xl shadow-2xl shadow-gray-900 border border-gray-700 md:mt-0 xl:p-0">
+    <div className="bg-zinc-800 relative w-full max-w-md rounded-2xl shadow-2xl shadow-zinc-900 border border-zinc-700 md:mt-0 xl:p-0">
       <button
         onClick={closeModal}
         className="w-9 h-9 rounded-full flex items-center justify-center absolute right-4 top-5"
       >
-        X
+        <FontAwesomeIcon icon={faXmark} className="text-xl" />
       </button>
       <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
         <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl">
@@ -90,13 +92,13 @@ export default function AuthModal() {
                 className="block mb-2 text-md font-medium"
               >
                 Username{" "}
-                <span className="text-gray-400 font-normal">(optional)</span>
+                <span className="text-zinc-400 font-normal">(optional)</span>
               </label>
               <input
                 type="text"
                 name="username"
                 placeholder="janedoe"
-                className="border border-gray-700 rounded-lg bg-gray-900 w-full p-2.5"
+                className="border border-zinc-700 rounded-lg bg-zinc-900 w-full p-2.5"
                 value={formData.username}
                 onChange={handleInputChange}
               />
@@ -114,7 +116,7 @@ export default function AuthModal() {
               type="email"
               name="email"
               placeholder="jane@doe.com"
-              className="border border-gray-700 rounded-lg bg-gray-900 w-full p-2.5"
+              className="border border-zinc-700 rounded-lg bg-zinc-900 w-full p-2.5"
               value={formData.email}
               onChange={handleInputChange}
             />
@@ -134,7 +136,7 @@ export default function AuthModal() {
               type="password"
               name="password"
               placeholder="••••••••"
-              className="border border-gray-700 rounded-lg bg-gray-900 w-full p-2.5"
+              className="border border-zinc-700 rounded-lg bg-zinc-900 w-full p-2.5"
               value={formData.password}
               onChange={handleInputChange}
             />
@@ -147,7 +149,7 @@ export default function AuthModal() {
             {isLogin ? "Login" : "Register"}
           </button>
         </form>
-        <p className="text-sm font-light text-gray-300 dark:text-gray-400">
+        <p className="text-sm font-light text-zinc-300 dark:text-zinc-400">
           {isLogin
             ? "Don't have an account yet? "
             : "Already have an account? "}

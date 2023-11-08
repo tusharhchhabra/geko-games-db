@@ -27,7 +27,12 @@ function SearchedGamesList({ games }) {
                 alt={game.name}
               />
             ) : (
-              <div className="w-[132px] h-[187px] bg-gray-800 rounded-md hover:scale-110 hover:brightness-125 transition duration-300 ease-in-out"></div>
+              <div className="w-[132px] h-[187px] flex overflow-hidden bg-gray-800 rounded-md hover:scale-110 hover:brightness-125 transition duration-300 ease-in-out">
+                <img
+                  src="/logo.png"
+                  className="object-contain rotate-[-30deg] scale-110 opacity-20"
+                />
+              </div>
             )}
             <p className="mt-4 line-clamp-2">{game.name}</p>
             <p className="mt-2 text-gray-500 font-normal">

@@ -11,7 +11,7 @@ const nextConfig = {
     ];
   },
   images: {
-    domains: ["images.igdb.com"],
+    domains: ["images.igdb.com", "https://images.igdb.com"],
   },
 };
 
