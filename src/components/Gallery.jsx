@@ -18,6 +18,7 @@ function Gallery({ children, onInit, className }) {
         autoplay={true}
         autoplayVideoOnSlide={true}
         gotoNextSlideOnVideoEnd={true}
+        getCaptionFromTitleOrAlt={false}
       >
         {children}
       </LightGallery>

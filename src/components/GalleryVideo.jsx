@@ -18,7 +18,7 @@ function GalleryVideo({ videoId }) {
       <div className="absolute bottom-1 left-3">
         <FontAwesomeIcon
           icon={faYoutube}
-          className="text-3xl text-zinc-200 drop-shadow-[0_3px_10px_rgba(0,0,0,0.5)]"
+          className="text-3xl text-zinc-200 drop-shadow-[0_3px_10px_rgba(0,0,0,0.5)] transform-gpu"
         />
       </div>
     </a>
