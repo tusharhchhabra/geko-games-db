@@ -15,16 +15,9 @@ function GameListItem({ games, gameSetRef, index }) {
 
   
   const gameSetIndex = index;
-  
-  
-
-  const heart = <FontAwesomeIcon icon={faHeart} size="xl" />;
-  const heartFilled = (
-    <FontAwesomeIcon icon={faHeart} size="xl" style={{ color: "#FF0000" }} />
-  );
-  const heartBig = <FontAwesomeIcon icon={faHeart} size="2xl" />;
+  const heartBig = <FontAwesomeIcon icon={faHeart}/>;
   const heartFilledBig = (
-    <FontAwesomeIcon icon={faHeart} size="2xl" style={{ color: "#FF0000" }} />
+    <FontAwesomeIcon icon={faHeart} style={{ color: "#FF0000" }} />
   );
 
   const isFavourite = (gameId) => {
@@ -192,7 +185,12 @@ function GameListItem({ games, gameSetRef, index }) {
               {user && (
                 <div
                   onClick={() => handleFavouriteClick(game.id)}
-                  className="absolute bottom-4 left-5"
+                  className="absolute
+                  lg:bottom-3 lg:left-5 lg:text-[35px]
+                  md:bottom-0.75 md:left-5 md:text-2xl
+                  sm:bottom-0.5 sm:left-5 sm:text-xl
+                  bottom-0.5 left-2 text-sm
+                  "
                 >
                   {isFavourite(game.id) ? heartFilledBig : heartBig}
                 </div>
