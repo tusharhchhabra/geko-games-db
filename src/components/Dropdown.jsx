@@ -60,7 +60,12 @@ export default function MyCombobox({
                               className="rounded-md"
                             />
                           ) : (
-                            <div className="w-[60px] h-[80px] bg-gray-300 rounded-md"></div>
+                            <div className="w-[60px] h-[80px] shrink-0 flex overflow-hidden bg-gray-800 rounded-md hover:scale-110 hover:brightness-125 transition duration-300 ease-in-out">
+                              <img
+                                src="/placeholder.png"
+                                className="object-contain rotate-[-30deg] scale-110"
+                              />
+                            </div>
                           )}
                           <div>
                             <p

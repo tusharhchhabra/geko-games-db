@@ -20,7 +20,7 @@ const Layout = ({ children }) => {
           {children}
         </div>
         {isModalOpen && (
-          <div className="flex w-full z-30 justify-center bg-gray-900/[0.75] backdrop-blur-lg items-center fixed top-0 bottom-0 left-0 right-0">
+          <div className="flex w-full z-30 justify-center bg-zinc-900/[0.75] backdrop-blur-md items-center fixed top-0 bottom-0 left-0 right-0 fade-up-short">
             <AuthModal />
           </div>
         )}
