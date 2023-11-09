@@ -31,7 +31,7 @@ const GamesList = ({ setOfGames }) => {
       } else if (slider.clientWidth >= 600 && slider.clientWidth < 1024) {
         scrollAmount = direction === "left" ? -180 : 180;
       } else if (slider.clientWidth >= 1024) {
-        scrollAmount = direction === "left" ? -600 : 600;
+        scrollAmount = direction === "left" ? -690 : 600;
       } else if (slider.clientWidth >= 1500) {
         scrollAmount = direction === "left" ? -25 : 25;
       }
@@ -57,7 +57,7 @@ const GamesList = ({ setOfGames }) => {
   return (
     <>
       {setOfGames.map((gameSet, index) => (
-        <div key={index} className="fade-in-short">
+      <div key={index} className="fade-in-short ">
           <h2
             className="text-violet-500 font-bold [text-shadow:2px_2px_3px_var(--tw-shadow-color)] shadow-black
           lg:text-4xl lg:ml-10 lg:mt-5 lg:p-2
@@ -111,7 +111,7 @@ const GamesList = ({ setOfGames }) => {
                 );
               }}
               className="bg-white rounded-full absolute opacity-50 hover:opacity-100 cursor-pointer z-10 text-black
-              xl:w-[80px] xl:h-[80px] xl:right-[70px] xl:top-[40%]
+              xl:w-[80px] xl:h-[80px] xl:right-[20px] xl:top-[40%]
               lg:w-[70px] lg:h-[70px] lg:right-[0px] lg:top-[40%]
               md:w-[50px] md:h-[50px] md:right-[0px] md:top-[45%]
               sm:w-[30px] sm:h-[30px] sm:right-[0px] sm:top-[45%]
