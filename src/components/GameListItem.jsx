@@ -89,7 +89,7 @@ function GameListItem({ games, gameSetRef, index }) {
         if (ref.slidePosition === 0 && index === 6) {
           style = "lg:-translate-x-28";
         } else if (ref.slidePosition === 0 && index === 7) {
-          style = "lg:-translate-x-72";
+          style = "lg:-translate-x-80";
         } else if (ref.slidePosition === 200 && index === 7) {
           style = "lg:-translate-x-40";
         } else if (ref.slidePosition === 200 && index === 8) {
