@@ -45,8 +45,27 @@ function GameDetailsPage({ game }) {
     }
   }, []);
 
+  const updateArrowVisibility = () => {
+    const carousel = lightGallery.current.el;
+    if (carousel) {
+      const isOverflowing = carousel.scrollWidth > carousel.clientWidth;
+      const arrows = document.querySelectorAll(".nav");
+
+      arrows.forEach((arrow) => {
+        arrow.style.display = isOverflowing ? "block" : "none";
+      });
+    }
+  };
+
   useEffect(() => {
     lightGallery.current.el.classList.add("last:pr-32");
+
+    updateArrowVisibility();
+
+    const handleResize = () => updateArrowVisibility();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
   }, [game.id]);
 
   useEffect(() => {
@@ -141,7 +160,7 @@ function GameDetailsPage({ game }) {
       <div className="mask-sides -mx-6 px-6 lg:pr-20 lg:-mr-20 relative">
         <button
           onClick={() => scroll("left")}
-          className="absolute left-9 top-20 lg:top-[90px] z-30 w-10 h-10 bg-zinc-700 rounded-full border flex items-center justify-center border-zinc-500 shadow-xl shadow-zinc-900 hover:brightness-125 active:scale-90 transition duration-100"
+          className="absolute left-9 top-20 lg:top-[90px] z-30 w-10 h-10 nav bg-zinc-700 rounded-full border flex items-center justify-center border-zinc-500 shadow-xl shadow-zinc-900 hover:brightness-125 active:scale-90 transition duration-100"
         >
           <FontAwesomeIcon
             icon={faChevronLeft}
@@ -150,7 +169,7 @@ function GameDetailsPage({ game }) {
         </button>
         <button
           onClick={() => scroll("right")}
-          className="absolute right-8 sm:right-16 top-20 lg:top-[90px] z-30 w-10 h-10 bg-zinc-700 rounded-full border flex items-center justify-center border-zinc-500 shadow-xl shadow-zinc-900 hover:brightness-125 active:scale-90 transition duration-100"
+          className="absolute right-8 sm:right-16 top-20 lg:top-[90px] z-30 w-10 h-10 nav bg-zinc-700 rounded-full border flex items-center justify-center border-zinc-500 shadow-xl shadow-zinc-900 hover:brightness-125 active:scale-90 transition duration-100"
         >
           <FontAwesomeIcon
             icon={faChevronRight}
