@@ -57,7 +57,7 @@ const buildQuery = ({
   }
 
   if (whereClauses.length > 0) {
-    query += `where ${whereClauses.join(" & ")};`;
+    query += `where ${whereClauses.join(" & ")} & themes != [42];`;
   }
 
   query += `limit ${limit}; offset ${offset};`;
