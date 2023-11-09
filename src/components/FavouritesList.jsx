@@ -20,6 +20,8 @@ const FavouritesList = ({ setOfGames }) => {
           md:grid-cols-4
           sm:grid-cols-4
           grid-cols-2
+          gap-4
+          
           ">
         
             <FavouritesListItem games={gameSet.games} />

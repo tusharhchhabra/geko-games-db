@@ -132,7 +132,7 @@ function GameListItem({ games, gameSetRef, index }) {
             className={
               gameVideo && game.id === hoveredGameId
                 ? "hidden"
-                : `block rounded-lg shadow-lg hover:shadow-[0px_10px_15px_rgba(255,255,255,1)] shadow-violet-500 transition duration-200 ease-in-out hover:scale-[1.03]  hover:brightness-110 z-0`
+                : `block rounded-lg shadow-md hover:shadow-[0px_10px_15px_rgba(255,255,255,1)] shadow-violet-500 transition duration-200 ease-in-out hover:scale-[1.03]  hover:brightness-110 z-0`
             }
           />
         </Link>
