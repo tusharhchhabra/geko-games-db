@@ -46,7 +46,7 @@ function GameDetailsPage({ game }) {
 
   useEffect(() => {
     lightGallery.current.el.classList.add("last:pr-32");
-  }, []);
+  }, [game.id]);
 
   useEffect(() => {
     setIsFavourite(
