@@ -67,7 +67,7 @@ function GameDetailsPage({ game }) {
               <LazyImage
                 src={game.screenshots[0].bigUrl}
                 alt={game.name + " Background"}
-                className="object-cover w-full h-full fade-in"
+                className="object-cover w-full h-full"
                 fadeDuration={1}
               />
             )}
@@ -83,7 +83,7 @@ function GameDetailsPage({ game }) {
             <LazyImage
               src={game.coverUrl}
               alt={game.name + " Cover"}
-              className="object-cover w-full h-full fade-in"
+              className="object-cover w-full h-full"
             />
           </div>
         )}

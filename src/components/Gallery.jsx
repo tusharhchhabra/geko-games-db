@@ -11,6 +11,8 @@ function Gallery({ children, onInit, className }) {
         onInit={onInit}
         mode="lg-fade"
         download={false}
+        startClass="fade-in-short"
+        zoomFromOrigin={false}
         elementClassNames={className}
         plugins={[lgVideo]}
         autoplay={true}
