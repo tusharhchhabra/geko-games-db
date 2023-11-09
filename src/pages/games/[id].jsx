@@ -7,15 +7,30 @@ import { getYearFromUnixTimestamp } from "@/helpers/findTime";
 import queries from "@/helpers/queryStrings";
 import websiteCategories from "@/helpers/websiteCategories";
 import Link from "next/link";
-import { useRef, useCallback, useEffect } from "react";
+import { useRef, useState, useCallback, useEffect, useContext } from "react";
 import {
   faChevronLeft,
   faChevronRight,
+  faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import FavouritesContext from "@/context/FavouritesContext";
+import { AuthContext } from "@/context/AuthContext";
+import GalleryVideo from "@/components/GalleryVideo";
 
 function GameDetailsPage({ game }) {
   const lightGallery = useRef(null);
+  const { toggleFavourite, state } = useContext(FavouritesContext);
+  const { user } = useContext(AuthContext);
+  const [isFavourite, setIsFavourite] = useState(false);
+
+  const handleFavoriteClicked = () => {
+    toggleFavourite(game.id)
+      .then(() => setIsFavourite((prev) => !prev))
+      .catch((error) => {
+        console.error("Error toggling favourite:", error);
+      });
+  };
 
   const scroll = (direction) => {
     lightGallery.current.el.scrollBy({
@@ -32,7 +47,13 @@ function GameDetailsPage({ game }) {
 
   useEffect(() => {
     lightGallery.current.el.classList.add("last:pr-32");
-  }, []);
+  }, [game.id]);
+
+  useEffect(() => {
+    setIsFavourite(
+      state.favourites.some((favourite) => favourite.game_id === game.id)
+    );
+  }, [state, game.id]);
 
   return (
     <div
@@ -46,7 +67,7 @@ function GameDetailsPage({ game }) {
               <LazyImage
                 src={game.screenshots[0].bigUrl}
                 alt={game.name + " Background"}
-                className="object-cover w-full h-full fade-in"
+                className="object-cover w-full h-full"
                 fadeDuration={1}
               />
             )}
@@ -62,7 +83,7 @@ function GameDetailsPage({ game }) {
             <LazyImage
               src={game.coverUrl}
               alt={game.name + " Cover"}
-              className="object-cover w-full h-full fade-in"
+              className="object-cover w-full h-full"
             />
           </div>
         )}
@@ -79,6 +100,21 @@ function GameDetailsPage({ game }) {
             )}
             {game.total_rating && (
               <Rating count={Math.round(game.total_rating) / 10} />
+            )}
+            {game.total_rating && user && (
+              <div className="h-[18px] w-[0.5px] bg-zinc-300 self-center -translate-y-px" />
+            )}
+            {user && (
+              <button
+                onClick={handleFavoriteClicked}
+                className={`w-8 h-8 -my-2 translate-y-0.5 flex items-center justify-center bg-zinc-100/20 backdrop-blur-md rounded-full ${
+                  isFavourite
+                    ? "text-red-600 hover:text-red-600"
+                    : "text-zinc-100/60 hover:text-zinc-100/80"
+                } hover:bg-zinc-100/30 hover:scale-110 active:scale-95 transition duration-150 ease-in-out cursor-pointer`}
+              >
+                <FontAwesomeIcon icon={faHeart} className="text-lg" />
+              </button>
             )}
           </div>
           {game.genres && (
@@ -126,6 +162,10 @@ function GameDetailsPage({ game }) {
             onInit={onInit}
             className="mt-4 py-10 flex px-6 -mx-6 lg:pr-20 lg:-mr-20 gap-2.5 overflow-x-scroll no-scrollbar"
           >
+            {game.videos &&
+              game.videos.map((video) => (
+                <GalleryVideo key={video.id} videoId={video.video_id} />
+              ))}
             {game.screenshots.map((screenshot) => (
               <a
                 key={screenshot.id}
@@ -142,7 +182,7 @@ function GameDetailsPage({ game }) {
           </Gallery>
         )}
       </div>
-      <div className={`${game.screenshots ? "mt-0" : "mt-20"} max-w-2xl`}>
+      <div className={`${game.screenshots ? "mt-4" : "mt-20"} max-w-2xl`}>
         <p className="text-3xl font-normal text-white">Summary</p>
         <p className="mt-6 text-lg lg:text-lg font-light leading-[1.7] lg:leading-relaxed">
           {game.summary}
