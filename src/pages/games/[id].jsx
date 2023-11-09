@@ -7,15 +7,30 @@ import { getYearFromUnixTimestamp } from "@/helpers/findTime";
 import queries from "@/helpers/queryStrings";
 import websiteCategories from "@/helpers/websiteCategories";
 import Link from "next/link";
-import { useRef, useCallback, useEffect } from "react";
+import { useRef, useState, useCallback, useEffect, useContext } from "react";
 import {
   faChevronLeft,
   faChevronRight,
+  faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import FavouritesContext from "@/context/FavouritesContext";
+import { AuthContext } from "@/context/AuthContext";
+import GalleryVideo from "@/components/GalleryVideo";
 
 function GameDetailsPage({ game }) {
   const lightGallery = useRef(null);
+  const { toggleFavourite, state } = useContext(FavouritesContext);
+  const { user } = useContext(AuthContext);
+  const [isFavourite, setIsFavourite] = useState(false);
+
+  const handleFavoriteClicked = () => {
+    toggleFavourite(game.id)
+      .then(() => setIsFavourite((prev) => !prev))
+      .catch((error) => {
+        console.error("Error toggling favourite:", error);
+      });
+  };
 
   const scroll = (direction) => {
     lightGallery.current.el.scrollBy({
@@ -30,12 +45,40 @@ function GameDetailsPage({ game }) {
     }
   }, []);
 
+  const updateArrowVisibility = () => {
+    const carousel = lightGallery.current.el;
+    if (carousel) {
+      const isOverflowing = carousel.scrollWidth > carousel.clientWidth;
+      const arrows = document.querySelectorAll(".nav");
+
+      arrows.forEach((arrow) => {
+        arrow.style.display = isOverflowing ? "block" : "none";
+      });
+    }
+  };
+
   useEffect(() => {
+    updateArrowVisibility();
+
+    const handleResize = () => updateArrowVisibility();
+    window.addEventListener("resize", handleResize);
+
     lightGallery.current.el.classList.add("last:pr-32");
-  }, []);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, [game.id]);
+
+  useEffect(() => {
+    setIsFavourite(
+      state.favourites.some((favourite) => favourite.game_id === game.id)
+    );
+  }, [state, game.id]);
 
   return (
-    <div className="px-6 xl:px-0 w-full max-w-3xl mb-28 text-zinc-300">
+    <div
+      key={game.id}
+      className="px-6 xl:px-0 w-full max-w-3xl mb-28 text-zinc-300"
+    >
       <div className={`absolute left-0 right-0 -z-10 h-[48vh] lg:h-[50vh]`}>
         <div className="absolute left-0 right-0 -z-10 h-[48vh] lg:h-[50vh]">
           <div className="relative left-0 right-0 h-[48vh] lg:h-[50vh]">
@@ -43,8 +86,7 @@ function GameDetailsPage({ game }) {
               <LazyImage
                 src={game.screenshots[0].bigUrl}
                 alt={game.name + " Background"}
-                className="object-cover"
-                placeholder={game.screenshots[0].thumbUrl}
+                className="object-cover w-full h-full"
                 fadeDuration={1}
               />
             )}
@@ -60,7 +102,7 @@ function GameDetailsPage({ game }) {
             <LazyImage
               src={game.coverUrl}
               alt={game.name + " Cover"}
-              className="object-cover"
+              className="object-cover w-full h-full"
             />
           </div>
         )}
@@ -77,6 +119,21 @@ function GameDetailsPage({ game }) {
             )}
             {game.total_rating && (
               <Rating count={Math.round(game.total_rating) / 10} />
+            )}
+            {game.total_rating && user && (
+              <div className="h-[18px] w-[0.5px] bg-zinc-300 self-center -translate-y-px" />
+            )}
+            {user && (
+              <button
+                onClick={handleFavoriteClicked}
+                className={`w-8 h-8 -my-2 translate-y-0.5 flex items-center justify-center bg-zinc-100/20 backdrop-blur-md rounded-full ${
+                  isFavourite
+                    ? "text-red-600 hover:text-red-600"
+                    : "text-zinc-100/60 hover:text-zinc-100/80"
+                } hover:bg-zinc-100/30 hover:scale-110 active:scale-95 transition duration-150 ease-in-out cursor-pointer`}
+              >
+                <FontAwesomeIcon icon={faHeart} className="text-lg" />
+              </button>
             )}
           </div>
           {game.genres && (
@@ -100,10 +157,10 @@ function GameDetailsPage({ game }) {
           )}
         </div>
       </div>
-      <div className="mask-sides -mx-6 px-6 lg:pr-20 lg:-mr-20 relative">
+      <div className="relative">
         <button
           onClick={() => scroll("left")}
-          className="absolute left-9 top-20 lg:top-[90px] z-30 w-10 h-10 bg-zinc-700 rounded-full border flex items-center justify-center border-zinc-500 shadow-xl shadow-zinc-900 hover:brightness-125 active:scale-90 transition duration-100"
+          className="absolute left-2 top-20 md:-left-5 lg:top-[90px] z-30 w-10 h-10 nav bg-zinc-600/50 backdrop-blur-md rounded-full flex items-center justify-center shadow-xl shadow-zinc-900 hover:bg-zinc-500/50 active:scale-90 transition duration-150"
         >
           <FontAwesomeIcon
             icon={faChevronLeft}
@@ -112,35 +169,41 @@ function GameDetailsPage({ game }) {
         </button>
         <button
           onClick={() => scroll("right")}
-          className="absolute right-8 sm:right-16 top-20 lg:top-[90px] z-30 w-10 h-10 bg-zinc-700 rounded-full border flex items-center justify-center border-zinc-500 shadow-xl shadow-zinc-900 hover:brightness-125 active:scale-90 transition duration-100"
+          className="absolute right-2 sm:right-0 lg:-right-14 top-20 lg:top-[90px] z-30 w-10 h-10 nav bg-zinc-600/50 backdrop-blur-md rounded-full flex items-center justify-center shadow-xl shadow-zinc-900 hover:bg-zinc-500/50 active:scale-90 transition duration-150"
         >
           <FontAwesomeIcon
             icon={faChevronRight}
             className="text-white text-lg"
           />
         </button>
-        {game.screenshots && (
-          <Gallery
-            onInit={onInit}
-            className="mt-4 py-10 flex px-6 -mx-6 lg:pr-20 lg:-mr-20 gap-2.5 overflow-x-scroll no-scrollbar"
-          >
-            {game.screenshots.map((screenshot) => (
-              <a
-                key={screenshot.id}
-                href={screenshot.bigUrl}
-                className="w-52 h-[117px] lg:w-60 lg:h-[135px] lg:mr-0.5 shrink-0 shadow-xl-center shadow-black/[0.3] border border-zinc-700/70 hover:border-none hover:z-10 rounded-lg hover:scale-[1.15] hover:brightness-110 transition duration-[0.25s] ease-in-out cursor-pointer overflow-hidden relative"
-              >
-                <LazyImage
-                  alt={game.name + " Screenshot " + screenshot.id}
-                  src={screenshot.smallUrl}
-                  className="object-cover"
-                />
-              </a>
-            ))}
-          </Gallery>
-        )}
+        <div className="mask-sides -mx-6 px-6 lg:pr-20 lg:-mr-20">
+          {game.screenshots && (
+            <Gallery
+              onInit={onInit}
+              className="mt-4 py-10 flex px-6 -mx-6 lg:pr-20 lg:-mr-20 gap-2.5 overflow-x-scroll no-scrollbar"
+            >
+              {game.videos &&
+                game.videos.map((video) => (
+                  <GalleryVideo key={video.id} videoId={video.video_id} />
+                ))}
+              {game.screenshots.map((screenshot) => (
+                <a
+                  key={screenshot.id}
+                  href={screenshot.bigUrl}
+                  className="w-52 h-[117px] lg:w-60 lg:h-[135px] lg:mr-0.5 shrink-0 rounded-lg shadow-xl-center shadow-black/[0.3] border border-zinc-700/70 hover:border-none hover:z-10 hover:scale-[1.15] active:scale-90 hover:brightness-110 transition duration-[0.25s] ease-in-out cursor-pointer overflow-hidden relative"
+                >
+                  <LazyImage
+                    alt={game.name + " Screenshot " + screenshot.id}
+                    src={screenshot.smallUrl}
+                    className="object-cover rounded-lg"
+                  />
+                </a>
+              ))}
+            </Gallery>
+          )}
+        </div>
       </div>
-      <div className={`${game.screenshots ? "mt-0" : "mt-20"} max-w-2xl`}>
+      <div className={`${game.screenshots ? "mt-4" : "mt-20"} max-w-2xl`}>
         <p className="text-3xl font-normal text-white">Summary</p>
         <p className="mt-6 text-lg lg:text-lg font-light leading-[1.7] lg:leading-relaxed">
           {game.summary}
@@ -177,15 +240,17 @@ function GameDetailsPage({ game }) {
               game.coverUrl && (
                 <Link
                   key={game.id}
-                  className="w-40 text-center"
+                  className="w-40 text-center fade-in rounded-lg"
                   href={`/games/${game.id}`}
                 >
-                  <img
-                    src={game.coverUrl}
-                    alt={game.name}
-                    className="w-40 shadow-lg rounded-lg border border-zinc-800 shadow-lg shadow-black/[0.5] hover:z-20 hover:border-zinc-800 hover:scale-105 hover:-translate-y-0.5 hover:brightness-110  active:scale-95 transition duration-200 ease-in-out cursor-pointer"
-                    loading="lazy"
-                  />
+                  <div className="rounded-lg border border-zinc-800 shadow-lg shadow-black/[0.5] hover:z-20 hover:border-zinc-800 hover:scale-105 hover:-translate-y-0.5 hover:brightness-110  active:scale-95 transition duration-300 ease-in-out cursor-pointer">
+                    <img
+                      src={game.coverUrl}
+                      alt={game.name}
+                      className="w-40 shadow-lg rounded-lg"
+                      loading="lazy"
+                    />
+                  </div>
                   <span className="mt-4 text-sm line-clamp-2">{game.name}</span>
                 </Link>
               )

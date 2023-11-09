@@ -57,7 +57,7 @@ const GamesList = ({ setOfGames }) => {
   return (
     <>
       {setOfGames.map((gameSet, index) => (
-        <div key={index}>
+        <div key={index} className="fade-in-short">
           <h2
             className="text-violet-500 font-bold [text-shadow:2px_2px_3px_var(--tw-shadow-color)] shadow-black
           lg:text-4xl lg:ml-10 lg:mt-5 lg:p-2

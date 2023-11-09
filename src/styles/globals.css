@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  img {
-    animation: fadeIn 0.4s ease-in-out;
-  }
-}
-
 @layer components {
   .btn {
     @apply rounded-full px-4 py-1 text-center text-base font-medium transition duration-200 focus:ring-[2px];
@@ -35,6 +29,9 @@
 
     .fade-in {
       animation: fadeIn 0.8s ease-in-out;
+    }
+    .fade-in-short {
+      animation: fadeIn 0.5s ease-in-out;
     }
 
     .fade-in-delay {
