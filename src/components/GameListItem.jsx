@@ -109,16 +109,8 @@ function GameListItem({ games, gameSetRef, index }) {
     return (
       <div
         key={game.id}
-        className={`w-[100px] h-[125px] sm:w-[150px] sm:h-[185px] md:w-[180px] md:h-[215px] lg:w-[240px] lg:h-[352px] inline-block cursor-pointer relative p-2 `}
+        className={`w-[100px] h-[125px] sm:w-[150px] sm:h-[185px] md:w-[180px] md:h-[215px] lg:w-[240px] lg:h-[352px] inline-block cursor-pointer relative p-2`}
       >
-        {user && (
-          <div
-            onClick={() => handleFavouriteClick(game.id)}
-            className="absolute top-2 left-3 z-10"
-          >
-            {isFavourite(game.id) ? heartFilled : heart}
-          </div>
-        )}
         <Link href={`/games/${game.id}`}>
           <img
             id={game.id}
@@ -136,7 +128,7 @@ function GameListItem({ games, gameSetRef, index }) {
             className={
               gameVideo && game.id === hoveredGameId
                 ? "hidden"
-                : `block rounded-lg  shadow-lg shadow-neutral-500/[0.8] hover:shadow-violet-700/[1] hover:shadow-xl transition duration-200 ease-in-out hover:scale-105 hover:brightness-110`
+                : `block rounded-lg shadow-lg hover:shadow-[0px_10px_15px_rgba(255,255,255,1)] shadow-[0_5px_10px_rgba(95,61,196,1)] transition duration-200 ease-in-out hover:scale-105  hover:brightness-110 z-0`
             }
           />
         </Link>
@@ -156,7 +148,7 @@ function GameListItem({ games, gameSetRef, index }) {
             md:w-[300px] md:h-[210px]
             lg:w-[425px] lg:h-[330px]
             bg-violet-500/[0.9] rounded-lg
-            z-40
+            z-30
             ${style}
             `}
             
@@ -166,7 +158,7 @@ function GameListItem({ games, gameSetRef, index }) {
                 className={
                   // Video size
                   gameVideo && game.id === hoveredGameId
-                    ? "absolute top-0 bottom-0 left-0 right-0 rounded-lg w-[150px] h-[100px] sm:w-[200px] sm:h-[135px] md:w-[300px] md:h-[175px] lg:w-[425px] lg:h-[275px] z-40"
+                    ? "absolute top-0 bottom-0 left-0 right-0 rounded-lg w-[150px] h-[100px] sm:w-[200px] sm:h-[135px] md:w-[300px] md:h-[175px] lg:w-[425px] lg:h-[275px] z-30"
                     : "hidden"
                 }
                 src={`https://www.youtube.com/embed/${gameVideo.video_id}?si=rKISgJFVYRGMtTwG&amp;start=10&autoplay=1&mute=1&controls=0&showinfo=0`}

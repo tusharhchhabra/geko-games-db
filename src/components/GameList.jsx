@@ -70,12 +70,13 @@ const GamesList = ({ setOfGames }) => {
           md:text-3xl md:ml-5 md:mt-5 md:p-2
           sm:text-2xl sm:ml-5 sm:mt-5 sm:p-1
           text-xl ml-5 mt-0 p-0
+          
           "
           >
             {gameSet.title}
           </h2>
 
-          <div className="relative flex items-center group">
+          <div className="relative flex items-center group ">
             <MdChevronLeft
               onClick={() => {
                 const newScrollPosition = slide(index, "left");
@@ -91,7 +92,7 @@ const GamesList = ({ setOfGames }) => {
               md:w-[50px] md:h-[50px] md:left-[0px] md:top-[45%]
               sm:w-[30px] sm:h-[30px] sm:left-[0px] sm:top-[45%]
               w-[20px] h-[20px] left-[0px] top-[45%]
-              z-50
+              
               "
             />
             <div
@@ -119,7 +120,7 @@ const GamesList = ({ setOfGames }) => {
               md:w-[50px] md:h-[50px] md:right-[0px] md:top-[45%]
               sm:w-[30px] sm:h-[30px] sm:right-[0px] sm:top-[45%]
               w-[20px] h-[20px] right-[0px] top-[45%]
-              z-50
+              
               "
             />
           </div>
