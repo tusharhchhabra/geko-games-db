@@ -7,7 +7,7 @@ const EasterEgg = () => {
         Easter 🥚
       </h2>
 
-      <div className="w-[440px] h-[352px] absolute bottom-[-200px] left-[-91px] mt-9 rounded-xl">
+      <div className="w-[440px] h-[352px] absolute bottom-[-200px] left-[-20px] mt-9 rounded-xl">
         <Link href={"/easteregg"}>
           <img
             src="/assets/whackaBug.png"
