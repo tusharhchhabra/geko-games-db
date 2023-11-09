@@ -11,7 +11,7 @@ function SearchedGamesList({ games }) {
 
   return (
     <div className="container mx-auto">
-      <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 xl:grid-cols-5 gap-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 xl:grid-cols-5 gap-x-8 gap-y-10">
         {games.map((game) => (
           <button
             key={game.id}
@@ -22,20 +22,20 @@ function SearchedGamesList({ games }) {
               <Image
                 width={132}
                 height={187}
-                className="w-full h-full object-cover object-center transform  rounded-lg border border-gray-700 hover:scale-110 hover:brightness-125 transition duration-300 ease-in-out"
+                className="w-full h-full object-cover object-center transform  rounded-lg border border-gray-700 hover:scale-110 active:scale-95 hover:brightness-110 hover:-translation-y-0.5 transition duration-300 ease-in-out"
                 src={game.cover.url}
                 alt={game.name}
               />
             ) : (
-              <div className="w-[132px] h-[187px] flex overflow-hidden bg-gray-800 rounded-md hover:scale-110 hover:brightness-125 transition duration-300 ease-in-out">
+              <div className="w-[132px] h-[187px] flex overflow-hidden bg-gray-800 rounded-md hover:scale-110 hover:brightness-110 active:scale-95 hover:-translation-y-0.5 transition duration-300 ease-in-out">
                 <img
-                  src="/logo.png"
-                  className="object-contain rotate-[-30deg] scale-110 opacity-20"
+                  src="/placeholder.png"
+                  className="object-contain rotate-[-30deg] scale-110"
                 />
               </div>
             )}
             <p className="mt-4 line-clamp-2">{game.name}</p>
-            <p className="mt-2 text-gray-500 font-normal">
+            <p className="mt-1 text-gray-500 font-normal">
               {getYearFromUnixTimestamp(game.first_release_date)}
             </p>
           </button>

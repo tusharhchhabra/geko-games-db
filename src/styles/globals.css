@@ -50,6 +50,9 @@
     .fade-down {
       animation: fadeDown 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     }
+    .grow-fade-in {
+      animation: growFadeIn 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
 
     .mask-sides {
       mask-image: linear-gradient(
@@ -94,5 +97,18 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes growFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+    scale: 0.6;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    scale: 1;
   }
 }

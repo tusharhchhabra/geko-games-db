@@ -7,13 +7,38 @@ import { getYearFromUnixTimestamp } from "@/helpers/findTime";
 import queries from "@/helpers/queryStrings";
 import websiteCategories from "@/helpers/websiteCategories";
 import Link from "next/link";
+import { useRef, useCallback, useEffect } from "react";
+import {
+  faArrowLeft,
+  faArrowRight,
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function GameDetailsPage({ game }) {
+  const lightGallery = useRef(null);
+
+  const scroll = (direction) => {
+    console.log(lightGallery.current.el);
+    lightGallery.current.el.scrollBy({
+      left: direction === "left" ? -500 : 500,
+      behavior: "smooth",
+    });
+  };
+
+  const onInit = useCallback((detail) => {
+    if (detail) {
+      lightGallery.current = detail.instance;
+    }
+  }, []);
+
+  useEffect(() => {
+    // lightGallery.current.el.classList.add("last:pr-32");
+  }, []);
+
   return (
-    <div
-      key={game.id}
-      className="px-6 xl:px-0 w-full max-w-3xl mb-28 text-zinc-300"
-    >
+    <div className="px-6 xl:px-0 w-full max-w-3xl mb-28 text-zinc-300">
       <div className={`absolute left-0 right-0 -z-10 h-[48vh] lg:h-[50vh]`}>
         <div className="absolute left-0 right-0 -z-10 h-[48vh] lg:h-[50vh]">
           <div className="relative left-0 right-0 h-[48vh] lg:h-[50vh]">
@@ -78,14 +103,35 @@ function GameDetailsPage({ game }) {
           )}
         </div>
       </div>
-      <div className="mask-sides -mx-6 pl-6 pr-16 lg:pr-20 lg:-mr-20">
+      <div className="mask-sides -mx-6 px-6 lg:pr-20 lg:-mr-20 relative">
+        <button
+          onClick={() => scroll("left")}
+          className="absolute left-8 top-20 lg:top-[90px] z-30 w-10 h-10 bg-zinc-700 rounded-full border flex items-center justify-center border-zinc-500 shadow-lg shadow-zinc-900 hover:brightness-125 active:scale-90 transition duration-100"
+        >
+          <FontAwesomeIcon
+            icon={faChevronLeft}
+            className="text-white text-lg"
+          />
+        </button>
+        <button
+          onClick={() => scroll("right")}
+          className="absolute right-8 sm:right-16 top-20 lg:top-[90px] z-30 w-10 h-10 bg-zinc-700 rounded-full border flex items-center justify-center border-zinc-500 shadow-lg shadow-zinc-900 hover:brightness-125 active:scale-90 transition duration-100"
+        >
+          <FontAwesomeIcon
+            icon={faChevronRight}
+            className="text-white text-lg"
+          />
+        </button>
         {game.screenshots && (
-          <Gallery className="mt-4 py-10 flex gap-2.5 overflow-x-scroll no-scrollbar">
+          <Gallery
+            onInit={onInit}
+            className="mt-4 py-10 flex px-6 -mx-6 lg:pr-20 lg:-mr-20 gap-2.5 overflow-x-scroll no-scrollbar"
+          >
             {game.screenshots.map((screenshot) => (
               <a
                 key={screenshot.id}
                 href={screenshot.bigUrl}
-                className="w-52 h-[117px] xl:w-60 xl:h-[135px] xl:mr-0.5 shrink-0 shadow-xl-center shadow-black/[0.3] border border-zinc-700/70 hover:border-none hover:z-10 rounded-lg hover:scale-[1.15] hover:brightness-110 transition duration-[0.25s] ease-in-out cursor-pointer overflow-hidden relative"
+                className="w-52 h-[117px] lg:w-60 lg:h-[135px] lg:mr-0.5 shrink-0 shadow-xl-center shadow-black/[0.3] border border-zinc-700/70 hover:border-none hover:z-10 rounded-lg hover:scale-[1.15] hover:brightness-110 transition duration-[0.25s] ease-in-out cursor-pointer overflow-hidden relative"
               >
                 <LazyImage src={screenshot.smallUrl} className="object-cover" />
               </a>
