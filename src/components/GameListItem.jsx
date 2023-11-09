@@ -124,7 +124,7 @@ function GameListItem({ games, gameSetRef, index }) {
             onMouseEnter={() => {
               gameListRef.current = setTimeout(() => {
                 fetchVideo(game.id);
-              }, 400);
+              }, 600);
             }}
             onMouseLeave={() => {
               clearTimeout(gameListRef.current);
