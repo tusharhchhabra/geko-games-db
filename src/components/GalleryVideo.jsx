@@ -1,7 +1,6 @@
 import React from "react";
 import LazyImage from "./LazyImage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay, faVideo } from "@fortawesome/free-solid-svg-icons";
 import { faYoutube } from "@fortawesome/free-brands-svg-icons";
 
 function GalleryVideo({ videoId }) {
