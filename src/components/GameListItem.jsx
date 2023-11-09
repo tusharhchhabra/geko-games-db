@@ -1,11 +1,11 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import Link from "next/link";
 import FavouritesContext from "@/context/FavouritesContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "@/context/AuthContext";
 
-function GameListItem({ games }) {
+function GameListItem({ games, gameSetRef, index }) {
   const [videos, setVideos] = useState({});
   const [hoveredGameId, setHoveredGameId] = useState(null);
   const gameListRef = useRef(null);
@@ -13,13 +13,11 @@ function GameListItem({ games }) {
   const [isUpdating, setIsUpdating] = useState(false);
   const { user } = useContext(AuthContext);
 
-  const heart = <FontAwesomeIcon icon={faHeart} size="xl" />;
-  const heartFilled = (
-    <FontAwesomeIcon icon={faHeart} size="xl" style={{ color: "#FF0000" }} />
-  );
-  const heartBig = <FontAwesomeIcon icon={faHeart} size="2xl" />;
+  
+  const gameSetIndex = index;
+  const heartBig = <FontAwesomeIcon icon={faHeart}/>;
   const heartFilledBig = (
-    <FontAwesomeIcon icon={faHeart} size="2xl" style={{ color: "#FF0000" }} />
+    <FontAwesomeIcon icon={faHeart} style={{ color: "#FF0000" }} />
   );
 
   const isFavourite = (gameId) => {
@@ -69,42 +67,62 @@ function GameListItem({ games }) {
       });
   };
 
-  return games.map((game) => {
+  return games.map((game, index) => {
     const gameVideo = videos[game.id];
+
+    let style = "translate-x-0";
+
+    gameSetRef.map((ref) => {
+      if (ref.index === gameSetIndex) {
+        if (ref.slidePosition === 0 && index === 6) {
+          style = "lg:-translate-x-28";
+        } else if (ref.slidePosition === 0 && index === 7) {
+          style = "lg:-translate-x-72";
+        } else if (ref.slidePosition === 200 && index === 7) {
+          style = "lg:-translate-x-40";
+        } else if (ref.slidePosition === 200 && index === 8) {
+          style = "lg:-translate-x-80";
+        } else if (ref.slidePosition === 200 && index === 0) {
+         style = "lg:translate-x-48"; 
+        } else if (ref.slidePosition === 400 && index === 8) {
+          style = "lg:-translate-x-52";
+        } else if (ref.slidePosition === 400 && index === 9) {
+          style = "lg:-translate-x-96";
+        } else if (ref.slidePosition === 400 && index === 1) {
+          style = "lg:translate-x-44";
+        } else if ((ref.slidePosition === 600 || ref.slidePosition === 610) && index === 9) {
+          style = "lg:-translate-x-56";
+        } else if ((ref.slidePosition === 600 || ref.slidePosition === 610) && index === 2) {
+          style = "lg:translate-x-36";
+        }
+      }
+    });
+
     return (
       <div
         key={game.id}
-        className="w-[100px] h-[125px] sm:w-[150px] sm:h-[185px] md:w-[180px] md:h-[215px] lg:w-[240px] lg:h-[352px] inline-block cursor-pointer relative p-2"
+        className={`w-[100px] h-[125px] sm:w-[150px] sm:h-[185px] md:w-[180px] md:h-[215px] lg:w-[240px] lg:h-[352px] inline-block cursor-pointer relative p-2`}
       >
-        {user && (
-          <div
-            onClick={() => handleFavouriteClick(game.id)}
-            className="absolute top-2.5 left-3.5"
-          >
-            {isFavourite(game.id) ? heartFilled : heart}
-          </div>
-        )}
         <Link href={`/games/${game.id}`}>
-        <img
-          id={game.id}
-          loading="lazy"
-          src={game.coverUrl}
-          alt={game.name}
-          onMouseEnter={() => {
-            gameListRef.current = setTimeout(() => {
-              fetchVideo(game.id);
-            }, 1500);
-          }}
-          onMouseLeave={() => {
-            clearTimeout(gameListRef.current);
-          }}
-          className={
-            gameVideo && game.id === hoveredGameId
-              ? "hidden"
-              : "block rounded-lg"
-          }
-        />
-        
+          <img
+            id={game.id}
+            loading="lazy"
+            src={game.coverUrl}
+            alt={game.name}
+            onMouseEnter={() => {
+              gameListRef.current = setTimeout(() => {
+                fetchVideo(game.id);
+              }, 1500);
+            }}
+            onMouseLeave={() => {
+              clearTimeout(gameListRef.current);
+            }}
+            className={
+              gameVideo && game.id === hoveredGameId
+                ? "hidden"
+                : `block rounded-lg shadow-lg hover:shadow-[0px_10px_15px_rgba(255,255,255,1)] shadow-[0_5px_10px_rgba(95,61,196,1)] transition duration-200 ease-in-out hover:scale-[1.03]  hover:brightness-110 z-0`
+            }
+          />
         </Link>
 
         <div
@@ -116,18 +134,20 @@ function GameListItem({ games }) {
           {gameVideo && (
             // Box With video in it
             <div
-              className="absolute top-0 bottom-0 left-0 right-0 z-10 
+              className={`absolute top-0 bottom-0 left-0 right-0 
             w-[150px] h-[120px]
             sm:w-[200px] sm:h-[166px]
             md:w-[300px] md:h-[210px]
             lg:w-[425px] lg:h-[330px]
-            bg-violet-500 rounded-lg"
+            bg-violet-500/[0.9] rounded-lg
+            z-30
+            ${style}`}
             >
               <iframe
                 className={
                   // Video size
                   gameVideo && game.id === hoveredGameId
-                    ? "absolute top-0 bottom-0 left-0 right-0 z-10 rounded-lg w-[150px] h-[100px] sm:w-[200px] sm:h-[135px] md:w-[300px] md:h-[175px] lg:w-[425px] lg:h-[275px]"
+                    ? "absolute top-0 bottom-0 left-0 right-0 rounded-lg w-[150px] h-[100px] sm:w-[200px] sm:h-[135px] md:w-[300px] md:h-[175px] lg:w-[425px] lg:h-[275px] z-30"
                     : "hidden"
                 }
                 src={`https://www.youtube.com/embed/${gameVideo.video_id}?si=rKISgJFVYRGMtTwG&amp;start=10&autoplay=1&mute=1&controls=0&showinfo=0`}
@@ -161,7 +181,12 @@ function GameListItem({ games }) {
               {user && (
                 <div
                   onClick={() => handleFavouriteClick(game.id)}
-                  className="absolute bottom-4 left-5"
+                  className="absolute
+                  lg:bottom-3 lg:left-5 lg:text-[35px]
+                  md:bottom-0.75 md:left-5 md:text-2xl
+                  sm:bottom-0.5 sm:left-5 sm:text-xl
+                  bottom-0.5 left-2 text-sm
+                  "
                 >
                   {isFavourite(game.id) ? heartFilledBig : heartBig}
                 </div>
@@ -169,7 +194,7 @@ function GameListItem({ games }) {
             </div>
           )}
         </div>
-        <div className="inline-block" style={{ width: '105px' }}></div>
+        <div className="inline-block" style={{ width: "105px" }}></div>
       </div>
     );
   });
