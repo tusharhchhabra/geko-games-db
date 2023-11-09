@@ -12,7 +12,7 @@ const Layout = ({ children }) => {
 
   return (
     <FavouritesProvider userId={user ? user.id : null}>
-      <main className="relative">
+      <main className="relative min-h-screen pb-16">
         <Navbar />
         <div
           className={`py-16 xl:px-16 flex justify-center ${inter.className}`}
@@ -24,6 +24,11 @@ const Layout = ({ children }) => {
             <AuthModal />
           </div>
         )}
+        <footer className="absolute bottom-0 w-full pb-16 flex items-center justify-center">
+          <span className="text-sm text-zinc-500 font-medium">
+            {"Made with ☕️ and 💜 in 🍁"}
+          </span>
+        </footer>
       </main>
     </FavouritesProvider>
   );
