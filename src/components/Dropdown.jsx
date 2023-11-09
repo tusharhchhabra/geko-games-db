@@ -18,14 +18,15 @@ export default function MyCombobox({
       <div className="relative mt-1">
         <div className="relative w-full cursor-default rounded-lg text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 md:text-sm">
           <Combobox.Input
-            className="w-full rounded-lg py-2 pl-8 pr-10 text-md leading-5 bg-zinc-700 md:bg-zinc-500/[0.2] md:backdrop-blur-md text-white focus:ring-0"
+            className="w-full rounded-lg py-2 pl-8 pr-10 text-md leading-5 bg-zinc-700 md:bg-slate-500/[0.2] md:backdrop-blur-md text-white focus:ring-0"
             displayValue={query}
             placeholder="Search..."
             onChange={(event) => setQuery(event.target.value)}
           />
           <FontAwesomeIcon
             icon={faSearch}
-            className="absolute top-2.5 left-2.5 text-zinc-400"
+            width={14}
+            className="absolute top-[11px] left-2.5 text-zinc-400"
           />
         </div>
         {(games.length !== 0 || canShowEmptyState) && query !== "" && (
