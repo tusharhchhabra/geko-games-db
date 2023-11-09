@@ -35,7 +35,10 @@ function GameDetailsPage({ game }) {
   }, []);
 
   return (
-    <div className="px-6 xl:px-0 w-full max-w-3xl mb-28 text-zinc-300">
+    <div
+      key={game.id}
+      className="px-6 xl:px-0 w-full max-w-3xl mb-28 text-zinc-300"
+    >
       <div className={`absolute left-0 right-0 -z-10 h-[48vh] lg:h-[50vh]`}>
         <div className="absolute left-0 right-0 -z-10 h-[48vh] lg:h-[50vh]">
           <div className="relative left-0 right-0 h-[48vh] lg:h-[50vh]">
@@ -43,8 +46,7 @@ function GameDetailsPage({ game }) {
               <LazyImage
                 src={game.screenshots[0].bigUrl}
                 alt={game.name + " Background"}
-                className="object-cover"
-                placeholder={game.screenshots[0].thumbUrl}
+                className="object-cover w-full h-full fade-in"
                 fadeDuration={1}
               />
             )}
@@ -60,7 +62,7 @@ function GameDetailsPage({ game }) {
             <LazyImage
               src={game.coverUrl}
               alt={game.name + " Cover"}
-              className="object-cover"
+              className="object-cover w-full h-full fade-in"
             />
           </div>
         )}
@@ -128,12 +130,12 @@ function GameDetailsPage({ game }) {
               <a
                 key={screenshot.id}
                 href={screenshot.bigUrl}
-                className="w-52 h-[117px] lg:w-60 lg:h-[135px] lg:mr-0.5 shrink-0 shadow-xl-center shadow-black/[0.3] border border-zinc-700/70 hover:border-none hover:z-10 rounded-lg hover:scale-[1.15] hover:brightness-110 transition duration-[0.25s] ease-in-out cursor-pointer overflow-hidden relative"
+                className="w-52 h-[117px] lg:w-60 lg:h-[135px] lg:mr-0.5 shrink-0 rounded-lg shadow-xl-center shadow-black/[0.3] border border-zinc-700/70 hover:border-none hover:z-10 hover:scale-[1.15] active:scale-90 hover:brightness-110 transition duration-[0.25s] ease-in-out cursor-pointer overflow-hidden relative"
               >
                 <LazyImage
                   alt={game.name + " Screenshot " + screenshot.id}
                   src={screenshot.smallUrl}
-                  className="object-cover"
+                  className="object-cover rounded-lg"
                 />
               </a>
             ))}
@@ -177,15 +179,17 @@ function GameDetailsPage({ game }) {
               game.coverUrl && (
                 <Link
                   key={game.id}
-                  className="w-40 text-center"
+                  className="w-40 text-center fade-in rounded-lg"
                   href={`/games/${game.id}`}
                 >
-                  <img
-                    src={game.coverUrl}
-                    alt={game.name}
-                    className="w-40 shadow-lg rounded-lg border border-zinc-800 shadow-lg shadow-black/[0.5] hover:z-20 hover:border-zinc-800 hover:scale-105 hover:-translate-y-0.5 hover:brightness-110  active:scale-95 transition duration-200 ease-in-out cursor-pointer"
-                    loading="lazy"
-                  />
+                  <div className="rounded-lg border border-zinc-800 shadow-lg shadow-black/[0.5] hover:z-20 hover:border-zinc-800 hover:scale-105 hover:-translate-y-0.5 hover:brightness-110  active:scale-95 transition duration-300 ease-in-out cursor-pointer">
+                    <img
+                      src={game.coverUrl}
+                      alt={game.name}
+                      className="w-40 shadow-lg rounded-lg"
+                      loading="lazy"
+                    />
+                  </div>
                   <span className="mt-4 text-sm line-clamp-2">{game.name}</span>
                 </Link>
               )
