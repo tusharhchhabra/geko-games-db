@@ -9,8 +9,6 @@ import websiteCategories from "@/helpers/websiteCategories";
 import Link from "next/link";
 import { useRef, useCallback, useEffect } from "react";
 import {
-  faArrowLeft,
-  faArrowRight,
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
@@ -20,7 +18,6 @@ function GameDetailsPage({ game }) {
   const lightGallery = useRef(null);
 
   const scroll = (direction) => {
-    console.log(lightGallery.current.el);
     lightGallery.current.el.scrollBy({
       left: direction === "left" ? -500 : 500,
       behavior: "smooth",
@@ -34,7 +31,7 @@ function GameDetailsPage({ game }) {
   }, []);
 
   useEffect(() => {
-    // lightGallery.current.el.classList.add("last:pr-32");
+    lightGallery.current.el.classList.add("last:pr-32");
   }, []);
 
   return (
@@ -106,7 +103,7 @@ function GameDetailsPage({ game }) {
       <div className="mask-sides -mx-6 px-6 lg:pr-20 lg:-mr-20 relative">
         <button
           onClick={() => scroll("left")}
-          className="absolute left-8 top-20 lg:top-[90px] z-30 w-10 h-10 bg-zinc-700 rounded-full border flex items-center justify-center border-zinc-500 shadow-lg shadow-zinc-900 hover:brightness-125 active:scale-90 transition duration-100"
+          className="absolute left-9 top-20 lg:top-[90px] z-30 w-10 h-10 bg-zinc-700 rounded-full border flex items-center justify-center border-zinc-500 shadow-xl shadow-zinc-900 hover:brightness-125 active:scale-90 transition duration-100"
         >
           <FontAwesomeIcon
             icon={faChevronLeft}
@@ -115,7 +112,7 @@ function GameDetailsPage({ game }) {
         </button>
         <button
           onClick={() => scroll("right")}
-          className="absolute right-8 sm:right-16 top-20 lg:top-[90px] z-30 w-10 h-10 bg-zinc-700 rounded-full border flex items-center justify-center border-zinc-500 shadow-lg shadow-zinc-900 hover:brightness-125 active:scale-90 transition duration-100"
+          className="absolute right-8 sm:right-16 top-20 lg:top-[90px] z-30 w-10 h-10 bg-zinc-700 rounded-full border flex items-center justify-center border-zinc-500 shadow-xl shadow-zinc-900 hover:brightness-125 active:scale-90 transition duration-100"
         >
           <FontAwesomeIcon
             icon={faChevronRight}
@@ -133,7 +130,11 @@ function GameDetailsPage({ game }) {
                 href={screenshot.bigUrl}
                 className="w-52 h-[117px] lg:w-60 lg:h-[135px] lg:mr-0.5 shrink-0 shadow-xl-center shadow-black/[0.3] border border-zinc-700/70 hover:border-none hover:z-10 rounded-lg hover:scale-[1.15] hover:brightness-110 transition duration-[0.25s] ease-in-out cursor-pointer overflow-hidden relative"
               >
-                <LazyImage src={screenshot.smallUrl} className="object-cover" />
+                <LazyImage
+                  alt={game.name + " Screenshot " + screenshot.id}
+                  src={screenshot.smallUrl}
+                  className="object-cover"
+                />
               </a>
             ))}
           </Gallery>
@@ -181,6 +182,7 @@ function GameDetailsPage({ game }) {
                 >
                   <img
                     src={game.coverUrl}
+                    alt={game.name}
                     className="w-40 shadow-lg rounded-lg border border-zinc-800 shadow-lg shadow-black/[0.5] hover:z-20 hover:border-zinc-800 hover:scale-105 hover:-translate-y-0.5 hover:brightness-110  active:scale-95 transition duration-200 ease-in-out cursor-pointer"
                     loading="lazy"
                   />
@@ -232,8 +234,6 @@ export async function getServerSideProps(context) {
       };
     });
   }
-
-  // console.log("SCREEEEEEEEEENS", game.screenshots);
 
   const gameDetails = {
     ...game,

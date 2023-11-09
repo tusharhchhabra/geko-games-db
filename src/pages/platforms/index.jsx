@@ -31,21 +31,18 @@ const PlatformsGameList = ({
     extractNameAsAnArray(initialThemes)
   );
   const [filteredGamesFetched, setFilteredGamesFetched] = useState(false);
-  const[allPlatforms, setAllPlatforms] = useState(initialPlatforms)
+  const [allPlatforms, setAllPlatforms] = useState(initialPlatforms);
   const [selectedPlatformName, setSelectedPlatformName] = useState(null);
 
-  console.log("platforms", platforms);
-  console.log("initialPlatforms", initialPlatforms);
-
-   useEffect(() => {
-     if (selectedPlatform !== null) {
-       allPlatforms.map((platform) => {
-         if (platform.id === selectedPlatform) {
-           setSelectedPlatformName(platform.name)
-         }
-       })
-     }
-   }, [selectedPlatform])
+  useEffect(() => {
+    if (selectedPlatform !== null) {
+      allPlatforms.map((platform) => {
+        if (platform.id === selectedPlatform) {
+          setSelectedPlatformName(platform.name);
+        }
+      });
+    }
+  }, [selectedPlatform]);
 
   // Fetch Initial Games When a Platform is Selected
   useEffect(() => {
