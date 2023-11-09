@@ -5,8 +5,6 @@ const UIOverlay = ({ score }) => {
   const [showInitialMessage, setShowInitialMessage] = useState(true);
   const [clock, setClock] = useState(68000);
 
-
-
   useEffect(() => {
     if (clock > 0) {
       const timer = setInterval(() => {
@@ -23,9 +21,12 @@ const UIOverlay = ({ score }) => {
     return () => clearTimeout(timer);
   }, []);
 
-  const formatTime = () => {
+  const timeOrLoseMessage = () => {
+    if (clock <= 0) {
+      return "You Lose!";
+    }
     const minutes = Math.floor(clock / 60000);
-    const seconds = Math.floor((clock % 60000) / 1000).toFixed(0);
+    const seconds = ((clock % 60000) / 1000).toFixed(0);
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
 
@@ -35,7 +36,7 @@ const UIOverlay = ({ score }) => {
         <div className="flex flex-col items-center space-y-4 mb-4">
           <div className="w-max p-4 bg-green-500 text-white rounded-md shadow-md">
             <div className="text-xl font-bold">
-              The pond has been attacked by 🪲BUGS🪲 Hurry and clean them up before
+              The pond has been attacked by 🐞BUGS🐞 Whack them all before
               Larry finds out!
             </div>
           </div>
@@ -49,13 +50,24 @@ const UIOverlay = ({ score }) => {
         </div>
       )}
 
-      {score < 500 ? (
+      {score < 500 && clock > 0 ? (
         <div className="w-max p-4 bg-black bg-opacity-70 text-white rounded-md shadow-md">
           <div className="text-xl font-bold"> Bugs Whacked: {score}</div>
           <div className="flex justify-center font-bold text-xl">
-            Time left: <span className="text-red-500">{formatTime()}</span>
+            Time left: <span className="text-red-500">{timeOrLoseMessage()}</span>
           </div>
         </div>
+      ) : clock <= 0 ? (
+        <>
+        <div className="w-max p-4 bg-black bg-opacity-70 text-white rounded-md shadow-md">
+          <div className="text-xl font-bold">{timeOrLoseMessage()} </div>
+        </div>
+        <div className="w-max mt-4 p-4 bg-violet-500 text-black rounded-md shadow-md">
+          <Link href="/">
+            <div className="text-xl font-bold underline">Back to Homepage</div>
+          </Link>
+        </div>
+      </>
       ) : (
         <>
           <div className="w-max mb-4 p-4 bg-black bg-opacity-70 text-white rounded-md shadow-md">
