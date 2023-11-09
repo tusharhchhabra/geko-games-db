@@ -79,18 +79,6 @@ function GameListItem({ games, gameSetRef, index }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (gameListRef.current) {
-        clearTimeout(gameListRef.current);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return games.map((game, index) => {
     const gameVideo = videos[game.id];
 
@@ -136,7 +124,7 @@ function GameListItem({ games, gameSetRef, index }) {
             onMouseEnter={() => {
               gameListRef.current = setTimeout(() => {
                 fetchVideo(game.id);
-              }, 1500);
+              }, 400);
             }}
             onMouseLeave={() => {
               clearTimeout(gameListRef.current);
