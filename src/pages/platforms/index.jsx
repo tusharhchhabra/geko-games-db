@@ -34,9 +34,6 @@ const PlatformsGameList = ({
   const[allPlatforms, setAllPlatforms] = useState(initialPlatforms)
   const [selectedPlatformName, setSelectedPlatformName] = useState(null);
 
-  console.log("platforms", platforms);
-  console.log("initialPlatforms", initialPlatforms);
-
    useEffect(() => {
      if (selectedPlatform !== null) {
        allPlatforms.map((platform) => {

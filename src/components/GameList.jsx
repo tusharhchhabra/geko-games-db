@@ -5,12 +5,10 @@ import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 const GamesList = ({ setOfGames }) => {
   const sliderRefs = useRef(new Array(setOfGames.length).fill(null));
   const [gameSetRef, setGameSetRef] = useState([]);
-  console.log("gameSetRef", gameSetRef);
-
 
   useEffect(() => {
     setGameSetRef((prevRefs) => {
-      const existingRefs = new Map(prevRefs.map(ref => [ref.index, ref]));
+      const existingRefs = new Map(prevRefs.map((ref) => [ref.index, ref]));
       const newRefs = setOfGames.reduce((acc, current, index) => {
         if (!existingRefs.has(index)) {
           acc.push({ index, slidePosition: 0 });
@@ -19,13 +17,10 @@ const GamesList = ({ setOfGames }) => {
         }
         return acc;
       }, []);
-  
+
       return newRefs;
     });
   }, [setOfGames]);
-
-
-
 
   const slide = (index, direction) => {
     const slider = sliderRefs.current[index];
@@ -38,7 +33,6 @@ const GamesList = ({ setOfGames }) => {
       } else if (slider.clientWidth >= 1024) {
         scrollAmount = direction === "left" ? -200 : 200;
       } else if (slider.clientWidth >= 1500) {
-        console.log("slider.clientWidth", slider.clientWidth);
         scrollAmount = direction === "left" ? -25 : 25;
       }
 
@@ -70,7 +64,6 @@ const GamesList = ({ setOfGames }) => {
           md:text-3xl md:ml-5 md:mt-5 md:p-2
           sm:text-2xl sm:ml-5 sm:mt-5 sm:p-1
           text-xl ml-5 mt-0 p-0
-          
           "
           >
             {gameSet.title}
@@ -82,7 +75,9 @@ const GamesList = ({ setOfGames }) => {
                 const newScrollPosition = slide(index, "left");
                 setGameSetRef((prevGameSetRef) =>
                   prevGameSetRef.map((item, idx) =>
-                    idx === index ? { ...item, slidePosition: newScrollPosition } : item
+                    idx === index
+                      ? { ...item, slidePosition: newScrollPosition }
+                      : item
                   )
                 );
               }}
@@ -92,7 +87,6 @@ const GamesList = ({ setOfGames }) => {
               md:w-[50px] md:h-[50px] md:left-[0px] md:top-[45%]
               sm:w-[30px] sm:h-[30px] sm:left-[0px] sm:top-[45%]
               w-[20px] h-[20px] left-[0px] top-[45%]
-              
               "
             />
             <div
@@ -110,7 +104,9 @@ const GamesList = ({ setOfGames }) => {
                 const newScrollPosition = slide(index, "right");
                 setGameSetRef((prevGameSetRef) =>
                   prevGameSetRef.map((item, idx) =>
-                    idx === index ? { ...item, slidePosition: newScrollPosition } : item
+                    idx === index
+                      ? { ...item, slidePosition: newScrollPosition }
+                      : item
                   )
                 );
               }}
@@ -120,7 +116,6 @@ const GamesList = ({ setOfGames }) => {
               md:w-[50px] md:h-[50px] md:right-[0px] md:top-[45%]
               sm:w-[30px] sm:h-[30px] sm:right-[0px] sm:top-[45%]
               w-[20px] h-[20px] right-[0px] top-[45%]
-              
               "
             />
           </div>

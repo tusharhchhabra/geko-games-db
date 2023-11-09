@@ -67,7 +67,6 @@ function GameListItem({ games, gameSetRef, index }) {
       });
   };
 
-
   return games.map((game, index) => {
     const gameVideo = videos[game.id];
 
@@ -142,10 +141,7 @@ function GameListItem({ games, gameSetRef, index }) {
             lg:w-[425px] lg:h-[330px]
             bg-violet-500/[0.9] rounded-lg
             z-30
-            ${style}
-            `}
-            
-            
+            ${style}`}
             >
               <iframe
                 className={
