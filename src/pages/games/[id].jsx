@@ -177,7 +177,7 @@ function GameDetailsPage({ game }) {
           </Gallery>
         )}
       </div>
-      <div className={`${game.screenshots ? "mt-0" : "mt-20"} max-w-2xl`}>
+      <div className={`${game.screenshots ? "mt-4" : "mt-20"} max-w-2xl`}>
         <p className="text-3xl font-normal text-white">Summary</p>
         <p className="mt-6 text-lg lg:text-lg font-light leading-[1.7] lg:leading-relaxed">
           {game.summary}
