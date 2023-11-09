@@ -31,7 +31,7 @@ const GamesList = ({ setOfGames }) => {
       } else if (slider.clientWidth >= 600 && slider.clientWidth < 1024) {
         scrollAmount = direction === "left" ? -180 : 180;
       } else if (slider.clientWidth >= 1024) {
-        scrollAmount = direction === "left" ? -200 : 200;
+        scrollAmount = direction === "left" ? -600 : 600;
       } else if (slider.clientWidth >= 1500) {
         scrollAmount = direction === "left" ? -25 : 25;
       }
