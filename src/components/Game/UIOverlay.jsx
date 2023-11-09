@@ -59,7 +59,7 @@ const UIOverlay = ({ score }) => {
         </div>
       ) : clock <= 0 ? (
         <>
-        <div className="w-max p-4 bg-black bg-opacity-70 text-white rounded-md shadow-md">
+        <div className="w-max p-4 bg-red-500 bg-opacity-70 text-black rounded-md shadow-md">
           <div className="text-xl font-bold">{timeOrLoseMessage()} </div>
         </div>
         <div className="w-max mt-4 p-4 bg-violet-500 text-black rounded-md shadow-md">
