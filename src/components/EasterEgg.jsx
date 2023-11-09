@@ -9,7 +9,10 @@ const EasterEgg = () => {
 
       <div className="w-[440px] h-[352px] absolute bottom-[-200px] left-[-91px] mt-9 rounded-xl">
         <Link href={"/easteregg"}>
-          <img src="/assets/whackaBug.png" alt="Game Cover" />
+          <img
+            src="/assets/whackaBug.png"
+            alt="Game Cover"
+          />
         </Link>
       </div>
     </div>
