@@ -7,15 +7,29 @@ import { getYearFromUnixTimestamp } from "@/helpers/findTime";
 import queries from "@/helpers/queryStrings";
 import websiteCategories from "@/helpers/websiteCategories";
 import Link from "next/link";
-import { useRef, useCallback, useEffect } from "react";
+import { useRef, useState, useCallback, useEffect, useContext } from "react";
 import {
   faChevronLeft,
   faChevronRight,
+  faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import FavouritesContext from "@/context/FavouritesContext";
+import { AuthContext } from "@/context/AuthContext";
 
 function GameDetailsPage({ game }) {
   const lightGallery = useRef(null);
+  const { toggleFavourite, state } = useContext(FavouritesContext);
+  const { user } = useContext(AuthContext);
+  const [isFavourite, setIsFavourite] = useState(false);
+
+  const handleFavoriteClicked = () => {
+    toggleFavourite(game.id)
+      .then(() => setIsFavourite((prev) => !prev))
+      .catch((error) => {
+        console.error("Error toggling favourite:", error);
+      });
+  };
 
   const scroll = (direction) => {
     lightGallery.current.el.scrollBy({
@@ -33,6 +47,12 @@ function GameDetailsPage({ game }) {
   useEffect(() => {
     lightGallery.current.el.classList.add("last:pr-32");
   }, []);
+
+  useEffect(() => {
+    setIsFavourite(
+      state.favourites.some((favourite) => favourite.game_id === game.id)
+    );
+  }, [state, game.id]);
 
   return (
     <div
@@ -79,6 +99,21 @@ function GameDetailsPage({ game }) {
             )}
             {game.total_rating && (
               <Rating count={Math.round(game.total_rating) / 10} />
+            )}
+            {game.total_rating && (
+              <div className="h-[18px] w-[0.5px] bg-zinc-300 self-center -translate-y-px" />
+            )}
+            {user && (
+              <button
+                onClick={handleFavoriteClicked}
+                className={`w-8 h-8 -my-2 translate-y-0.5 flex items-center justify-center bg-zinc-100/20 backdrop-blur-md rounded-full ${
+                  isFavourite
+                    ? "text-red-600 hover:text-red-600"
+                    : "text-zinc-100/60 hover:text-zinc-100/80"
+                } hover:bg-zinc-100/30 hover:scale-110 active:scale-95 transition duration-150 ease-in-out cursor-pointer`}
+              >
+                <FontAwesomeIcon icon={faHeart} className="text-lg" />
+              </button>
             )}
           </div>
           {game.genres && (
