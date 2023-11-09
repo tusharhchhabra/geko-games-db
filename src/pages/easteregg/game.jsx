@@ -12,5 +12,5 @@ export default function Game() {
     return () => document.body.style.overflow = originalStyle;
   }, []);
 
-  return <GameComponentWithNoSSR />;
+  return <div className='fade-in shadow-2xl shadow-blue-500'><GameComponentWithNoSSR /></div>;
 }
