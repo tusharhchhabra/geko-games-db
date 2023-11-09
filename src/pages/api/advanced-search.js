@@ -16,7 +16,7 @@ export default async function advancedSearch(req, res) {
 
   const gamesWithSizedCoverUrl = queries.searchedGamesWithSizedCovers(
     games,
-    "t_cover_big"
+    "t_cover_big_2x"
   );
 
   res.send({ games: gamesWithSizedCoverUrl });

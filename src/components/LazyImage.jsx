@@ -2,7 +2,6 @@ import Image from "next/image";
 import { useState } from "react";
 
 export default function LazyImage({
-  key,
   src,
   placeholder,
   alt,
@@ -19,7 +18,6 @@ export default function LazyImage({
 
   return (
     <Image
-      key={key}
       src={src}
       alt={alt}
       width={width}
