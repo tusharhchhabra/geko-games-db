@@ -24,11 +24,6 @@ const Layout = ({ children }) => {
             <AuthModal />
           </div>
         )}
-        <footer className="absolute bottom-0 w-full pb-16 flex items-center justify-center">
-          <span className="text-sm text-zinc-500 font-medium">
-            {"Made with ☕️ and 💜 in 🍁"}
-          </span>
-        </footer>
       </main>
     </FavouritesProvider>
   );
