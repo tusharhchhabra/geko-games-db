@@ -31,7 +31,7 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed left-0 top-0 z-20 w-full bg-transparent transition-colors duration-300 ${
+      className={`fixed left-0 top-0 z-50 w-full bg-transparent transition-colors duration-300 ${
         scrollPosition > 0
           ? "border-b-[0.5px] border-gray-700 bg-zinc-900/[0.45] backdrop-blur-lg"
           : "border-gray-800"
@@ -67,12 +67,12 @@ export default function Navbar() {
         <div
           className={`${
             isOpen
-              ? "block bg-zinc-800 absolute w-full top-14 left-0 pb-8 md:static"
+              ? "block bg-zinc-800 absolute w-full top-14 left-0 pb-8 md:static fade-down"
               : "hidden"
           } w-full md:items-center md:justify-between md:static md:ml-auto md:gap-x-4 md:flex md:w-auto`}
           id="navbar-sticky"
         >
-          <ul className="mt-4 flex flex-col text-lg md:text-base rounded-lg p-4 font-normal md:mt-0 md:flex-row md:gap-x-4 lg:gap-x-8 xl:gap-x-12 md:border-0 md:p-0 ">
+          <ul className="mt-2 flex flex-col text-lg md:text-base rounded-lg p-4 font-normal md:mt-0 md:flex-row md:gap-x-4 lg:gap-x-8 xl:gap-x-12 md:border-0 md:p-0 ">
             <li>
               <Link
                 href="/platforms"
@@ -101,7 +101,7 @@ export default function Navbar() {
             )}
           </ul>
           <div className="px-7 lg:pl-7">
-            <SearchBar />
+            <SearchBar setNavMenuIsOpen={setIsOpen} />
           </div>
           <div className={`${isOpen ? "mt-6" : "mt-0"} px-7 md:p-0`}>
             {user ? (

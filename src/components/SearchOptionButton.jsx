@@ -9,8 +9,8 @@ function SearchOptionButton({
     <button
       onClick={() => handleOptionChange(id, paramName)}
       className={`px-3 py-1 text-left flex-grow-0 ${
-        isSelected ? "bg-violet-600" : "bg-gray-800"
-      } rounded-md border-[0.5px] border-gray-700`}
+        isSelected ? "bg-violet-600" : "bg-zinc-800"
+      } rounded-md border-[0.5px] border-zinc-600 hover:brightness-125 hover:scale-[1.02] active:scale-95 transition-transform duration-200`}
     >
       {label}
     </button>

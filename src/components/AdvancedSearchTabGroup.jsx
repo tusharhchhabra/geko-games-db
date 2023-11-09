@@ -74,7 +74,7 @@ function AdvancedSearchTabGroup({
         searchTerm={params.name}
         handleSearchTermChange={handleSearchTermChange}
       />
-      <div className="font-medium text-center text-gray-400 border-b border-gray-700">
+      <div className="font-medium text-center text-zinc-400 border-b border-zinc-700">
         <ul className="mt-4 flex flex-wrap -mb-px gap-1">
           <AdvancedSearchTab
             name="Genre"

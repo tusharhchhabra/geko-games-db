@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import MyCombobox from "./Dropdown";
 import { useRouter } from "next/router";
 
-function SearchBar() {
+function SearchBar({ setNavMenuIsOpen }) {
   const [query, setQuery] = useState("");
   const [games, setGames] = useState([]);
   const [selectedGame, setSelectedGame] = useState(null);
@@ -25,6 +25,7 @@ function SearchBar() {
 
   const handleGameSelect = (game) => {
     setSelectedGame(game);
+    setNavMenuIsOpen(false);
     router.push(`/games/${game.id}`);
   };
 
