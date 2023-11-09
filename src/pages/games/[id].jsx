@@ -16,6 +16,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FavouritesContext from "@/context/FavouritesContext";
 import { AuthContext } from "@/context/AuthContext";
+import GalleryVideo from "@/components/GalleryVideo";
 
 function GameDetailsPage({ game }) {
   const lightGallery = useRef(null);
@@ -100,7 +101,7 @@ function GameDetailsPage({ game }) {
             {game.total_rating && (
               <Rating count={Math.round(game.total_rating) / 10} />
             )}
-            {game.total_rating && (
+            {game.total_rating && user && (
               <div className="h-[18px] w-[0.5px] bg-zinc-300 self-center -translate-y-px" />
             )}
             {user && (
@@ -161,6 +162,10 @@ function GameDetailsPage({ game }) {
             onInit={onInit}
             className="mt-4 py-10 flex px-6 -mx-6 lg:pr-20 lg:-mr-20 gap-2.5 overflow-x-scroll no-scrollbar"
           >
+            {game.videos &&
+              game.videos.map((video) => (
+                <GalleryVideo key={video.id} videoId={video.video_id} />
+              ))}
             {game.screenshots.map((screenshot) => (
               <a
                 key={screenshot.id}

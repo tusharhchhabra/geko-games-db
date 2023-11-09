@@ -1,7 +1,7 @@
 import LightGallery from "lightgallery/react";
 import "lightgallery/css/lightgallery.css";
-import "lightgallery/css/lg-zoom.css";
-import "lightgallery/css/lg-thumbnail.css";
+import lgVideo from "lightgallery/plugins/video";
+import "lightgallery/css/lg-video.css";
 
 function Gallery({ children, onInit, className }) {
   return (
@@ -12,6 +12,10 @@ function Gallery({ children, onInit, className }) {
         mode="lg-fade"
         download={false}
         elementClassNames={className}
+        plugins={[lgVideo]}
+        autoplay={true}
+        autoplayVideoOnSlide={true}
+        gotoNextSlideOnVideoEnd={true}
       >
         {children}
       </LightGallery>
