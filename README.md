@@ -14,12 +14,14 @@ Games DB is a comprehensive games database web application built using Next.js, 
 
 ## Getting Started
 
-Follow these instructions to set up Games DB locally for development and testing purposes.
+Follow these instructions to set up Games DB locally for development.
 
 ### Prerequisites
 
 - Node.js version >= 16.14
+- IGDB API client ID and authorization token 
 - A Vercel PostgreSQL database (for managing users and favorites)
+- An OpenAI API key for the AI game suggestions feature
 
 ### Installation
 
@@ -33,7 +35,7 @@ Follow these instructions to set up Games DB locally for development and testing
    npm install
    ```
 3. **Set up environment variables**:
-   Copy the .env.example file to a new file named .env.development.local, and fill in the required API keys and database credentials. Credentials include Twitch Developer Client ID, Authorization Token, Vercel Postgres Database URL, and JWT secret key.
+   Copy the .env.example file to a new file named .env.development.local, and fill in the required API keys and database credentials.
 
 4. **Run the app in development mode**:
    ```sh
@@ -61,11 +63,16 @@ Follow these instructions to set up Games DB locally for development and testing
 
 [HeadlessUI](https://headlessui.com) - Combobox for the Search bar
 
+[LightGallery.js](https://www.lightgalleryjs.com) - Lightbox for images and videos
+
+[FontAwesome](https://fontawesome.com) - Icons
+
+
 ## Limitations
 
 - Does not yet have the ability to refresh the JWT token for the logged in state.
 - Game information is sourced from the IGDB API and is read-only - it cannot be added to or modified.
-- Game data is user-submitted and may vary in completeness. However, most medium to large games have extensive information available.
+- Game data is user-submitted and may vary in completeness. However, a majority of the widely popular games have extensive information available.
 
 ## Credits
 
