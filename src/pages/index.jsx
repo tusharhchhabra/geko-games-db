@@ -67,7 +67,7 @@ const HomePage = ({ initialGameSets, initialThemes }) => {
   }, [handleScroll]);
 
   return (
-    <div className="w-screen -mx-16">
+    <div className="w-screen -mx-4 lg:-mx-16">
       <img
         alt="Featured-game"
         src="/assets/rocketLeague.png"
@@ -79,14 +79,13 @@ const HomePage = ({ initialGameSets, initialThemes }) => {
       md:top-[500px]
       sm:top-[300px]
       top-[275px]
-      pl-20
+      pl-4
+      lg:pl-20
       "
       >
         <GamesList setOfGames={gameSets} />
-        {allDataLoaded && (
-          <EasterEgg />
-        )}
-        
+        {allDataLoaded && <EasterEgg />}
+
         {loading && (
           <div
             role="status"
