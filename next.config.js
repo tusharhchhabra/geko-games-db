@@ -12,6 +12,7 @@ const nextConfig = {
   },
   images: {
     domains: ["images.igdb.com", "img.youtube.com"],
+    unoptimized: true,
   },
 };
 
