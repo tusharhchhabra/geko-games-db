@@ -69,7 +69,7 @@ const HomePage = ({ initialGameSets, initialThemes }) => {
     <div className="w-screen ">
       <img
         alt="Featured-game"
-        src="/assets/rocketLeague.png"
+        src="/assets/rocketLeague.jpg"
         className="w-screen object-cover lg:h-[650px] md:h-[450px] sm:h-[250px] h-[200px] z-0 absolute top-16 left-0 rounded-2xl shadow-2xl shadow-[0_0_15px_rgba(255,255,255,0.5)] fade-in-short"
       />
       <div
