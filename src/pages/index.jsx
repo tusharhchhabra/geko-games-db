@@ -4,6 +4,7 @@ import GamesList from "@/components/GameList";
 import queries from "@/helpers/queryStrings";
 import extractIdAsAnArray from "@/helpers/extractIdsAsArray";
 import extractNameAsAnArray from "@/helpers/extractNameAsArray";
+import EasterEgg from "@/components/EasterEgg";
 
 const HomePage = ({ initialGameSets, initialThemes }) => {
   const [gameSets, setGameSets] = useState(initialGameSets);
@@ -66,7 +67,7 @@ const HomePage = ({ initialGameSets, initialThemes }) => {
   }, [handleScroll]);
 
   return (
-    <div className="w-screen ">
+    <div className="w-screen -mx-4 lg:-mx-16">
       <img
         alt="Featured-game"
         src="/assets/rocketLeague.jpg"
@@ -78,9 +79,13 @@ const HomePage = ({ initialGameSets, initialThemes }) => {
       md:top-[500px]
       sm:top-[300px]
       top-[275px]
+      pl-4
+      lg:pl-20
       "
       >
         <GamesList setOfGames={gameSets} />
+        {allDataLoaded && <EasterEgg />}
+
         {loading && (
           <div
             role="status"

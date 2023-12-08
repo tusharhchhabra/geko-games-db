@@ -157,7 +157,7 @@ const PlatformsGameList = ({
 
   // Render JSX
   return (
-    <div className="lg:p-24 w-full p-2">
+    <div className="lg:p-24 w-full p-2 ">
       <PlatformButton
         platforms={initialPlatforms}
         setSelectedPlatform={setSelectedPlatform}
@@ -167,14 +167,14 @@ const PlatformsGameList = ({
         setAllDataLoaded={setAllDataLoaded}
       />
       {filteredGamesFetched ? (
-        <div className=" w-full absolute lg:left-10 top-48 lg:top-44 ">
-          <h1 className="lg:text-[50px] font-bold text-gray-700 mt-5 lg:mt-10">
+        <div className=" w-screen absolute lg:left-10 top-48 lg:top-44 -mx-4 lg:-mx-16 pl-4 lg:pl-20">
+          <h1 className="lg:text-[50px] font-bold text-gray-700 mt-5 lg:mt-10 -ml- ">
             {selectedPlatformName}
           </h1>
           <GamesList setOfGames={filteredGames} />
         </div>
       ) : (
-        <div className="w-full absolute lg:left-10 top-48 mt-5 lg:mt-2">
+        <div className="w-screen absolute lg:left-10 top-48 mt-5 lg:mt-2 -mx-4 lg:-mx-16 pl-4 lg:pl-20">
           <GamesList setOfGames={gameSets} />
         </div>
       )}

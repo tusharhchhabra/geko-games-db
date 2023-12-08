@@ -22,9 +22,10 @@ const FavouritesList = ({ setOfGames }) => {
           lg:grid-cols-5
           md:grid-cols-4
           sm:grid-cols-4
-          grid-cols-2 fade-in-short
-          "
-          >
+          grid-cols-2
+          gap-4
+          fade-in-short
+          ">
             <FavouritesListItem games={gameSet.games} />
           </div>
         </div>

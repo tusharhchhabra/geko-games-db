@@ -67,6 +67,18 @@ function GameListItem({ games, gameSetRef, index }) {
       });
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (gameListRef.current) {
+        clearTimeout(gameListRef.current);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return games.map((game, index) => {
     const gameVideo = videos[game.id];
 
@@ -77,7 +89,7 @@ function GameListItem({ games, gameSetRef, index }) {
         if (ref.slidePosition === 0 && index === 6) {
           style = "lg:-translate-x-28";
         } else if (ref.slidePosition === 0 && index === 7) {
-          style = "lg:-translate-x-72";
+          style = "lg:-translate-x-80";
         } else if (ref.slidePosition === 200 && index === 7) {
           style = "lg:-translate-x-40";
         } else if (ref.slidePosition === 200 && index === 8) {
@@ -112,7 +124,7 @@ function GameListItem({ games, gameSetRef, index }) {
             onMouseEnter={() => {
               gameListRef.current = setTimeout(() => {
                 fetchVideo(game.id);
-              }, 1500);
+              }, 800);
             }}
             onMouseLeave={() => {
               clearTimeout(gameListRef.current);
@@ -120,7 +132,7 @@ function GameListItem({ games, gameSetRef, index }) {
             className={
               gameVideo && game.id === hoveredGameId
                 ? "hidden"
-                : `block rounded-lg shadow-lg hover:shadow-[0px_10px_15px_rgba(255,255,255,1)] shadow-violet-500 transition duration-200 ease-in-out hover:scale-[1.03]  hover:brightness-110 z-0`
+                : `block rounded-lg shadow-md hover:shadow-[0px_10px_15px_rgba(255,255,255,1)] shadow-violet-500 transition duration-200 ease-in-out hover:scale-[1.03]  hover:brightness-110 z-0`
             }
           />
         </Link>
